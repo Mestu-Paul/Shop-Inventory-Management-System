@@ -30,3 +30,29 @@ pip install Pillow
 - Email & SMS
 
 - Help
+
+# Operation
+
+- Add\Manage Item
+
+- Purchase Item
+
+- Check Stock
+
+- Demage Stock
+
+- Purchase Report
+
+- Sales Report
+
+- Item Sales Report
+
+- Expenditure
+
+- Expenditure Report
+
+- Staff Manager
+
+- Contact Book
+
+- Refresh
