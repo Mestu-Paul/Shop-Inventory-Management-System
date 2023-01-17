@@ -1,0 +1,48 @@
+# Add\Manage Item (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Add\Manage Item", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Purchase Item (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Purchase Item", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Check Stock (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Check Stock", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Demage Stock (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Demage Stock", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Purchase Report (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Purchase Report", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Sales Report (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Sales Report", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Item Sales Report (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Item Sales Report", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Expenditure (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Expenditure", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Expenditure Report (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Expenditure Report", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Staff Manager (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Staff Manager", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Contact Book (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Contact Book", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+# Refresh (at left_frame0) 
+left0_frame_btn_0 = tk.Button(left_fram0,text="Refresh", fg=left0_fg, bg=left01_bg, font=('Times New Roman1',10))
+left0_frame_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
