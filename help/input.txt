@@ -1,13 +1,13 @@
-Add\Manage Item
-Purchase Item
-Check Stock
-Demage Stock
-Purchase Report
-Sales Report
-Item Sales Report
-Expenditure
-Expenditure Report
-Staff Manager
-Contact Book
-Refresh
+Item Name
+Item Code
+Item Name
+Item Code
+Item Group
+Company
+Shelf No.
+Available Quantity
+Sale Price Rate
+Sale Quantity
+Discount
+Item Total Price
 00

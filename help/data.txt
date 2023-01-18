@@ -22,3 +22,19 @@ Expenditure Report
 Staff Manager
 Contact Book
 Refresh
+
+
+----------item info---------
+Item Name
+Item Name
+Item Code
+Item Code
+Item Group
+Company
+Shelf No.
+Available Quantity
+Sale Price Rate
+Sale Quantity
+Price
+Discount
+Item Total Price
