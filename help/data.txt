@@ -38,3 +38,11 @@ Sale Quantity
 Price
 Discount
 Item Total Price
+
+--------purchase info-------
+Total Item
+Total Price
+Discount
+Payable
+Total Paid
+Change/Due

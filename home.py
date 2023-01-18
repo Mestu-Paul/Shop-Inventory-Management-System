@@ -18,6 +18,9 @@ def addHome(root):
     left0_fg = '#000000'
     left1_bg = '#e1e1e1'
     left1_fg = '#000000'
+    left2_bg = '#e1e1e1'
+    left2_fg = '#000000'
+
 
 
     # ============================ top frame 0 ============================
@@ -67,116 +70,39 @@ def addHome(root):
 
     # ============================ left frame 0 ============================
     left_frame_0 = tk.Frame(root,bg=left0_bg)
-    left_frame_0.place(x=3,y=112, relwidth=0.15, relheight=0.75)
+    left_frame_0.place(relx=0.005,rely=0.172, relwidth=0.15, relheight=0.75)
 
-    # ----------------------------------------------------------------------
-    # Add\Manage Item (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Add\Manage Item", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Purchase Item (at left_frame0) 
-    left_frame_0_btn_1 = tk.Button(left_frame_0,text="Purchase Item", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_1.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Check Stock (at left_frame0) 
-    left_frame_0_btn_2 = tk.Button(left_frame_0,text="Check Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_2.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Demage Stock (at left_frame0) 
-    left_frame_0_btn_3 = tk.Button(left_frame_0,text="Demage Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_3.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Purchase Report (at left_frame0) 
-    left_frame_0_btn_4 = tk.Button(left_frame_0,text="Purchase Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_4.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Sales Report (at left_frame0) 
-    left_frame_0_btn_5 = tk.Button(left_frame_0,text="Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_5.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Item Sales Report (at left_frame0) 
-    left_frame_0_btn_6 = tk.Button(left_frame_0,text="Item Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_6.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Expenditure (at left_frame0) 
-    left_frame_0_btn_7 = tk.Button(left_frame_0,text="Expenditure", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_7.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Expenditure Report (at left_frame0) 
-    left_frame_0_btn_8 = tk.Button(left_frame_0,text="Expenditure Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_8.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Staff Manager (at left_frame0) 
-    left_frame_0_btn_9 = tk.Button(left_frame_0,text="Staff Manager", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_9.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-
-    # Contact Book (at left_frame0) 
-    left_frame_0_btn_10 = tk.Button(left_frame_0,text="Contact Book", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_10.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    # ---------------------------------------------------------------------- #
+    operation_list = ['Add\Manage Item', 'Purchase Item', 'Check Stock', 'Demage Stock',
+                    'Purchase Report', 'Sales Report', 'Item Sales Report', 'Expenditure',
+                    'Expenditure Report', 'Staff Manager', 'Contact Book', 'Refresh']
+    for op in range(0,len(operation_list)-1):
+        left_frame_0_btn_0 = tk.Button(left_frame_0,text=operation_list[op], fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+        left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Refresh (at left_frame0) 
     left_frame_0_btn_11 = tk.Button(left_frame_0,text="Refresh", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
     left_frame_0_btn_11.pack(side=tk.TOP,fill=tk.X,padx=5, pady=15)
-    
+
+
     # ============================ left frame 1 ============================
     left_frame_1 = tk.Frame(root,bg=left1_bg)
-    left_frame_1.place(relx=0.16,y=112, relwidth=0.28, relheight=0.75)
+    left_frame_1.place(relx=0.16,rely=0.172, relwidth=0.28, relheight=0.75)
 
     # ----------------------------------------------------------------------#
     purchase_date = tkcal.DateEntry(left_frame_1,selecmode='day', cursor='hand1')
     purchase_date.place(relx=0.55,y=5,relwidth=0.4)
 
-    # Item Name (at left_frame1)
-    left_frame_1_lbl_0 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Name :')
-    left_frame_1_lbl_0.place(x=5,y=30,relwidth=0.5)
+    item_info_list = ['Item Name :', 'Item Name :', 'Item Code :', 'Item Code :',
+                    'Item Group :', 'Company :', 'Shelf No. :', 'Available Quantity :',
+                    'Sale Price Rate :', 'Sale Quantity :', 'Price :', 'Discount :',
+                    'Item Total Price :']
 
-    # Item Code (at left_frame1)
-    left_frame_1_lbl_1 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Code :')
-    left_frame_1_lbl_1.place(x=5,y=60,relwidth=0.5)
 
-    # Item Name (at left_frame1)
-    left_frame_1_lbl_2 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Name :')
-    left_frame_1_lbl_2.place(x=5,y=90,relwidth=0.5)
+    for itm in range(0,len(item_info_list)):
+        left_frame_1_lbl_0 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text=item_info_list[itm])
+        left_frame_1_lbl_0.place(x=5,y=(itm+1)*30,relwidth=0.5)    
 
-    # Item Code (at left_frame1)
-    left_frame_1_lbl_3 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Code :')
-    left_frame_1_lbl_3.place(x=5,y=120,relwidth=0.5)
-
-    # Item Group (at left_frame1)
-    left_frame_1_lbl_4 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Group :')
-    left_frame_1_lbl_4.place(x=5,y=150,relwidth=0.5)
-
-    # Company (at left_frame1)
-    left_frame_1_lbl_5 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Company :')
-    left_frame_1_lbl_5.place(x=5,y=180,relwidth=0.5)
-
-    # Shelf No. (at left_frame1)
-    left_frame_1_lbl_6 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Shelf No. :')
-    left_frame_1_lbl_6.place(x=5,y=210,relwidth=0.5)
-
-    # Available Quantity (at left_frame1)
-    left_frame_1_lbl_7 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Available Quantity :')
-    left_frame_1_lbl_7.place(x=5,y=240,relwidth=0.5)
-
-    # Sale Price Rate (at left_frame1)
-    left_frame_1_lbl_8 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Sale Price Rate :')
-    left_frame_1_lbl_8.place(x=5,y=270,relwidth=0.5)
-
-    # Sale Quantity (at left_frame1)
-    left_frame_1_lbl_9 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Sale Quantity :')
-    left_frame_1_lbl_9.place(x=5,y=300,relwidth=0.5)
-
-    # Price
-    left_frame_1_lbl_10 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Price :')
-    left_frame_1_lbl_10.place(x=5,y=330,relwidth=0.5)
-
-    # Discount (at left_frame1)
-    left_frame_1_lbl_11 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Discount :')
-    left_frame_1_lbl_11.place(x=5,y=360,relwidth=0.5)
-
-    # Item Total Price (at left_frame1)
-    left_frame_1_lbl_12 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Total Price :')
-    left_frame_1_lbl_12.place(x=5,y=390,relwidth=0.5)
 
     # delete item
     left_frame_btn_delete = tk.Button(left_frame_1, fg=top1_fg, bg=top1_bg,font=('Times New Roman',14), text='Delete')
@@ -240,5 +166,163 @@ def addHome(root):
     # Item Total Price (at left_frame1)
     left_frame_1_lbl_total_price = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Total Price :')
     left_frame_1_lbl_total_price.place(relx=0.5, y=390, relwidth=0.48, relheight=0.04)
+
+
+
+    # ============================ left frame 2 ============================ #
+    left_frame_2 = tk.Frame(root,bg=left2_bg)
+    left_frame_2.place(relx=0.45,rely=0.172,relwidth=0.545,relheight=0.75)
+
+    purchase_font = 12
+    # ---------------------------- customer info frame ----------------------------- #
+    left_frame_2_frame_customer_info = tk.Frame(left_frame_2,bg=left2_bg)
+    left_frame_2_frame_customer_info.place(relx=0.01,rely=0.01,relwidth=0.48,relheight=0.6)
+
+    # ---------------------------- label --------------------------#
+    # search type
+    left_frame_2_frame_customer_info_lbl_0 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Search by :')
+    left_frame_2_frame_customer_info_lbl_0.place(relx=0.01, rely=0.01, relwidth=0.4, relheight=0.08)
+
+    # search box
+    left_frame_2_frame_customer_info_lbl_1 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Query :')
+    left_frame_2_frame_customer_info_lbl_1.place(relx=0.01, rely=0.1, relwidth=0.4, relheight=0.08)
+
+    # search button
+    left_frame_2_frame_customer_info_btn_search = tk.Button(left_frame_2_frame_customer_info,fg=top1_fg, bg=top1_bg, font=('Times New Roman',12), text='Search')
+    left_frame_2_frame_customer_info_btn_search.place(relx=0.25, rely=0.2, relwidth=0.4, relheight=0.08)
+
+    # customer name 
+    left_frame_2_frame_customer_info_lbl_2 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Name :')
+    left_frame_2_frame_customer_info_lbl_2.place(relx=0.01, rely=0.3, relwidth=0.4, relheight=0.08)
+
+    # customer pre-balance
+    left_frame_2_frame_customer_info_lbl_3 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Pre-balance :')
+    left_frame_2_frame_customer_info_lbl_3.place(relx=0.01, rely=0.4, relwidth=0.4, relheight=0.08)
+
+    # customer current balance
+    left_frame_2_frame_customer_info_lbl_4 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Current-balance :')
+    left_frame_2_frame_customer_info_lbl_4.place(relx=0.01, rely=0.5, relwidth=0.4, relheight=0.08)
+
+    # customer contact no
+    left_frame_2_frame_customer_info_lbl_5 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Contact :')
+    left_frame_2_frame_customer_info_lbl_5.place(relx=0.01, rely=0.6, relwidth=0.4, relheight=0.08)
+
+    # ---------------------------- Input ------------------------------ #
+    product_search_type = tk.StringVar()
+    search_type_list = ['name', "code", "company",'group']
+    product_search_type.set(search_type_list[0]) # default value
+    search_type = tk.OptionMenu(left_frame_2_frame_customer_info, product_search_type, *search_type_list)
+    search_type.place(relx=0.3, rely=0.01, relwidth=0.6, relheight=0.09)
+
+    query = tk.Entry(left_frame_2_frame_customer_info)
+    query.place(relx=0.3, rely=0.11, relwidth=0.6, relheight=0.08)
+
+    customer_name = tk.Entry(left_frame_2_frame_customer_info)
+    customer_name.place(relx=0.42, rely=0.3, relwidth=0.48, relheight=0.08)
+
+    pre_balance = tk.Entry(left_frame_2_frame_customer_info)
+    pre_balance.place(relx=0.42, rely=0.4, relwidth=0.48, relheight=0.08)
+
+    current_balance = tk.Entry(left_frame_2_frame_customer_info)
+    current_balance.place(relx=0.42, rely=0.5, relwidth=0.48, relheight=0.08)
+
+    contact_no = tk.Entry(left_frame_2_frame_customer_info)
+    contact_no.place(relx=0.42, rely=0.6, relwidth=0.48, relheight=0.08)
+
+
+    # ---------------------------- payment info frame ----------------------------- #
+    left_frame_2_frame_payment_info = tk.Frame(left_frame_2,bg=left2_bg)
+    left_frame_2_frame_payment_info.place(relx=0.5,rely=0.01,relwidth=0.49,relheight=0.6)
+
+    purchase_info_list = ['Total Item :', 'Total Price :', 'Discount :',
+                        'Payable :', 'Total Paid :', 'Change/Due :']
+    for i in range(0,len(purchase_info_list)):
+        left_frame_2_frame_payment_info_lbl = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text=purchase_info_list[i])
+        left_frame_2_frame_payment_info_lbl.place(relx=0.01, rely=0.01+0.1*i, relwidth=0.4, relheight=0.08)     
+
+
+
+    # total item 
+    left_frame_2_frame_payment_info_lbl_1 = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    left_frame_2_frame_payment_info_lbl_1.place(relx=0.42, rely=0.01, relwidth=0.4, relheight=0.08)
+
+    # total price
+    left_frame_2_frame_payment_info_lbl_2 = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Total price :')
+    left_frame_2_frame_payment_info_lbl_2.place(relx=0.42, rely=0.1, relwidth=0.4, relheight=0.08)
+
+    # discount 
+    left_frame_2_frame_payment_info_lbl_5 = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    left_frame_2_frame_payment_info_lbl_5.place(relx=0.42, rely=0.2, relwidth=0.4, relheight=0.08)
+
+    # Payable
+    left_frame_2_frame_payment_info_lbl_7 = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    left_frame_2_frame_payment_info_lbl_7.place(relx=0.42, rely=0.3, relwidth=0.4, relheight=0.08)
+
+    # total paid
+    left_frame_2_frame_payment_info_total_paid = tk.Entry(left_frame_2_frame_payment_info)
+    left_frame_2_frame_payment_info_total_paid.place(relx=0.42, rely=0.4, relwidth=0.4, relheight=0.08)
+
+    # change/due
+    left_frame_2_frame_payment_info_lbl_10 = tk.Label(left_frame_2_frame_payment_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    left_frame_2_frame_payment_info_lbl_10.place(relx=0.42, rely=0.5, relwidth=0.4, relheight=0.08)
+
+    # =================== frame ====================== #
+    left_frame_2_frame_payment_info_frame_payment_acount = tk.Frame(left_frame_2_frame_payment_info,bg=left2_bg)
+
+    def payment_method_select(event):
+        left_frame_2_frame_payment_info_frame_payment_acount_lbl_11 = tk.Label(left_frame_2_frame_payment_info_frame_payment_acount, bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Payment A/C :')
+        if(payment_method_type.get()=='Cash'):
+            left_frame_2_frame_payment_info_frame_payment_acount.place_forget()
+            return
+        
+        left_frame_2_frame_payment_info_frame_payment_acount.place(relx=0,rely=0.6,relwidth=1,relheight=0.4)
+        # payment account
+        left_frame_2_frame_payment_info_frame_payment_acount_lbl_11.place(relx=0.01, rely=0.5, relwidth=0.4, relheight=0.2)
+        payment_acount_number = tk.StringVar()
+        payment_acount_number_list = ['Name1', "Name2", "Name3",'Name4']
+        payment_acount_number.set(payment_acount_number_list[0]) # default value
+        payment_acount = tk.OptionMenu(left_frame_2_frame_payment_info_frame_payment_acount, payment_acount_number, *payment_acount_number_list,command=payment_method_select)
+        payment_acount.place(relx=0.42, rely=0.5, relwidth=0.4, relheight=0.2)
+        default_payment_account = tk.IntVar()
+        tk.Checkbutton(left_frame_2_frame_payment_info_frame_payment_acount, bg=left2_bg, font=('Times New Roman',purchase_font), text='Set aa default', variable=default_payment_account).place(relx=0.6,rely=0.7)
+
+
+    
+    # payment method
+    left_frame_2_frame_customer_info_lbl_6 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',10), text='Payment method :')
+    left_frame_2_frame_customer_info_lbl_6.place(relx=0.01, rely=0.8, relwidth=0.4, relheight=0.08)
+    payment_method_type = tk.StringVar()
+    payment_method_type_list = ['Cash', "Bkash", "Nagad",'Card']
+    payment_method_type.set(payment_method_type_list[0]) # default value
+    payment_method = tk.OptionMenu(left_frame_2_frame_customer_info, payment_method_type, *payment_method_type_list,command=payment_method_select)
+    payment_method.place(relx=0.42, rely=0.8, relwidth=0.4, relheight=0.09)
+
+
+
+
+
+    # ---------------------------- scroll table frame ----------------------------- #
+    left_frame_2_frame_table = tk.Frame(left_frame_2)
+    left_frame_2_frame_table.place(relx=0,rely=0.62,relwidth=1,relheight=0.4)
+
+    # scroll bar
+    scrollbar = tk.Scrollbar(left_frame_2_frame_table)
+    scrollbar.place(relx=0.97,rely=0,relwidth=0.03,relheight=1)
+
+    # treeview
+    tree = tk.ttk.Treeview(left_frame_2_frame_table, column=("c1", "c2", "c3"), show='headings', yscrollcommand=scrollbar.set)
+    # tree.column("# 1", anchor=tk.CENTER)
+    # tree.heading("# 1", text="ID")
+    # tree.column("# 2", anchor=tk.CENTER)
+    # tree.heading("# 2", text="Company")
+    # tree.column("# 3", anchor=tk.CENTER)
+    # tree.heading("# 3", text="Company1")
+
+    # Insert the data in Treeview widget
+    # tree.insert('', 'end', values=('1', 'Honda', "hello"))
+
+    tree.place(relx=0,rely=0,relwidth=0.97,relheight=1)
+    scrollbar.config( command = tree.yview )
+
 
     
