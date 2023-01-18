@@ -3,6 +3,10 @@ import tkinter as tk
 # local 
 from menubar import *
 from home import *
+from login import *
+
+# authentication
+a = user_login()
 
 # root window
 root = tk.Tk()
