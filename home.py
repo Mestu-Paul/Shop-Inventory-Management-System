@@ -206,6 +206,9 @@ def addHome(root):
     # customer contact no
     left_frame_2_frame_customer_info_lbl_5 = tk.Label(left_frame_2_frame_customer_info,bg=left2_bg, anchor='w', font=('Times New Roman',purchase_font), text='Contact :')
     left_frame_2_frame_customer_info_lbl_5.place(relx=0.01, rely=0.6, relwidth=0.4, relheight=0.08)
+    
+    payment_button = tk.Button(left_frame_2_frame_customer_info,text='Payment', bg=top1_bg)
+    payment_button.place(relx=0.4,rely=0.9,height=25)
 
     # ---------------------------- Input ------------------------------ #
     product_search_type = tk.StringVar()
@@ -323,6 +326,3 @@ def addHome(root):
 
     tree.place(relx=0,rely=0,relwidth=0.97,relheight=1)
     scrollbar.config( command = tree.yview )
-
-
-    
