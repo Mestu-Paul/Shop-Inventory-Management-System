@@ -25,8 +25,8 @@ def addHome(root):
     top_frame_0.place(x=0,y=0,relwidth=1,height=80)
     # ---------------------------------------------------------------------
     # logo  (at frame 0)
-    shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
-    top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = shop_logo)
+    root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
+    top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
     top0_frame_0_lbl_0.pack(side=tk.LEFT,padx=15)
 
     # shop name (at frame 0)
