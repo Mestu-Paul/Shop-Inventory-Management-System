@@ -65,7 +65,7 @@ def addHome(root):
 
     # ============================ left frame 0 ============================
     left_frame_0 = tk.Frame(root,bg=left0_bg)
-    left_frame_0.place(x=3,y=112, relwidth=0.15, relheight=0.8)
+    left_frame_0.place(x=3,y=112, relwidth=0.15, relheight=0.75)
 
     # ----------------------------------------------------------------------
     # Add\Manage Item (at left_frame0) 
@@ -73,48 +73,48 @@ def addHome(root):
     left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Purchase Item (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Purchase Item", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_1 = tk.Button(left_frame_0,text="Purchase Item", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_1.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Check Stock (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Check Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_2 = tk.Button(left_frame_0,text="Check Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_2.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Demage Stock (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Demage Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_3 = tk.Button(left_frame_0,text="Demage Stock", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_3.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Purchase Report (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Purchase Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_4 = tk.Button(left_frame_0,text="Purchase Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_4.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Sales Report (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_5 = tk.Button(left_frame_0,text="Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_5.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Item Sales Report (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Item Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_6 = tk.Button(left_frame_0,text="Item Sales Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_6.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Expenditure (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Expenditure", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_7 = tk.Button(left_frame_0,text="Expenditure", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_7.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Expenditure Report (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Expenditure Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_8 = tk.Button(left_frame_0,text="Expenditure Report", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_8.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Staff Manager (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Staff Manager", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_9 = tk.Button(left_frame_0,text="Staff Manager", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_9.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Contact Book (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Contact Book", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    left_frame_0_btn_10 = tk.Button(left_frame_0,text="Contact Book", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_10.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     # Refresh (at left_frame0) 
-    left_frame_0_btn_0 = tk.Button(left_frame_0,text="Refresh", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-    left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=15)
+    left_frame_0_btn_11 = tk.Button(left_frame_0,text="Refresh", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    left_frame_0_btn_11.pack(side=tk.TOP,fill=tk.X,padx=5, pady=15)
 
     
 
