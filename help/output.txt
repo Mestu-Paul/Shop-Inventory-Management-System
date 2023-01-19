@@ -1,48 +1,24 @@
-# Item Name (at left_frame1)
-left_frame_1_lbl_0 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Name :')
-left_frame_1_lbl_0.place(x=5,y=30,relwidth=0.5)
+left_frame_entry_item_name = tk.Entry(left_frame)
+left_frame_entry_item_name.place(relx=0.48,rely=0.01,relwidth=0.5,relheight=0.06)
 
-# Item Code (at left_frame1)
-left_frame_1_lbl_1 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Code :')
-left_frame_1_lbl_1.place(x=5,y=60,relwidth=0.5)
+left_frame_entry_item_code = tk.Entry(left_frame)
+left_frame_entry_item_code.place(relx=0.48,rely=0.09,relwidth=0.5,relheight=0.06)
 
-# Item Name (at left_frame1)
-left_frame_1_lbl_2 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Name :')
-left_frame_1_lbl_2.place(x=5,y=90,relwidth=0.5)
+left_frame_entry_item_group = tk.Entry(left_frame)
+left_frame_entry_item_group.place(relx=0.48,rely=0.17,relwidth=0.5,relheight=0.06)
 
-# Item Code (at left_frame1)
-left_frame_1_lbl_3 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Code :')
-left_frame_1_lbl_3.place(x=5,y=120,relwidth=0.5)
+left_frame_entry_company = tk.Entry(left_frame)
+left_frame_entry_company.place(relx=0.48,rely=0.25,relwidth=0.5,relheight=0.06)
 
-# Item Group (at left_frame1)
-left_frame_1_lbl_4 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Group :')
-left_frame_1_lbl_4.place(x=5,y=150,relwidth=0.5)
+left_frame_entry_shelf_no = tk.Entry(left_frame)
+left_frame_entry_shelf_no.place(relx=0.48,rely=0.33,relwidth=0.5,relheight=0.06)
 
-# Company (at left_frame1)
-left_frame_1_lbl_5 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Company :')
-left_frame_1_lbl_5.place(x=5,y=180,relwidth=0.5)
+left_frame_entry_quantity = tk.Entry(left_frame)
+left_frame_entry_quantity.place(relx=0.48,rely=0.41,relwidth=0.5,relheight=0.06)
 
-# Shelf No. (at left_frame1)
-left_frame_1_lbl_6 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Shelf No. :')
-left_frame_1_lbl_6.place(x=5,y=210,relwidth=0.5)
+left_frame_entry_sale_price = tk.Entry(left_frame)
+left_frame_entry_sale_price.place(relx=0.48,rely=0.49,relwidth=0.5,relheight=0.06)
 
-# Available Quantity (at left_frame1)
-left_frame_1_lbl_7 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Available Quantity :')
-left_frame_1_lbl_7.place(x=5,y=240,relwidth=0.5)
-
-# Sale Price Rate (at left_frame1)
-left_frame_1_lbl_8 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Sale Price Rate :')
-left_frame_1_lbl_8.place(x=5,y=270,relwidth=0.5)
-
-# Sale Quantity (at left_frame1)
-left_frame_1_lbl_9 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Sale Quantity :')
-left_frame_1_lbl_9.place(x=5,y=300,relwidth=0.5)
-
-# Discount (at left_frame1)
-left_frame_1_lbl_10 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Discount :')
-left_frame_1_lbl_10.place(x=5,y=330,relwidth=0.5)
-
-# Item Total Price (at left_frame1)
-left_frame_1_lbl_11 = tk.Label(left_frame_1,bg=left1_bg, anchor='w', font=('Times New Roman',14), text='Item Total Price :')
-left_frame_1_lbl_11.place(x=5,y=360,relwidth=0.5)
+left_frame_entry_purchase_price = tk.Entry(left_frame)
+left_frame_entry_purchase_price.place(relx=0.48,rely=0.57,relwidth=0.5,relheight=0.06)
 

@@ -1,13 +1,8 @@
-Item Name
-Item Code
-Item Name
-Item Code
-Item Group
-Company
-Shelf No.
-Available Quantity
-Sale Price Rate
-Sale Quantity
-Discount
-Item Total Price
-00
+ Item Name
+ Item Code
+ Item Group
+ Company
+ Shelf No
+ Quantity
+ Sale Price
+ Purchase Price

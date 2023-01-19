@@ -1,28 +1,23 @@
-# Python program to temporarily remove a
-# Tkinter widget without using just place
+import webbrowser 
+import cv2 
+cap = cv2.VideoCapture(0) 
+# initialize the cv2 QRCode detector 
+detector = cv2.QRCodeDetector()
+# from dbr import *
 
-# Import the Tkinter library
-from tkinter import *
-
-# Create a GUI app
-app=Tk()
-
-# Set the title and geometry of the window
-app.title('Remove Tkinter Widget')
-app.geometry("600x400")
-
-# Make a function to remove the widget
-def remove_widget():
-    label.place_forget()
-
-# Create a label widget to display text
-label=Label(app, text="Tkinter Widget", font='Helvetica 20 bold')
-label.place(relx=0.5, rely=0.3, anchor=CENTER)
-
-# Create a button to remove text
-button=Button(app, text="Remove Widget", command=remove_widget)
-button.place(relx=0.5, rely=0.7, anchor=CENTER)
-
-# Make infinite loop for displaying app
-# on the screen
-app.mainloop()
+# BarcodeReader.init_license("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==")
+while True: 
+    _, img = cap.read()
+    # detect and decode 
+    data, bbox, _ = detector.detectAndDecode(img) 
+    # check if there is a QRCode in the image 
+    if data: 
+        a=data 
+        break
+    cv2.imshow("QRCODEscanner", img)     
+    if cv2.waitKey(1) == ord("q"): 
+        break
+b=webbrowser.open(str(a)) 
+print(a)
+cap.release() 
+cv2.destroyAllWindows()

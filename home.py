@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import datetime as dt 
 import tkcalendar as tkcal
+import item_manage as itmng
 # root window
 # root = tk.Tk()
 # root.title('Shopping Inventory Management System')
@@ -23,7 +24,7 @@ left2_fg = '#000000'
 def init_page(root,page_name):
     # ============================ top frame 0 ============================
     top_frame_0 = tk.Frame(root,bg=top0_bg)
-    top_frame_0.place(x=0,y=0,relwidth=1,height=80)
+    top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
     # ---------------------------------------------------------------------
     # logo  (at frame 0)
     root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
@@ -47,7 +48,7 @@ def init_page(root,page_name):
 
     # ============================ top frame 1 ============================
     top_frame_1 = tk.Frame(root,bg=top1_bg)
-    top_frame_1.place(x=0,y=80,relwidth=1,height=30)
+    top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
     # ---------------------------------------------------------------------
     # welcome  (at frame 1)
     top_frame_1_lbl_0 = tk.Label(top_frame_1,text="Welcome to abc Fasion House" , fg=top1_fg, bg=top1_bg, font=("Comic Sans MS",12))
@@ -64,36 +65,112 @@ def init_page(root,page_name):
     top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
 
     # tittle (at frame 1)
-    top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=top1_fg, bg=top1_bg, font=("Comic Sans MS",12))
-    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+    # top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=top1_fg, bg=top1_bg, font=("Comic Sans MS",12))
+    # top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+
+def manage_item(root):
+    print("go to manage item")
+    init_page(root,'Manage Item')
+    itmng.item_manage(root)
+
+def purchase_item(root):
+	pass
+
+def check_stock(root):
+	pass
+
+def demage_stock(root):
+	pass
+
+def purchase_report(root):
+	pass
+
+def sales_report(root):
+	pass
+
+def item_sales_report(root):
+	pass
+
+def expenditure(root):
+	pass
+
+def expenditure_report(root):
+	pass
+
+def staff_manager(root):
+	pass
+
+def contact_book(root):
+	pass
+
+
 
 def addHome(root):
+    init_page(root,'Item Sale')
+    # item manage main frame
+    main_frame = tk.Frame(root,bg='white')
+    main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
+    
     # ============================ left frame 0 ============================
-    left_frame_0 = tk.Frame(root,bg=left0_bg)
-    left_frame_0.place(relx=0.005,rely=0.172, relwidth=0.15, relheight=0.75)
+    left_frame_0 = tk.Frame(main_frame,bg=left0_bg)
+    left_frame_0.place(relx=0.005,rely=0, relwidth=0.15, relheight=1)
 
-    # ---------------------------------------------------------------------- #
-    operation_list = ['Add\Manage Item', 'Purchase Item', 'Check Stock', 'Demage Stock',
-                    'Purchase Report', 'Sales Report', 'Item Sales Report', 'Expenditure',
-                    'Expenditure Report', 'Staff Manager', 'Contact Book', 'Refresh']
-    for op in range(0,len(operation_list)-1):
-        left_frame_0_btn_0 = tk.Button(left_frame_0,text=operation_list[op], fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
-        left_frame_0_btn_0.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    # ---------------------------operation button--------------------------- #
+    left_frame_0_btn_manage_item = tk.Button(left_frame_0,text='Manage Item', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:manage_item(root))
+    left_frame_0_btn_manage_item.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
+    left_frame_0_btn_purchase_item = tk.Button(left_frame_0,text='Purchase Item', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:purchase_item(root))
+    left_frame_0_btn_purchase_item.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_check_stock = tk.Button(left_frame_0,text='Check Stock', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:check_stock(root))
+    left_frame_0_btn_check_stock.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_demage_stock = tk.Button(left_frame_0,text='Demage Stock', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:demage_stock(root))
+    left_frame_0_btn_demage_stock.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_purchase_report = tk.Button(left_frame_0,text='Purchase Report', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:purchase_report(root))
+    left_frame_0_btn_purchase_report.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_sales_report = tk.Button(left_frame_0,text='Sales Report', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:sales_report(root))
+    left_frame_0_btn_sales_report.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_item_sales_report = tk.Button(left_frame_0,text='Item Sales Report', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:item_sales_report(root))
+    left_frame_0_btn_item_sales_report.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_expenditure = tk.Button(left_frame_0,text='Expenditure', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:expenditure(root))
+    left_frame_0_btn_expenditure.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_expenditure_report = tk.Button(left_frame_0,text='Expenditure Report', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:expenditure_report(root))
+    left_frame_0_btn_expenditure_report.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_staff_manager = tk.Button(left_frame_0,text='Staff Manager', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:staff_manager(root))
+    left_frame_0_btn_staff_manager.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+    left_frame_0_btn_contact_book = tk.Button(left_frame_0,text='Contact Book', fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10),command=lambda:contact_book(root))
+    left_frame_0_btn_contact_book.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+
+
+    # for op in range(0,len(operation_list)-1):
+    #     left_frame_0_btn[op] = tk.Button(left_frame_0,text=operation_list[op], fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
+    #     left_frame_0_btn[op].pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
+    
+    #Manage button commanf
+    # left_frame_0_btn[0].config(command=lambda:manage_item(root))
+    
     # Refresh (at left_frame0) 
     left_frame_0_btn_11 = tk.Button(left_frame_0,text="Refresh", fg=left0_fg, bg=left_0_bg_1, font=('Times New Roman1',10))
     left_frame_0_btn_11.pack(side=tk.TOP,fill=tk.X,padx=5, pady=15)
 
 
     # ============================ left frame 1 ============================
-    left_frame_1 = tk.Frame(root,bg=left1_bg)
-    left_frame_1.place(relx=0.16,rely=0.172, relwidth=0.28, relheight=0.75)
+    left_frame_1 = tk.Frame(main_frame,bg=left1_bg)
+    left_frame_1.place(relx=0.16,rely=0, relwidth=0.28, relheight=1)
 
     # ----------------------------------------------------------------------#
     purchase_date = tkcal.DateEntry(left_frame_1,selecmode='day', cursor='hand1')
     purchase_date.place(relx=0.55,y=5,relwidth=0.4)
 
-    item_info_list = ['Item Name :', 'Item Name :', 'Item Code :', 'Item Code :',
+    item_info_list = ['Item Name :', 'Item Code :', 'Item Name :', 'Item Code :',
                     'Item Group :', 'Company :', 'Shelf No. :', 'Available Quantity :',
                     'Sale Price Rate :', 'Sale Quantity :', 'Price :', 'Discount :',
                     'Item Total Price :']
@@ -170,8 +247,8 @@ def addHome(root):
 
 
     # ============================ left frame 2 ============================ #
-    left_frame_2 = tk.Frame(root,bg=left2_bg)
-    left_frame_2.place(relx=0.45,rely=0.172,relwidth=0.545,relheight=0.75)
+    left_frame_2 = tk.Frame(main_frame,bg=left2_bg)
+    left_frame_2.place(relx=0.45,rely=0,relwidth=0.545,relheight=1)
 
     purchase_font = 12
     # ---------------------------- customer info frame ----------------------------- #
@@ -208,7 +285,7 @@ def addHome(root):
     left_frame_2_frame_customer_info_lbl_5.place(relx=0.01, rely=0.6, relwidth=0.4, relheight=0.08)
     
     payment_button = tk.Button(left_frame_2_frame_customer_info,text='Payment', bg=top1_bg)
-    payment_button.place(relx=0.4,rely=0.9,height=25)
+    payment_button.place(relx=0.8,rely=0.9,height=30)
 
     # ---------------------------- Input ------------------------------ #
     product_search_type = tk.StringVar()

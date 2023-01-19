@@ -14,6 +14,16 @@ pip install tkcalendar
 ```
 pip install Pillow
 ```
+**barcode** *(for image)*
+
+```
+pip install dbr
+```
+**barcode** *(for image)*
+
+```
+pip install dbr
+```
 
 # Menu
 
