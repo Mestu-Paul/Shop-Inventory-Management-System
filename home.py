@@ -6,23 +6,21 @@ import tkcalendar as tkcal
 # root = tk.Tk()
 # root.title('Shopping Inventory Management System')
 # root.geometry('1100x650+10+10')
+# root.minsize(1100,650)
 
-def addHome(root):
-    # color code 
-    top0_bg = '#297592'
-    top0_fg = '#ffffff'
-    top1_bg = '#3bbd75'
-    top1_fg = '#000000'
-    left0_bg = '#13dbcc'
-    left_0_bg_1 = '#b1b13d'
-    left0_fg = '#000000'
-    left1_bg = '#e1e1e1'
-    left1_fg = '#000000'
-    left2_bg = '#e1e1e1'
-    left2_fg = '#000000'
-
-
-
+# color code 
+top0_bg = '#297592'
+top0_fg = '#ffffff'
+top1_bg = '#3bbd75'
+top1_fg = '#000000'
+left0_bg = '#13dbcc'
+left_0_bg_1 = '#b1b13d'
+left0_fg = '#000000'
+left1_bg = '#e1e1e1'
+left1_fg = '#000000'
+left2_bg = '#e1e1e1'
+left2_fg = '#000000'
+def init_page(root,page_name):
     # ============================ top frame 0 ============================
     top_frame_0 = tk.Frame(root,bg=top0_bg)
     top_frame_0.place(x=0,y=0,relwidth=1,height=80)
@@ -30,15 +28,19 @@ def addHome(root):
     # logo  (at frame 0)
     root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
     top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
-    top0_frame_0_lbl_0.pack(side=tk.LEFT,padx=15)
+    top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
 
     # shop name (at frame 0)
     top0_frame_0_lbl_1 = tk.Label(top_frame_0,text="abc Fashion House" , fg=top0_fg, bg=top0_bg, font=("Comic Sans MS", 20, "bold"))
-    top0_frame_0_lbl_1.pack(side=tk.LEFT,padx=15)
+    top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
 
     # shop owner's info (at frame 0)
-    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text="Mobile: +8801xxxxxxxxx\nEmail: abc@xxxxx.com" , fg=top0_fg, bg=top0_bg, font=("Times New Roman", 12))
-    top0_frame_0_lbl_2.pack(side=tk.LEFT,padx=250)
+    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text="Mobile: +8801xxxxxxxxx\nEmail: abc@xxxxx.com\nOwner: abc" , fg=top0_fg, bg=top0_bg, font=("Times New Roman", 12))
+    top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
+    
+    # page name 
+    top0_frame_0_lbl_3 = tk.Label(top_frame_0,text=page_name , fg=top0_fg, bg=top0_bg, font=("Times New Roman", 17,"bold"))
+    top0_frame_0_lbl_3.place(relx=0.43, rely=0.3)
 
 
 
@@ -65,9 +67,7 @@ def addHome(root):
     top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=top1_fg, bg=top1_bg, font=("Comic Sans MS",12))
     top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
 
-
-
-
+def addHome(root):
     # ============================ left frame 0 ============================
     left_frame_0 = tk.Frame(root,bg=left0_bg)
     left_frame_0.place(relx=0.005,rely=0.172, relwidth=0.15, relheight=0.75)
@@ -302,8 +302,6 @@ def addHome(root):
 
 
 
-
-
     # ---------------------------- scroll table frame ----------------------------- #
     left_frame_2_frame_table = tk.Frame(left_frame_2)
     left_frame_2_frame_table.place(relx=0,rely=0.62,relwidth=1,relheight=0.4)
@@ -326,3 +324,6 @@ def addHome(root):
 
     tree.place(relx=0,rely=0,relwidth=0.97,relheight=1)
     scrollbar.config( command = tree.yview )
+    # root.mainloop()
+    
+# addHome(root)
