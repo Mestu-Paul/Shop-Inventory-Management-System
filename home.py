@@ -2,8 +2,11 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import datetime as dt 
 import tkcalendar as tkcal
+
+
 import item_manage as itmng
 import item_purchase as itmpch
+import check_stock as chkstk
 
 from color_code import *
 # root window
@@ -79,7 +82,9 @@ def purchase_item(root):
     
 
 def check_stock(root):
-	pass
+    print('go to check stock')
+    init_page(root,'Check Stock')
+    chkstk.check_stock(root)    
 
 def demage_stock(root):
 	pass
@@ -169,7 +174,7 @@ def addHome(root):
 
 
     # ============================ left frame 1 ============================
-    middle_frame = tk.Frame(main_frame,bg=color7)
+    middle_frame = tk.Frame(main_frame,bg=light_grey)
     middle_frame.place(relx=0.16,rely=0, relwidth=0.28, relheight=1)
 
     # ----------------------------------------------------------------------#
@@ -183,7 +188,7 @@ def addHome(root):
 
 
     for itm in range(0,len(item_info_list)):
-        middle_frame_lbl_0 = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text=item_info_list[itm])
+        middle_frame_lbl_0 = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text=item_info_list[itm])
         middle_frame_lbl_0.place(x=5,y=(itm+1)*30,relwidth=0.5)    
 
 
@@ -219,55 +224,55 @@ def addHome(root):
     # --------------------------------product info box------------------------------- #
 
     # Item Name (at left_frame1)
-    middle_frame_lbl_item_name = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Item Name :')
+    middle_frame_lbl_item_name = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Item Name :')
     middle_frame_lbl_item_name.place(relx=0.5, y=90, relwidth=0.48, relheight=0.04)
 
     # Item Code (at left_frame1)
-    middle_frame_lbl_item_code = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Item Code :')
+    middle_frame_lbl_item_code = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Item Code :')
     middle_frame_lbl_item_code.place(relx=0.5, y=120, relwidth=0.48, relheight=0.04)
 
     # Item Group (at left_frame1)
-    middle_frame_lbl_item_group = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Item Group :')
+    middle_frame_lbl_item_group = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Item Group :')
     middle_frame_lbl_item_group.place(relx=0.5, y=150, relwidth=0.48, relheight=0.04)
 
     # Company (at left_frame1)
-    middle_frame_lbl_company = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Company :')
+    middle_frame_lbl_company = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Company :')
     middle_frame_lbl_company.place(relx=0.5, y=180, relwidth=0.48, relheight=0.04)
 
     # Shelf No. (at left_frame1)
-    middle_frame_lbl_shelf_no = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Shelf No. :')
+    middle_frame_lbl_shelf_no = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Shelf No. :')
     middle_frame_lbl_shelf_no.place(relx=0.5, y=210, relwidth=0.48, relheight=0.04)
 
     # Available Quantity (at left_frame1)
-    middle_frame_lbl_avl_quantity = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Available Quantity :')
+    middle_frame_lbl_avl_quantity = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Available Quantity :')
     middle_frame_lbl_avl_quantity.place(relx=0.5, y=240, relwidth=0.48, relheight=0.04)
 
     # Price
-    middle_frame_lbl_price = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Price :')
+    middle_frame_lbl_price = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Price :')
     middle_frame_lbl_price.place(relx=0.5, y=330, relwidth=0.48, relheight=0.04)
 
     # Item Total Price (at left_frame1)
-    middle_frame_lbl_total_price = tk.Label(middle_frame,bg=color7, anchor='w', font=('Times New Roman',14), text='Item Total Price :')
+    middle_frame_lbl_total_price = tk.Label(middle_frame,bg=light_grey, anchor='w', font=('Times New Roman',14), text='Item Total Price :')
     middle_frame_lbl_total_price.place(relx=0.5, y=390, relwidth=0.48, relheight=0.04)
 
 
 
     # ============================ left frame 2 ============================ #
-    right_frame = tk.Frame(main_frame,bg=color7)
+    right_frame = tk.Frame(main_frame,bg=light_grey)
     right_frame.place(relx=0.45,rely=0,relwidth=0.545,relheight=1)
 
     purchase_font = 12
     # ---------------------------- customer info frame ----------------------------- #
-    right_frame_customer_info_frame = tk.Frame(right_frame,bg=color7)
+    right_frame_customer_info_frame = tk.Frame(right_frame,bg=light_grey)
     right_frame_customer_info_frame.place(relx=0.01,rely=0.01,relwidth=0.48,relheight=0.6)
 
     # ---------------------------- label --------------------------#
     # search type
-    right_frame_customer_info_frame_lbl_0 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Search by :')
+    right_frame_customer_info_frame_lbl_0 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Search by :')
     right_frame_customer_info_frame_lbl_0.place(relx=0.01, rely=0.01, relwidth=0.4, relheight=0.08)
 
     # search box
-    right_frame_customer_info_frame_lbl_1 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Query :')
+    right_frame_customer_info_frame_lbl_1 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Query :')
     right_frame_customer_info_frame_lbl_1.place(relx=0.01, rely=0.1, relwidth=0.4, relheight=0.08)
 
     # search button
@@ -275,19 +280,19 @@ def addHome(root):
     right_frame_customer_info_frame_btn_search.place(relx=0.25, rely=0.2, relwidth=0.4, relheight=0.08)
 
     # customer name 
-    right_frame_customer_info_frame_lbl_2 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Name :')
+    right_frame_customer_info_frame_lbl_2 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Name :')
     right_frame_customer_info_frame_lbl_2.place(relx=0.01, rely=0.3, relwidth=0.4, relheight=0.08)
 
     # customer pre-balance
-    right_frame_customer_info_frame_lbl_3 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Pre-balance :')
+    right_frame_customer_info_frame_lbl_3 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Pre-balance :')
     right_frame_customer_info_frame_lbl_3.place(relx=0.01, rely=0.4, relwidth=0.4, relheight=0.08)
 
     # customer current balance
-    right_frame_customer_info_frame_lbl_4 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Current-balance :')
+    right_frame_customer_info_frame_lbl_4 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Current-balance :')
     right_frame_customer_info_frame_lbl_4.place(relx=0.01, rely=0.5, relwidth=0.4, relheight=0.08)
 
     # customer contact no
-    right_frame_customer_info_frame_lbl_5 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Contact :')
+    right_frame_customer_info_frame_lbl_5 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Contact :')
     right_frame_customer_info_frame_lbl_5.place(relx=0.01, rely=0.6, relwidth=0.4, relheight=0.08)
     
     payment_button = tk.Button(right_frame_customer_info_frame,text='Payment', bg=color3)
@@ -317,31 +322,31 @@ def addHome(root):
 
 
     # ---------------------------- payment info frame ----------------------------- #
-    right_frame_payment_info_frame = tk.Frame(right_frame,bg=color7)
+    right_frame_payment_info_frame = tk.Frame(right_frame,bg=light_grey)
     right_frame_payment_info_frame.place(relx=0.5,rely=0.01,relwidth=0.49,relheight=0.6)
 
     purchase_info_list = ['Total Item :', 'Total Price :', 'Discount :',
                         'Payable :', 'Total Paid :', 'Change/Due :']
     for i in range(0,len(purchase_info_list)):
-        right_frame_payment_info_frame_lbl = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text=purchase_info_list[i])
+        right_frame_payment_info_frame_lbl = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text=purchase_info_list[i])
         right_frame_payment_info_frame_lbl.place(relx=0.01, rely=0.01+0.1*i, relwidth=0.4, relheight=0.08)     
 
 
 
     # total item 
-    right_frame_payment_info_frame_lbl_1 = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    right_frame_payment_info_frame_lbl_1 = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
     right_frame_payment_info_frame_lbl_1.place(relx=0.42, rely=0.01, relwidth=0.4, relheight=0.08)
 
     # total price
-    right_frame_payment_info_frame_lbl_2 = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Total price :')
+    right_frame_payment_info_frame_lbl_2 = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Total price :')
     right_frame_payment_info_frame_lbl_2.place(relx=0.42, rely=0.1, relwidth=0.4, relheight=0.08)
 
     # discount 
-    right_frame_payment_info_frame_lbl_5 = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    right_frame_payment_info_frame_lbl_5 = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
     right_frame_payment_info_frame_lbl_5.place(relx=0.42, rely=0.2, relwidth=0.4, relheight=0.08)
 
     # Payable
-    right_frame_payment_info_frame_lbl_7 = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    right_frame_payment_info_frame_lbl_7 = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
     right_frame_payment_info_frame_lbl_7.place(relx=0.42, rely=0.3, relwidth=0.4, relheight=0.08)
 
     # total paid
@@ -349,14 +354,14 @@ def addHome(root):
     right_frame_payment_info_frame_total_paid.place(relx=0.42, rely=0.4, relwidth=0.4, relheight=0.08)
 
     # change/due
-    right_frame_payment_info_frame_lbl_10 = tk.Label(right_frame_payment_info_frame,bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
+    right_frame_payment_info_frame_lbl_10 = tk.Label(right_frame_payment_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Total item :')
     right_frame_payment_info_frame_lbl_10.place(relx=0.42, rely=0.5, relwidth=0.4, relheight=0.08)
 
     # =================== frame ====================== #
-    right_frame_payment_info_frame_frame_payment_acount = tk.Frame(right_frame_payment_info_frame,bg=color7)
+    right_frame_payment_info_frame_frame_payment_acount = tk.Frame(right_frame_payment_info_frame,bg=light_grey)
 
     def payment_method_select(event):
-        right_frame_payment_info_frame_frame_payment_acount_lbl_11 = tk.Label(right_frame_payment_info_frame_frame_payment_acount, bg=color7, anchor='w', font=('Times New Roman',purchase_font), text='Payment A/C :')
+        right_frame_payment_info_frame_frame_payment_acount_lbl_11 = tk.Label(right_frame_payment_info_frame_frame_payment_acount, bg=light_grey, anchor='w', font=('Times New Roman',purchase_font), text='Payment A/C :')
         if(payment_method_type.get()=='Cash'):
             right_frame_payment_info_frame_frame_payment_acount.place_forget()
             return
@@ -370,12 +375,12 @@ def addHome(root):
         payment_acount = tk.OptionMenu(right_frame_payment_info_frame_frame_payment_acount, payment_acount_number, *payment_acount_number_list,command=payment_method_select)
         payment_acount.place(relx=0.42, rely=0.5, relwidth=0.4, relheight=0.2)
         default_payment_account = tk.IntVar()
-        tk.Checkbutton(right_frame_payment_info_frame_frame_payment_acount, bg=color7, font=('Times New Roman',purchase_font), text='Set aa default', variable=default_payment_account).place(relx=0.6,rely=0.7)
+        tk.Checkbutton(right_frame_payment_info_frame_frame_payment_acount, bg=light_grey, font=('Times New Roman',purchase_font), text='Set aa default', variable=default_payment_account).place(relx=0.6,rely=0.7)
 
 
     
     # payment method
-    right_frame_customer_info_frame_lbl_6 = tk.Label(right_frame_customer_info_frame,bg=color7, anchor='w', font=('Times New Roman',10), text='Payment method :')
+    right_frame_customer_info_frame_lbl_6 = tk.Label(right_frame_customer_info_frame,bg=light_grey, anchor='w', font=('Times New Roman',10), text='Payment method :')
     right_frame_customer_info_frame_lbl_6.place(relx=0.01, rely=0.8, relwidth=0.4, relheight=0.08)
     payment_method_type = tk.StringVar()
     payment_method_type_list = ['Cash', "Bkash", "Nagad",'Card']
