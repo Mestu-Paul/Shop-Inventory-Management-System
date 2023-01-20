@@ -58,7 +58,7 @@ def getMenubar(root):
         menu=Help_menu
     )
 
-    # add a menu item to the menu
+    # add a menu item to the setting menu
     Setting_menu.add_command(
         label = 'General Setting',
         command = General_Setting
@@ -67,10 +67,64 @@ def getMenubar(root):
         label = 'Email Setting',
         command = Email_Setting
     )
+    
+    # add menu item to the Accounting_menu
+    Accounting_menu.add_command(
+	label = 'Manage Account',
+	command = manage_account
+    )
+
+    Accounting_menu.add_command(
+        label = 'Transaction Entry',
+        command = transaction_entry
+    )
+
+    Accounting_menu.add_command(
+        label = 'Bank Transaction Entry',
+        command = bank_transaction_entry
+    )
+
+    Accounting_menu.add_command(
+        label = 'Transaction Report',
+        command = transaction_report
+    )
+
+    Accounting_menu.add_command(
+        label = 'Account Ladger',
+        command = account_ladger
+    )
+
+    Accounting_menu.add_command(
+        label = 'Summary Sheet',
+        command = summary_sheet
+    )
+
+
     return menubar
 
+# ------------- setting command ------------- #
 def General_Setting():
     print("General setting")
 
 def Email_Setting():
     print("Email setting")
+    
+# ------------- accounting command ------------- #
+def manage_account():
+	print('Manage Account')
+
+def transaction_entry():
+	print('Transaction Entry')
+
+def bank_transaction_entry():
+	print('Bank Transaction Entry')
+
+def transaction_report():
+	print('Transaction Report')
+
+def account_ladger():
+	print('Account Ladger')
+
+def summary_sheet():
+	print('Summary Sheet')
+
