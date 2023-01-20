@@ -1,6 +1,12 @@
 -------Menuber------
 Tasks
 Accounting
+    Manage A/C
+    Transaction Entry
+    Bank Transaction Entry
+    Transaction Report
+    Account Ladger
+    Summary Sheet
 Database
 Setting
     General Setting
@@ -46,3 +52,26 @@ Discount
 Payable
 Total Paid
 Change/Due
+
+--------- Accounting -------
+Openning Date
+A/C number
+A/C name
+A/C category
+Current balance
+A/C area
+Contact number
+Address
+
+--------- Accounting search type -------
+A/C Number
+A/C Name
+A/C Category
+A/C Area
+Contact Number
+All Due Customer
+All Owe Customer
+All Due Supplier
+All Owe Supplier
+Due Today
+All Overdue

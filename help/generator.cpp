@@ -16,10 +16,9 @@ int main(){
     string s;
     vector<string>vs;
     int i=0,j=30;
+    cout<<"[";
     while(getline(cin,s)){
-        cout<<"left_frame_entry"<<Replace(s,' ','_')<<" = tk.Entry(left_frame)"<<endl;
-        cout<<"left_frame_entry"<<Replace(s,' ','_')<<".place(relx=0.48,rely="<<0.01+i*0.08<<",relwidth=0.5,relheight=0.06)"<<endl;
-        i++;
-        cout<<endl;
+        cout<<"'"<<s<<"',";
     }
+    cout<<"]"<<endl;
 }

@@ -3,133 +3,150 @@ from PIL import ImageTk, Image
 import tkcalendar as tkcal
 # from datetime import date
 import datetime as dt 
-from home import *
+import color_code as color
+# from home import *
 
 # root window
 root = tk.Tk()
 root.title('Shopping Inventory Management System')
 root.geometry('1100x650+10+10')
 
-# color code 
-left_bg = '#e1e1e1'
-left_fg = left_bg
-left_btn_bg = '#3bbd75'
-right_bg = left_bg
-right_fg = left_fg
+def close_user_panel(root):
+    root.quit()
+    
+def back_home(main_frame):
+    print("back home")
+    main_frame.place_forget()
+def user_accessibility_manager(accessibility_frame):
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Product manage',bg=color.color3,anchor='w')
+    accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
+    
+def user_accessibility_admin(accessibility_frame):
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='User manage',bg=color.color3,anchor='w')
+    accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
+    user_accessibility_manager(accessibility_frame)
+    
+def user_accessibility_owner(accessibility_frame):
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Shop basic info',bg=color.color3,anchor='w')
+    accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
+    user_accessibility_admin(accessibility_frame)
+    
 
-init_page(root,'Item Manage')
+    
+def basic_info_setting():
+    print('i am here user panal')
+    
+    # =================== main frame ========================= #
+    main_frame = tk.Frame(root,bg='white')
+    main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
+    
+    # =================== top frame ========================= #
+    top_frame = tk.Frame(main_frame,bg=color.light_grey)
+    top_frame.place(relx=0,rely=0,relwidth=1, relheight=0.3)
+    
+    # ----------------------- label --------------------- #
+    user_info_list = ['Username :','Password :','Full Name :']
+    for i in range(0,len(user_info_list)):
+        top_frame_lbl = tk.Label(top_frame,text=user_info_list[i], bg=color.light_grey, font=('Times New Roman',14), anchor='w')
+        top_frame_lbl.place(relx=0.02, rely=0.1+(0.2)*i, relwidth=0.09, relheight=0.15)
+    
+    # # ---------------------- user info input ------------ #
+    top_frame_entry_user_name = tk.Entry(top_frame)
+    top_frame_entry_user_name.place(relx=0.12,rely=0.1,relwidth=0.12,relheight=0.15)
 
-item_info_list = ['Item Name :', 'Item Code :','Item Group :', 'Company :',
-                  'Shelf No. :', 'Quantity :','Sale Price :','Purchase Price :']
-# =================== frame ========================= #
-left_frame = tk.Frame(root,bg=left_bg)
-left_frame.place(relx=0.005,rely=0.172,relwidth=0.25, relheight=0.75)
+    top_frame_entry_password = tk.Entry(top_frame)
+    top_frame_entry_password.place(relx=0.12,rely=0.3,relwidth=0.12,relheight=0.15)
 
-# ----------------------- label --------------------- #
+    top_frame_entry_user_fullname = tk.Entry(top_frame)
+    top_frame_entry_user_fullname.place(relx=0.12,rely=0.5,relwidth=0.12,relheight=0.15)
+    
+    # =================== access frame ========================= #
+    top_frame_user_access_frame = tk.LabelFrame(top_frame,text='User accessibility')
+    top_frame_user_access_frame.place(relx=0.35,rely=0.3,relwidth=0.12,relheight=0.7)
+    def user_accessibility(event):
+        for child in top_frame_user_access_frame.winfo_children():
+            child.destroy()
+        print(user_type.get())
+        if(user_type.get()=='Owner'):
+            user_accessibility_owner(top_frame_user_access_frame)
+        elif(user_type.get()=='Admin'):
+            user_accessibility_admin(top_frame_user_access_frame)
+        else:
+            user_accessibility_manager(top_frame_user_access_frame)
+            
+    top_frame_lbl = tk.Label(top_frame,text='User role: ', bg=color.light_grey, font=('Times New Roman',14), anchor='w')
+    top_frame_lbl.place(relx=0.26, rely=0.1, relwidth=0.09, relheight=0.15)
+    
+    user_type = tk.StringVar()
+    user_type_list = ['Owner','Admin','Manager']
+    user_type.set('Manager')
+    top_frame_entry_user_type = tk.OptionMenu(top_frame,user_type,*user_type_list,command=user_accessibility)
+    top_frame_entry_user_type.config(font=('Times New Roma',12))
+    top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
 
-for i in range(0,len(item_info_list)):
-    left_frame_lbl_0 = tk.Label(left_frame,text=item_info_list[i], bg=left_fg, font=('Times New Roman',14), anchor='w')
-    left_frame_lbl_0.place(relx=0.02, rely=0.01+(0.08)*i, relwidth=0.45, relheight=0.06)
+    # user add button
+    top_frame_add_user_btn = tk.Button(top_frame,text='Add',bg=color.color3,fg=color.color4,font=('Times New Roma',12))
+    top_frame_add_user_btn.place(relx=0.02,rely=0.75,relwidth=0.09,height=30)
+    
+    # user update button
+    top_frame_update_user_btn = tk.Button(top_frame,text='Update',bg=color.color3,fg=color.color4,font=('Times New Roma',12))
+    top_frame_update_user_btn.place(relx=0.13,rely=0.75,relwidth=0.09,height=30)
+    
+    # user delete button 
+    top_frame_delete_user_btn = tk.Button(top_frame,text='Delete',bg=color.red,fg=color.color2,font=('Times New Roma',12))
+    top_frame_delete_user_btn.place(relx=0.24,rely=0.75,relwidth=0.09,height=30)
+    
+    # search type
+    top_frame_search_lbl = tk.Label(top_frame,bg=color.light_grey, anchor='w', font=('Times New Roman',12), text='Search by :')
+    top_frame_search_lbl.place(relx=0.51, rely=0.1, relwidth=0.09, relheight=0.15)
 
-# left_frame_entry_item_name = tk.Entry(left_frame)
-# left_frame_entry_item_name.place(relx=0.48,rely=0.01,relwidth=0.5,relheight=0.06)
+    user_search_type = tk.StringVar()
+    search_type_list = ['User name','User role']
+    user_search_type.set(search_type_list[0]) # default value
+    search_type = tk.OptionMenu(top_frame, user_search_type, *search_type_list)
+    search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
 
-left_frame_entry_item_name = tk.Entry(left_frame)
-left_frame_entry_item_name.place(relx=0.48,rely=0.01,relwidth=0.5,relheight=0.06)
+    # search box
+    top_frame_lbl_1 = tk.Label(top_frame,bg=color.light_grey, anchor='w', font=('Times New Roman',12), text='Query :')
+    top_frame_lbl_1.place(relx=0.51, rely=0.3, relwidth=0.09, relheight=0.15)
 
-left_frame_entry_item_code = tk.Entry(left_frame)
-left_frame_entry_item_code.place(relx=0.48,rely=0.09,relwidth=0.5,relheight=0.06)
+    query = tk.Entry(top_frame)
+    query.place(relx=0.61, rely=0.3, relwidth=0.1, relheight=0.15)
 
-left_frame_entry_item_group = tk.Entry(left_frame)
-left_frame_entry_item_group.place(relx=0.48,rely=0.17,relwidth=0.5,relheight=0.06)
+    # search button
+    top_frame_search_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Search')
+    top_frame_search_btn.place(relx=0.55, rely=0.75, relwidth=0.09, height=30)
+    
+    # refresh button
+    top_frame_refresh_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Refresh')
+    top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
+    
+    # close button
+    top_frame_close_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Close', command=lambda:close_user_panel(root))
+    top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
+    
+        
+    # =================== bottom frame ========================= #
+    bottom_frame = tk.Frame(main_frame,bg=color.light_grey)
+    bottom_frame.place(relx=0,rely=0.31,relwidth=1,relheight=.69)
+    
+    # scroll bar
+    scrollbar = tk.Scrollbar(bottom_frame)
 
-left_frame_entry_company = tk.Entry(left_frame)
-left_frame_entry_company.place(relx=0.48,rely=0.25,relwidth=0.5,relheight=0.06)
+    # # treeview
+    tree = tk.ttk.Treeview(bottom_frame, column=("c1", "c2", "c3"), show='headings', yscrollcommand=scrollbar.set)
+    # # tree.column("# 1", anchor=tk.CENTER)
+    # # tree.heading("# 1", text="ID")
+    # # tree.column("# 2", anchor=tk.CENTER)
+    # # tree.heading("# 2", text="Company")
+    # # tree.column("# 3", anchor=tk.CENTER)
+    # # tree.heading("# 3", text="Company1")
 
-left_frame_entry_shelf_no = tk.Entry(left_frame)
-left_frame_entry_shelf_no.place(relx=0.48,rely=0.33,relwidth=0.5,relheight=0.06)
+    # # Insert the data in Treeview widget
+    # # tree.insert('', 'end', values=('1', 'Honda', "hello"))
 
-left_frame_entry_quantity = tk.Entry(left_frame)
-left_frame_entry_quantity.place(relx=0.48,rely=0.41,relwidth=0.5,relheight=0.06)
-
-left_frame_entry_sale_price = tk.Entry(left_frame)
-left_frame_entry_sale_price.place(relx=0.48,rely=0.49,relwidth=0.5,relheight=0.06)
-
-left_frame_entry_purchase_price = tk.Entry(left_frame)
-left_frame_entry_purchase_price.place(relx=0.48,rely=0.57,relwidth=0.5,relheight=0.06)
-
-
-
-# update button
-left_frame_btn_update = tk.Button(left_frame,text='Update', font=('Times New Roma',14), bg=left_btn_bg)
-left_frame_btn_update.place(relx=0.02,rely=0.8,relwidth=0.4)
-
-# add button
-left_frame_btn_update = tk.Button(left_frame,text='Add Item', font=('Times New Roma',14), bg=left_btn_bg)
-left_frame_btn_update.place(relx=0.54,rely=0.8,relwidth=0.4)
-
-# delete button
-left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg='#dd0000', fg='#ffffff')
-left_frame_btn_update.place(relx=0.26,rely=0.9,relwidth=0.45)
-
-# =================== frame ========================= #
-right_frame = tk.Frame(root,bg=right_bg)
-right_frame.place(relx=0.26,rely=0.172,relwidth=0.738, relheight=0.75)
-
-right_frame_table_caption_lbl = tk.Label(right_frame,text='Item Table', font=('Times New Roma',16,'bold'),bg=right_bg)
-right_frame_table_caption_lbl.place(relx=0.4,relwidth=0.2,relheight=0.06)
-
-# ---------------------------- scroll table frame ----------------------------- #
-right_frame_table_frame = tk.Frame(right_frame,bg=right_bg)
-right_frame_table_frame.place(relx=0,rely=0.07,relwidth=1,relheight=0.7)
-
-right_frame_lbl_1 = tk.Label(right_frame,text='Search By: ',bg=right_bg,anchor='w',font=('Times New Roma',12))
-right_frame_lbl_1.place(relx=0.01,rely=0.8,relwidth=0.12)
-
-product_search_type = tk.StringVar()
-search_type_list = ['name', "code", "company",'group']
-product_search_type.set(search_type_list[0]) # default value
-search_type = tk.OptionMenu(right_frame, product_search_type, *search_type_list)
-search_type.config(font=('Times New Roma',12))
-search_type.place(relx=0.14, rely=0.8, relwidth=0.18,relheight=0.06)
-
-right_frame_lbl_2 = tk.Label(right_frame,text='Query: ',bg=right_bg,anchor='w',font=('Times New Roma',12))
-right_frame_lbl_2.place(relx=0.01,rely=0.87,relwidth=0.12)
-
-right_frame_entry_query = tk.Entry(right_frame)
-right_frame_entry_query.place(relx=0.14,rely=0.87,relwidth=0.18,relheight=0.05)
-
-# search button
-right_frame_btn_search = tk.Button(right_frame,text='Search',bg=left_btn_bg,font=('Times New Roman',12,'bold'))
-right_frame_btn_search.place(relx=0.1,rely=0.94,relwidth=0.1,relheight=0.05)
-
-# preview button
-right_frame_btn_privew = tk.Button(right_frame,text='Preview',bg=left_btn_bg,font=('Times New Roman',14,'bold'))
-right_frame_btn_privew.place(relx=0.4,rely=0.85,relwidth=0.11,relheight=0.06)
-
-# back button
-right_frame_btn_back = tk.Button(right_frame,text='Back',bg=left_btn_bg,font=('Times New Roman',14,'bold'))
-right_frame_btn_back.place(relx=0.8,rely=0.85,relwidth=0.11,relheight=0.06)
-
-# scroll bar
-scrollbar = tk.Scrollbar(right_frame_table_frame)
-
-# # treeview
-tree = tk.ttk.Treeview(right_frame_table_frame, column=("c1", "c2", "c3"), show='headings', yscrollcommand=scrollbar.set)
-# # tree.column("# 1", anchor=tk.CENTER)
-# # tree.heading("# 1", text="ID")
-# # tree.column("# 2", anchor=tk.CENTER)
-# # tree.heading("# 2", text="Company")
-# # tree.column("# 3", anchor=tk.CENTER)
-# # tree.heading("# 3", text="Company1")
-
-# # Insert the data in Treeview widget
-# # tree.insert('', 'end', values=('1', 'Honda', "hello"))
-
-tree.place(relx=0,rely=0,relwidth=0.97,relheight=1)
-scrollbar.place(relx=0.97,rely=0,relwidth=0.03,relheight=1)
-scrollbar.config( command = tree.yview )
-
-# ----------------------- label --------------------- #
-
+    tree.place(relx=0.003,rely=0,relwidth=0.97,relheight=1)
+    scrollbar.place(relx=0.97,rely=0,relwidth=0.03,relheight=1)
+    scrollbar.config( command = tree.yview )
+basic_info_setting()
 root.mainloop()

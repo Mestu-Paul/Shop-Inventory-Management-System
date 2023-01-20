@@ -1,8 +1,11 @@
- Item Name
- Item Code
- Item Group
- Company
- Shelf No
- Quantity
- Sale Price
- Purchase Price
+A/C Number
+A/C Name
+A/C Category
+A/C Area
+Contact Number
+All Due Customer
+All Owe Customer
+All Due Supplier
+All Owe Supplier
+Due Today
+All Overdue

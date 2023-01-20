@@ -3,6 +3,8 @@ from tkinter import Menu
 
 import manage_bank_account as mngbnkac
 import basic_info_setting as bscinf
+import user_panal as upanel
+from home import addHome
 
 def getMenubar(root):
     # create a menubar
@@ -18,19 +20,18 @@ def getMenubar(root):
 
 
     # create a menu
-    Tasks_menu = Menu(menubar)
-    Accounting_menu = Menu(menubar)
+    File_menu = Menu(menubar)
+    Accounting_menu = Menu(menubar) # ,tearoff=0
     Database_menu = Menu(menubar)
     Setting_menu = Menu(menubar)
-    User_menu = Menu(menubar)
-    Panel_menu = Menu(menubar)
+    User_panel_menu = Menu(menubar)
     Email_SMS_menu = Menu(menubar)
     Help_menu = Menu(menubar)
 
     # add the File menu to the menubar
     menubar.add_cascade(
-        label="Tasks",
-        menu=Tasks_menu
+        label="File",
+        menu=File_menu
     )
     menubar.add_cascade(
         label="Accounting",
@@ -45,12 +46,8 @@ def getMenubar(root):
         menu=Setting_menu
     )
     menubar.add_cascade(
-        label="User",
-        menu=User_menu
-    )
-    menubar.add_cascade(
-        label="Panel",
-        menu=Panel_menu
+        label="User Panel",
+        menu=User_panel_menu
     )
     menubar.add_cascade(
         label="Email & SMS",
@@ -73,8 +70,8 @@ def getMenubar(root):
     
     # add menu item to the Accounting_menu
     Accounting_menu.add_command(
-	label = 'Manage Account',
-	command = lambda:manage_account(root)
+        label = 'Manage Account',
+        command = lambda:manage_account(root)
     )
 
     Accounting_menu.add_command(
@@ -102,8 +99,24 @@ def getMenubar(root):
         command = summary_sheet
     )
 
+    # add menu item to user panel
+    User_panel_menu.add_command(
+        label='Manage User',
+        command=lambda:user_panel(root)
+    )
+    
+    # add menu item to file menu
+    File_menu.add_command(
+        label='Home',
+        command=lambda:addHome(root)
+    )
 
     return menubar
+
+def user_panel(root):
+    print("user")
+    upanel.user_panel(root)
+    
 
 # ------------- setting command ------------- #
 def General_Setting(root):
