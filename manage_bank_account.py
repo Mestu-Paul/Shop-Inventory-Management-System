@@ -7,6 +7,7 @@ def back_home(main_frame):
     main_frame.place_forget()
 
 def manage_bank_account(root):
+    init_page(root,'Manage Account')
     # item manage main frame
     main_frame = tk.Frame(root,bg='white')
     main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)

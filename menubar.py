@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Menu
 
 import manage_bank_account as mngbnkac
+import basic_info_setting as bscinf
 
 def getMenubar(root):
     # create a menubar
@@ -63,7 +64,7 @@ def getMenubar(root):
     # add a menu item to the setting menu
     Setting_menu.add_command(
         label = 'General Setting',
-        command = General_Setting
+        command = lambda: General_Setting(root)
     )
     Setting_menu.add_command(
         label = 'Email Setting',
@@ -105,8 +106,9 @@ def getMenubar(root):
     return menubar
 
 # ------------- setting command ------------- #
-def General_Setting():
-    print("General setting")
+def General_Setting(root):
+    print("Basic info")
+    bscinf.basic_info_setting(root)
 
 def Email_Setting():
     print("Email setting")
