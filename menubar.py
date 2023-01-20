@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import Menu
 
+import manage_bank_account as mngbnkac
+
 def getMenubar(root):
     # create a menubar
     menubar = Menu(root)
@@ -71,7 +73,7 @@ def getMenubar(root):
     # add menu item to the Accounting_menu
     Accounting_menu.add_command(
 	label = 'Manage Account',
-	command = manage_account
+	command = lambda:manage_account(root)
     )
 
     Accounting_menu.add_command(
@@ -110,8 +112,9 @@ def Email_Setting():
     print("Email setting")
     
 # ------------- accounting command ------------- #
-def manage_account():
-	print('Manage Account')
+def manage_account(root):
+    print('Manage Account')
+    mngbnkac.manage_bank_account(root)
 
 def transaction_entry():
 	print('Transaction Entry')
