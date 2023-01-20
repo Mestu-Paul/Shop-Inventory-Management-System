@@ -76,10 +76,13 @@ def manage_bank_account(root):
     top_frame_search_lbl = tk.Label(top_frame,bg=light_grey, anchor='w', font=('Times New Roman',12), text='Search by :')
     top_frame_search_lbl.place(relx=0.01, rely=0.08, relwidth=0.12, relheight=0.1)
 
-    product_search_type = tk.StringVar()
-    search_type_list = ['name', "code", "company",'group']
-    product_search_type.set(search_type_list[0]) # default value
-    search_type = tk.OptionMenu(top_frame, product_search_type, *search_type_list)
+    account_search_type = tk.StringVar()
+    search_type_list = ['A/C Number','A/C Name','A/C Category','A/C Area',
+                        'Contact Number','All Due Customer','All Owe Customer',
+                        'All Due Supplier','All Owe Supplier','Due Today','All Overdue',]
+
+    account_search_type.set(search_type_list[0]) # default value
+    search_type = tk.OptionMenu(top_frame, account_search_type, *search_type_list)
     search_type.place(relx=0.12, rely=0.08, relwidth=0.15, relheight=0.14)
 
     # search box
@@ -92,6 +95,33 @@ def manage_bank_account(root):
     # search button
     top_frame_search_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Search')
     top_frame_search_btn.place(relx=0.05, rely=0.42, relwidth=0.1, relheight=0.12)
+    
+    # sort type
+    top_frame_sort_lbl = tk.Label(top_frame,bg=light_grey, anchor='w', font=('Times New Roman',12), text='Sort on :')
+    top_frame_sort_lbl.place(relx=0.35, rely=0.08, relwidth=0.12, relheight=0.1)
+
+    sort_type = tk.StringVar()
+    search_type_list = ['A/C Number','A/C Name','A/C Category','Due Customer',
+                        'Owe Customer','Due Supplier','Owe Supplier']
+
+    sort_type.set(search_type_list[0]) # default value
+    search_type = tk.OptionMenu(top_frame, sort_type, *search_type_list)
+    search_type.place(relx=0.46, rely=0.08, relwidth=0.15, relheight=0.14)
+
+    # sort by
+    top_frame_lbl_1 = tk.Label(top_frame,bg=light_grey, anchor='w', font=('Times New Roman',12), text='Sort by :')
+    top_frame_lbl_1.place(relx=0.35, rely=0.25, relwidth=0.12, relheight=0.1)
+
+    sort_by = tk.StringVar()
+    sort_by.set('Increasing') # default value
+    sort_by = tk.OptionMenu(top_frame, sort_by, ['Increasing','Decreasing'])
+    sort_by.place(relx=0.46, rely=0.27, relwidth=0.15, relheight=0.12)
+    # query = tk.Entry(top_frame)
+    # query.place(relx=0.61, rely=0.27, relwidth=0.15, relheight=0.12)
+
+    # sort button
+    top_frame_search_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Sort')
+    top_frame_search_btn.place(relx=0.39, rely=0.42, relwidth=0.1, relheight=0.12)
 
     top_frame_refresh_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Refresh')
     top_frame_refresh_btn.place(relx=0.8, rely=0.15, relwidth=0.1, relheight=0.14)
