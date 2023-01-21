@@ -61,7 +61,7 @@ def item_manage(root):
     left_frame_btn_update.place(relx=0.54,rely=0.8,relwidth=0.4)
 
     # delete button
-    left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg=color.red, fg=color.color3)
+    left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg=color.red, fg=color.color2)
     left_frame_btn_update.place(relx=0.26,rely=0.9,relwidth=0.45)
 
     # =================== frame ========================= #
