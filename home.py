@@ -4,11 +4,13 @@ import datetime as dt
 import tkcalendar as tkcal
 
 
-import item_manage as itmng
-import item_purchase as itmpch
-import check_stock as chkstk
-import check_demage_stock as chkdmgstk
-import sales_report as slrprt
+import item_manage as _item_manage
+import item_purchase as _item_purchase
+import check_stock as _check_stock
+import check_demage_stock as _check_demage_stock
+import sales_report as _sales_report
+import item_sales_report as _item_sales_report
+
 
 from color_code import *
 # root window
@@ -75,23 +77,23 @@ def init_page(root,page_name):
 def manage_item(root):
     print("go to manage item")
     init_page(root,'Manage Item')
-    itmng.item_manage(root)
+    _item_manage.item_manage(root)
 
 def purchase_item(root):
     print('go to purchase item')
     init_page(root,'Purchase Item')
-    itmpch.item_purchase(root)
+    _item_purchase.item_purchase(root)
     
 
 def check_stock(root):
     print('go to check stock')
     init_page(root,'Check Stock Item')
-    chkstk.check_stock(root)    
+    _check_stock.check_stock(root)    
 
 def check_demage_stock(root):
     print('go to demage check')
     init_page(root,'Deamge Stock Item')
-    chkdmgstk.check_demage_stock(root)
+    _check_demage_stock.check_demage_stock(root)
 
 def purchase_report(root):
 	pass
@@ -99,10 +101,13 @@ def purchase_report(root):
 def sales_report(root):
     print('go to sales report')
     init_page(root,'Sales Report')
-    slrprt.sales_report(root)
+    _sales_report.sales_report(root)
 
 def item_sales_report(root):
-	pass
+    print('go to demage check')
+    init_page(root,'Item-Sales Report')
+    _item_sales_report.item_sales_report(root)
+
 
 def expenditure(root):
 	pass
