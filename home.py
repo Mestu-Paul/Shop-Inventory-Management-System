@@ -7,6 +7,7 @@ import tkcalendar as tkcal
 import item_manage as itmng
 import item_purchase as itmpch
 import check_stock as chkstk
+import check_demage_stock as chkdmgstk
 
 from color_code import *
 # root window
@@ -83,11 +84,13 @@ def purchase_item(root):
 
 def check_stock(root):
     print('go to check stock')
-    init_page(root,'Check Stock')
+    init_page(root,'Check Stock Item')
     chkstk.check_stock(root)    
 
-def demage_stock(root):
-	pass
+def check_demage_stock(root):
+    print('go to demage check')
+    init_page(root,'Deamge Stock Item')
+    chkdmgstk.check_demage_stock(root)
 
 def purchase_report(root):
 	pass
@@ -136,7 +139,7 @@ def addHome(root):
     left_frame_btn_check_stock = tk.Button(left_frame,text='Check Stock', fg=color4, bg=color6, font=('Times New Roman1',10),command=lambda:check_stock(root))
     left_frame_btn_check_stock.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
-    left_frame_btn_demage_stock = tk.Button(left_frame,text='Demage Stock', fg=color4, bg=color6, font=('Times New Roman1',10),command=lambda:demage_stock(root))
+    left_frame_btn_demage_stock = tk.Button(left_frame,text='Demage Stock', fg=color4, bg=color6, font=('Times New Roman1',10),command=lambda:check_demage_stock(root))
     left_frame_btn_demage_stock.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
 
     left_frame_btn_purchase_report = tk.Button(left_frame,text='Purchase Report', fg=color4, bg=color6, font=('Times New Roman1',10),command=lambda:purchase_report(root))
