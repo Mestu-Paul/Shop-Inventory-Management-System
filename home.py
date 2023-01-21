@@ -11,6 +11,7 @@ import check_demage_stock as _check_demage_stock
 import sales_report as _sales_report
 import item_sales_report as _item_sales_report
 import purchase_report as _purchase_report
+import expenditure_report as _expenditure_report
 
 
 from color_code import *
@@ -116,7 +117,9 @@ def expenditure(root):
 	print('go to expenditure')
 
 def expenditure_report(root):
-	print('go to expenditure report')
+    print('go to expenditure report')
+    init_page(root,'Expenditure Report')
+    _expenditure_report.expenditure_report(root)
 
 def staff_manager(root):
 	print('go to staff_manager')
