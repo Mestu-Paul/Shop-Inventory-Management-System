@@ -8,6 +8,7 @@ import item_manage as itmng
 import item_purchase as itmpch
 import check_stock as chkstk
 import check_demage_stock as chkdmgstk
+import sales_report as slrprt
 
 from color_code import *
 # root window
@@ -96,7 +97,9 @@ def purchase_report(root):
 	pass
 
 def sales_report(root):
-	pass
+    print('go to sales report')
+    init_page(root,'Sales Report')
+    slrprt.sales_report(root)
 
 def item_sales_report(root):
 	pass
