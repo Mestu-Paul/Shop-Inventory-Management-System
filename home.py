@@ -10,6 +10,7 @@ import check_stock as _check_stock
 import check_demage_stock as _check_demage_stock
 import sales_report as _sales_report
 import item_sales_report as _item_sales_report
+import purchase_report as _purchase_report
 
 
 from color_code import *
@@ -96,7 +97,9 @@ def check_demage_stock(root):
     _check_demage_stock.check_demage_stock(root)
 
 def purchase_report(root):
-	pass
+    print('go to purchase report')
+    init_page(root,'Purchase report')
+    _purchase_report.purchase_report(root)
 
 def sales_report(root):
     print('go to sales report')
@@ -110,16 +113,16 @@ def item_sales_report(root):
 
 
 def expenditure(root):
-	pass
+	print('go to expenditure')
 
 def expenditure_report(root):
-	pass
+	print('go to expenditure report')
 
 def staff_manager(root):
-	pass
+	print('go to staff_manager')
 
 def contact_book(root):
-	pass
+	print('go to contact_book')
 
 def refresh(root):
     print('refresh home')
