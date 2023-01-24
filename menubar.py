@@ -45,9 +45,9 @@ def getMenubar(root):
         label="Setting",
         menu=Setting_menu
     )
-    menubar.add_cascade(
+    menubar.add_command(
         label="User Panel",
-        menu=User_panel_menu
+        command=lambda:user_panel(root)
     )
     menubar.add_cascade(
         label="Email & SMS",
