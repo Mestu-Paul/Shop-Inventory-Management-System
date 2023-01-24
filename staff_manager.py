@@ -15,7 +15,7 @@ def stuff_payment(main_frame):
 def payment_report(main_frame):
     pass
 def staff_manager(root):
-    main_frame = tk.Frame(root,bg=color.color2)
+    main_frame = tk.Frame(root,bg=color.color_list[1])
     main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
     staff_menu = tk.Menu(main_frame)
     main_frame.config(menu=staff_menu)

@@ -7,16 +7,16 @@ def back_home(main_frame):
     print("back home")
     main_frame.place_forget()
 def user_accessibility_manager(accessibility_frame):
-    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Product manage',bg=color.color3,anchor='w')
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Product manage',bg=color.color_list[2],anchor='w')
     accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
     
 def user_accessibility_admin(accessibility_frame):
-    accessibility_frame_lbl = tk.Label(accessibility_frame,text='User manage',bg=color.color3,anchor='w')
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='User manage',bg=color.color_list[2],anchor='w')
     accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
     user_accessibility_manager(accessibility_frame)
     
 def user_accessibility_owner(accessibility_frame):
-    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Shop basic info',bg=color.color3,anchor='w')
+    accessibility_frame_lbl = tk.Label(accessibility_frame,text='Shop basic info',bg=color.color_list[2],anchor='w')
     accessibility_frame_lbl.pack(side=tk.TOP,fill=tk.X,padx=5,pady=2)
     user_accessibility_admin(accessibility_frame)
     
@@ -31,13 +31,13 @@ def user_panel(root):
     main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
     
     # =================== top frame ========================= #
-    top_frame = tk.Frame(main_frame,bg=color.light_grey)
+    top_frame = tk.Frame(main_frame,bg=color.color_list[7])
     top_frame.place(relx=0,rely=0,relwidth=1, relheight=0.3)
     
     # ----------------------- label --------------------- #
     user_info_list = ['Username :','Password :','Full Name :']
     for i in range(0,len(user_info_list)):
-        top_frame_lbl = tk.Label(top_frame,text=user_info_list[i], bg=color.light_grey, font=('Times New Roman',14), anchor='w')
+        top_frame_lbl = tk.Label(top_frame,text=user_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w')
         top_frame_lbl.place(relx=0.02, rely=0.1+(0.2)*i, relwidth=0.09, relheight=0.15)
     
     # # ---------------------- user info input ------------ #
@@ -64,7 +64,7 @@ def user_panel(root):
         else:
             user_accessibility_manager(top_frame_user_access_frame)
             
-    top_frame_lbl = tk.Label(top_frame,text='User role: ', bg=color.light_grey, font=('Times New Roman',14), anchor='w')
+    top_frame_lbl = tk.Label(top_frame,text='User role: ', bg=color.color_list[7], font=('Times New Roman',14), anchor='w')
     top_frame_lbl.place(relx=0.26, rely=0.1, relwidth=0.09, relheight=0.15)
     
     user_type = tk.StringVar()
@@ -75,19 +75,19 @@ def user_panel(root):
     top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
 
     # user add button
-    top_frame_add_user_btn = tk.Button(top_frame,text='Add',bg=color.color3,fg=color.color4,font=('Times New Roma',12))
+    top_frame_add_user_btn = tk.Button(top_frame,text='Add',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12))
     top_frame_add_user_btn.place(relx=0.02,rely=0.75,relwidth=0.09,height=30)
     
     # user update button
-    top_frame_update_user_btn = tk.Button(top_frame,text='Update',bg=color.color3,fg=color.color4,font=('Times New Roma',12))
+    top_frame_update_user_btn = tk.Button(top_frame,text='Update',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12))
     top_frame_update_user_btn.place(relx=0.13,rely=0.75,relwidth=0.09,height=30)
     
     # user delete button 
-    top_frame_delete_user_btn = tk.Button(top_frame,text='Delete',bg=color.red,fg=color.color2,font=('Times New Roma',12))
+    top_frame_delete_user_btn = tk.Button(top_frame,text='Delete',bg=color.color_list[6],fg=color.color_list[1],font=('Times New Roma',12))
     top_frame_delete_user_btn.place(relx=0.24,rely=0.75,relwidth=0.09,height=30)
     
     # search type
-    top_frame_search_lbl = tk.Label(top_frame,bg=color.light_grey, anchor='w', font=('Times New Roman',12), text='Search by :')
+    top_frame_search_lbl = tk.Label(top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Search by :')
     top_frame_search_lbl.place(relx=0.51, rely=0.1, relwidth=0.09, relheight=0.15)
 
     user_search_type = tk.StringVar()
@@ -97,27 +97,27 @@ def user_panel(root):
     search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
 
     # search box
-    top_frame_lbl_1 = tk.Label(top_frame,bg=color.light_grey, anchor='w', font=('Times New Roman',12), text='Query :')
+    top_frame_lbl_1 = tk.Label(top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Query :')
     top_frame_lbl_1.place(relx=0.51, rely=0.3, relwidth=0.09, relheight=0.15)
 
     query = tk.Entry(top_frame)
     query.place(relx=0.61, rely=0.3, relwidth=0.1, relheight=0.15)
 
     # search button
-    top_frame_search_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Search')
+    top_frame_search_btn = tk.Button(top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search')
     top_frame_search_btn.place(relx=0.55, rely=0.75, relwidth=0.09, height=30)
     
     # refresh button
-    top_frame_refresh_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Refresh')
+    top_frame_refresh_btn = tk.Button(top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh')
     top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
     
     # close button
-    top_frame_close_btn = tk.Button(top_frame,fg=color.color4, bg=color.color3, font=('Times New Roman',12), text='Back', command=lambda:back_home(main_frame))
+    top_frame_close_btn = tk.Button(top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:back_home(main_frame))
     top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
     
         
     # =================== bottom frame ========================= #
-    bottom_frame = tk.Frame(main_frame,bg=color.light_grey)
+    bottom_frame = tk.Frame(main_frame,bg=color.color_list[7])
     bottom_frame.place(relx=0,rely=0.31,relwidth=1,relheight=.69)
     
     # scroll bar

@@ -17,12 +17,12 @@ def item_manage(root):
                     'Shelf No. :', 'Quantity :','Sale Price :','Purchase Price :']
     
     # =================== frame ========================= #
-    left_frame = tk.Frame(main_frame,bg=color.light_grey)
+    left_frame = tk.Frame(main_frame,bg=color.color_list[7])
     left_frame.place(relx=0.005,rely=0,relwidth=0.25, relheight=1)
 
     # ----------------------- label --------------------- #
     for i in range(0,len(item_info_list)):
-        left_frame_lbl_0 = tk.Label(left_frame,text=item_info_list[i], bg=color.light_grey, font=('Times New Roman',14), anchor='w')
+        left_frame_lbl_0 = tk.Label(left_frame,text=item_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w')
         left_frame_lbl_0.place(relx=0.02, rely=0.01+(0.08)*i, relwidth=0.45, relheight=0.06)
     
     # ---------------------- item info input ------------ #
@@ -53,29 +53,29 @@ def item_manage(root):
 
 
     # update button
-    left_frame_btn_update = tk.Button(left_frame,text='Update', font=('Times New Roma',14), bg=color.color3)
+    left_frame_btn_update = tk.Button(left_frame,text='Update', font=('Times New Roma',14), bg=color.color_list[2])
     left_frame_btn_update.place(relx=0.02,rely=0.8,relwidth=0.4)
 
     # add button
-    left_frame_btn_update = tk.Button(left_frame,text='Add Item', font=('Times New Roma',14), bg=color.color3)
+    left_frame_btn_update = tk.Button(left_frame,text='Add Item', font=('Times New Roma',14), bg=color.color_list[2])
     left_frame_btn_update.place(relx=0.54,rely=0.8,relwidth=0.4)
 
     # delete button
-    left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg=color.red, fg=color.color2)
+    left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg=color.color_list[6], fg=color.color_list[1])
     left_frame_btn_update.place(relx=0.26,rely=0.9,relwidth=0.45)
 
     # =================== frame ========================= #
-    right_frame = tk.Frame(main_frame,bg=color.light_grey)
+    right_frame = tk.Frame(main_frame,bg=color.color_list[7])
     right_frame.place(relx=0.26,rely=0,relwidth=0.738, relheight=1)
 
-    right_frame_table_caption_lbl = tk.Label(right_frame,text='Item Table', font=('Times New Roma',16,'bold'),bg=color.light_grey)
+    right_frame_table_caption_lbl = tk.Label(right_frame,text='Item Table', font=('Times New Roma',16,'bold'),bg=color.color_list[7])
     right_frame_table_caption_lbl.place(relx=0.4,relwidth=0.2,relheight=0.06)
 
     # ---------------------------- scroll table frame ----------------------------- #
-    right_frame_table_frame = tk.Frame(right_frame,bg=color.light_grey)
+    right_frame_table_frame = tk.Frame(right_frame,bg=color.color_list[7])
     right_frame_table_frame.place(relx=0,rely=0.07,relwidth=1,relheight=0.7)
 
-    right_frame_lbl_1 = tk.Label(right_frame,text='Search By: ',bg=color.light_grey,anchor='w',font=('Times New Roma',12))
+    right_frame_lbl_1 = tk.Label(right_frame,text='Search By: ',bg=color.color_list[7],anchor='w',font=('Times New Roma',12))
     right_frame_lbl_1.place(relx=0.01,rely=0.8,relwidth=0.12)
 
     product_search_type = tk.StringVar()
@@ -85,22 +85,22 @@ def item_manage(root):
     search_type.config(font=('Times New Roma',12))
     search_type.place(relx=0.14, rely=0.8, relwidth=0.18,relheight=0.06)
 
-    right_frame_lbl_2 = tk.Label(right_frame,text='Query: ',bg=color.light_grey,anchor='w',font=('Times New Roma',12))
+    right_frame_lbl_2 = tk.Label(right_frame,text='Query: ',bg=color.color_list[7],anchor='w',font=('Times New Roma',12))
     right_frame_lbl_2.place(relx=0.01,rely=0.87,relwidth=0.12)
 
     right_frame_entry_query = tk.Entry(right_frame)
     right_frame_entry_query.place(relx=0.14,rely=0.87,relwidth=0.18,relheight=0.05)
 
     # search button
-    right_frame_btn_search = tk.Button(right_frame,text='Search',bg=color.color3,font=('Times New Roman',12,'bold'))
+    right_frame_btn_search = tk.Button(right_frame,text='Search',bg=color.color_list[2],font=('Times New Roman',12,'bold'))
     right_frame_btn_search.place(relx=0.1,rely=0.94,relwidth=0.1,relheight=0.05)
 
     # preview button
-    right_frame_btn_privew = tk.Button(right_frame,text='Preview',bg=color.color3,font=('Times New Roman',14,'bold'))
+    right_frame_btn_privew = tk.Button(right_frame,text='Preview',bg=color.color_list[2],font=('Times New Roman',14,'bold'))
     right_frame_btn_privew.place(relx=0.4,rely=0.85,relwidth=0.11,relheight=0.06)
 
     # back button
-    right_frame_btn_back = tk.Button(right_frame,text='Back',bg=color.color3,font=('Times New Roman',14,'bold'),command=lambda:back_home(main_frame))
+    right_frame_btn_back = tk.Button(right_frame,text='Back',bg=color.color_list[2],font=('Times New Roman',14,'bold'),command=lambda:back_home(main_frame))
     right_frame_btn_back.place(relx=0.8,rely=0.85,relwidth=0.11,relheight=0.06)
 
     # scroll bar
