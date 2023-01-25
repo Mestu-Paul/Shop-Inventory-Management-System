@@ -12,14 +12,11 @@ import sales_report as _sales_report
 import item_sales_report as _item_sales_report
 import purchase_report as _purchase_report
 import expenditure_report as _expenditure_report
-
+import staff_manager as _staff_manager
 
 import color_code as color
 # root window
-# root = tk.Tk()
-# root.title('Shopping Inventory Management System')
-# root.geometry('1100x650+10+10')
-# root.minsize(1100,650)
+
 
 
 
@@ -122,7 +119,8 @@ def expenditure_report(root):
     _expenditure_report.expenditure_report(root)
 
 def staff_manager(root):
-	print('go to staff_manager')
+    print('go to staff manager')
+    _staff_manager.staff_manager(root)
 
 def contact_book(root):
 	print('go to contact_book')
@@ -130,6 +128,7 @@ def contact_book(root):
 def refresh(root):
     print('refresh home')
     init_page(root,'Item Sale')
+    addHome(root)
 
 
 
@@ -429,6 +428,14 @@ def addHome(root):
 
     tree.place(relx=0,rely=0,relwidth=0.97,relheight=1)
     scrollbar.config( command = tree.yview )
+    
+    bottom_frame = tk.Frame(root,bg='#e5c6b7')
+    bottom_frame.place(relx=0,rely=0.922,relwidth=1,relheight=0.08)
+    tk.Label(bottom_frame,text='Information').pack()
     # root.mainloop()
     
+# root = tk.Tk()
+# root.title('Shopping Inventory Management System')
+# root.geometry('1100x650+10+10')
+# root.minsize(1100,650)
 # addHome(root)

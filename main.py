@@ -1,12 +1,12 @@
 import tkinter as tk
 
 # local 
-from menubar import *
-from home import *
-from login import *
+import menubar as menubar
+import home as home
+import login as login
 
 # authentication
-# a = user_login()
+# a = login.user_login()
 
 # root window
 root = tk.Tk()
@@ -15,10 +15,10 @@ root.geometry('1100x650+10+10')
 root.minsize(1100,650)
 
 # menubar
-MenuBar = getMenubar(root)
+MenuBar = menubar.getMenubar(root)
 
 # Home window
-addHome(root)
+home.addHome(root)
 
 
 

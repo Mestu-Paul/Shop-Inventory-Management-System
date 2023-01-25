@@ -5,6 +5,7 @@ import manage_bank_account as mngbnkac
 import basic_info_setting as bscinf
 import user_panal as upanel
 from home import addHome
+import color_code as color
 
 def getMenubar(root):
     # create a menubar
@@ -66,6 +67,10 @@ def getMenubar(root):
     Setting_menu.add_command(
         label = 'Email Setting',
         command = Email_Setting
+    )
+    Setting_menu.add_command(
+        label = 'Customize Color',
+        command = lambda:color.color_change(root)
     )
     
     # add menu item to the Accounting_menu
