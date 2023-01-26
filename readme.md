@@ -24,6 +24,11 @@ pip install dbr
 ```
 pip install dbr
 ```
+**cryptography** *(for password encryption)*
+
+```
+pip install cryptography
+```
 
 # Menu
 

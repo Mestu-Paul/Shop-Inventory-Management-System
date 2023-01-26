@@ -1,0 +1,8 @@
+/* ------------------ user_panel ------------------------- *
+command = 'CREATE TABLE user_panel (\
+    user_name TEXT PRIMARY KEY,\
+    hash_key TEXT,\
+    user_password TEXT,\
+    full_name TEXT,\
+    role TEXT\
+);'

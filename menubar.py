@@ -3,11 +3,16 @@ from tkinter import Menu
 
 import manage_bank_account as mngbnkac
 import basic_info_setting as bscinf
-import user_panal as upanel
+from user_panal import User_Panel
 from home import addHome
 import color_code as color
 
 def getMenubar(root):
+    
+    # create object for user panel
+    global upanel
+    upanel = User_Panel(root)
+
     # create a menubar
     menubar = Menu(root)
     root.config(menu=menubar)
@@ -120,7 +125,7 @@ def getMenubar(root):
 
 def user_panel(root):
     print("user")
-    upanel.user_panel(root)
+    upanel.user_panel()
     
 
 # ------------- setting command ------------- #
