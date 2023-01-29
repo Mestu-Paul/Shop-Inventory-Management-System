@@ -4,7 +4,6 @@ import datetime as dt
 import tkcalendar as tkcal
 
 
-import item_manage as _item_manage
 import item_purchase as _item_purchase
 import check_stock as _check_stock
 import check_demage_stock as _check_demage_stock
@@ -13,8 +12,13 @@ import item_sales_report as _item_sales_report
 import purchase_report as _purchase_report
 import expenditure_report as _expenditure_report
 import staff_manager as _staff_manager
+import item_manage as _item_manage
 
 import color_code as color
+
+
+# object of classes
+
 # root window
 
 
@@ -76,7 +80,7 @@ def init_page(root,page_name):
 def manage_item(root):
     print("go to manage item")
     init_page(root,'Manage Item')
-    _item_manage.item_manage(root)
+    item_manage_obj.item_manage(root)
 
 def purchase_item(root):
     print('go to purchase item')
@@ -134,6 +138,9 @@ def refresh(root):
 
 def addHome(root):
     init_page(root,'Item Sale')
+    global item_manage_obj
+    item_manage_obj = _item_manage.Item_Manage(root)
+    
     # item manage main frame
     main_frame = tk.Frame(root,bg='white')
     main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)

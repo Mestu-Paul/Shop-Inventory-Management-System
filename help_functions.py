@@ -1,5 +1,6 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+import re as regex
 
 def show_message(message_type,message):
     messagebox = tk.Toplevel()
@@ -10,4 +11,19 @@ def show_message(message_type,message):
     tk.Label(messagebox,text=message).pack(side=tk.TOP,fill=tk.X)
     tk.Button(messagebox,text='Ok',command=messagebox.destroy).pack(side=tk.TOP)
     messagebox.mainloop()
-    
+
+def is_number(var):
+    for v in var:
+        if regex.match("^[0-9]+([.][0-9]{2})?$",v)==None:
+            return False
+        return True
+def is_alpha(var):
+    for v in var:
+        if regex.match("^[a-zA-Z\s]+$",v)==None:
+            return False
+        return True
+def is_alphanum(var):
+    for v in var:
+        if regex.match("^[a-zA-Z0-9\s]+$",v)==None:
+            return False
+        return True

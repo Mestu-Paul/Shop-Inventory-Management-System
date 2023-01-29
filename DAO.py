@@ -25,8 +25,8 @@ def set_user_panel(user_info):
     # pass_key = Fernet.generate_key()
     # fernet = Fernet(pass_key)
     # user_info[1] = fernet.encrypt(user_info[1].encode())
-#     command = f"INSERT INTO user_panel values('{user_info[0]}',\
-# '{user_info[1]}','{user_info[1]}','{user_info[2]}','{user_info[3]}');"
+    #     command = f"INSERT INTO user_panel values('{user_info[0]}',\
+    # '{user_info[1]}','{user_info[1]}','{user_info[2]}','{user_info[3]}');"
     command = "INSERT INTO user_panel values(?,?,?,?,?);"
     print(command)
     user_info.insert(1,user_info[1])
@@ -66,5 +66,51 @@ def delete_row_of_a_table(table_name,condition_column_name,condion_column_value)
         cursor.execute(command)
         conn.commit()
         return [1,f"Successfully deleted the user , user name = {condion_column_value}"]
+    except Exception as e:
+        return [0,e]
+def get_rows(command):
+    conn = connect_db()
+    cursor = conn.cursor()
+    print(command)
+    try:
+        cursor.execute(command)
+        rows = cursor.fetchall()
+        # print(rows)
+        return [1,rows]
+    except Exception as e:
+        print(e)
+        return [0,e]
+def set_rows(command,values):
+    conn = connect_db()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(command,values)
+        conn.commit()
+        return [1,"Successfully added a new one"]
+    except Exception as e:
+        return [0,e]
+def update_rows(command,values):
+    print("update : ",values)
+    conn = connect_db()
+    cursor = conn.cursor()
+    # user_info.insert(1,user_info[1])
+    # user_info.insert(4,user_info[0])
+    # print(user_info)
+    try:
+        cursor.execute(command,values)
+        conn.commit()
+        return [1,"Successfully updated"]
+    except Exception as e:
+        return [0,e]
+def delete_rows(command,values):
+    conn = connect_db()
+    cursor = conn.cursor()
+    # user_info.insert(1,user_info[1])
+    # user_info.insert(4,user_info[0])
+    # print(user_info)
+    try:
+        cursor.execute(command,values)
+        conn.commit()
+        return [1,"Successfully Deleted"]
     except Exception as e:
         return [0,e]
