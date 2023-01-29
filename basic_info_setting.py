@@ -3,7 +3,7 @@ import color_code as color
 
 
 def close_basic_setting(root):
-    root.quit()
+    root.destroy()
 def basic_info_setting(root):
     
     root.root = tk.Tk()
