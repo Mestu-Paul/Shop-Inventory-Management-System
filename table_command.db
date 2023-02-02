@@ -8,39 +8,46 @@ command = 'CREATE TABLE user_panel (\
 );'
 
 /* ------------------ item_details ------------------------- *
-command = 'CREATE TABLE item_details (\
-    item_name TEXT UNIQUE,\
-    item_code  TEXT PRIMARY KEY,\
-    item_date date,\
-    item_group TEXT,\
-    item_company TEXT,\
-    item_shelf_no TEXT,\
-    item_quantity INTEGER,\
-    item_sale_price REAL,\
-    item_purchase_price REAL\
+'CREATE TABLE item_details (\
+    code  TEXT PRIMARY KEY,\
+    name TEXT,\
+    group_ TEXT,\
+    company TEXT,\
+    vat_rate REAL,\
+    quantity INTEGER,\
+    unit_purchase_price REAL,\
+    unit_sale_price REAL,\
+    invoice_id INTEGER, \
+    FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id)\
 );'
 
 /* ------------------ invoice ------------------------- *
 'CREATE TABLE invoice (\
-    invoice_number INTEGER PRIMARY KEY AUTOINCREMENT,\
-    invoice_type TEXT, \
-    invoice_date DATE,\
-    inoice_time TIME, \
+    invoice_id INTEGER PRIMARY KEY AUTOINCREMENT,\
+    type TEXT, \
+    date DATE,\
+    time TIME, \
     total REAL, \
     discount REAL, \
+    vat REAL,\
     payable REAL, \
     paid REAl, \
     change REAL \
 );'
 
-/* ------------------ invoice product details ------------------------- *
-'CREATE table invoice_product_details (\
-    item_code TEXT, \
-    qty INTEGER, \
-    total REAL,\
+/* ------------------ sale or purchase product details ------------------------- *
+'CREATE TABLE sale_purchase (\
+    code  TEXT,\
+    name TEXT,\
+    quantity INTEGER,\
+    unit_price REAL,\
+    total_price REAL,\
     discount REAL,\
-    payable REAL, \
-    invoice_number INTEGER,\
-    FOREIGN KEY (item_code) REFERENCES item_details(item_code), \
-    FOREIGN KEY (invoice_number) REFERENCES invoice(invoice_number) \
+    vat REAL,\
+    payable REAL,\
+    paid REAL,\
+    change REAL,\
+    invoice_id INTEGER, \
+    FOREIGN KEY (code) REFERENCES item_details(code), \
+    FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id) \
 );'

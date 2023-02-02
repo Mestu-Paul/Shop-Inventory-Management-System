@@ -2,7 +2,7 @@ import tkinter as tk
 
 from home import *
 
-def back_home(main_frame):
+def backHome(main_frame):
     print("back home")
     main_frame.place_forget()
 
@@ -130,7 +130,7 @@ def manage_bank_account(root):
     top_frame_preview_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Preview')
     top_frame_preview_btn.place(relx=0.8, rely=0.35, relwidth=0.1, relheight=0.14)
 
-    top_frame_back_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Back',command=lambda:back_home(main_frame))
+    top_frame_back_btn = tk.Button(top_frame,fg=color4, bg=color3, font=('Times New Roman',12), text='Back',command=lambda:backHome(main_frame))
     top_frame_back_btn.place(relx=0.8, rely=0.55, relwidth=0.1, relheight=0.14)
 
 

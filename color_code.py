@@ -30,7 +30,7 @@ def choose_color(idx,main_frame):
     print(color_code[1])
     update_preview(main_frame)
     
-def back_home(main_frame):
+def backHome(main_frame):
     print("back home")
     print(color_list)
     main_frame.place_forget()
@@ -38,7 +38,7 @@ def color_update_apply(main_frame):
     print(color_list)
     color_list=temp_color_list.copy()
     print(color_list)
-    back_home(main_frame)
+    backHome(main_frame)
 def color_change(root):
     temp_color_list = color_list.copy()
     print('I am here color change')
@@ -63,7 +63,7 @@ def color_change(root):
     update_preview(main_frame)
     
     tk.Button(main_frame,text='Apply',bg=color_list[2],command=lambda:color_update_apply(main_frame)).place(relx=0.12,rely=0.65,relwidth=0.1,height=30)
-    tk.Button(main_frame,text='Cancel',bg=color_list[2],command=lambda:back_home(main_frame)).place(relx=0.32,rely=0.65,relwidth=0.1,height=30)
+    tk.Button(main_frame,text='Cancel',bg=color_list[2],command=lambda:backHome(main_frame)).place(relx=0.32,rely=0.65,relwidth=0.1,height=30)
 # root = tk.Tk()
 # root.geometry('1100x650+10+10')
 # color_change(root)

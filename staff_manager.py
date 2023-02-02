@@ -3,7 +3,7 @@ import tkinter as tk
 import color_code as color
 
 
-def back_home(main_frame):
+def backHome(main_frame):
     print("back home")
     main_frame.place_forget()
 def add_new_staff(main_frame):
@@ -23,7 +23,7 @@ def staff_manager(root):
     tk.Button(menu_bar_frame,text='Manage staff',font=('Times New Roman',12,'bold'),command=lambda:manage_staff(main_frame)).place(relx=.12,rely=0,relwidth=0.12,height=25)
     tk.Button(menu_bar_frame,text='Staff payment',font=('Times New Roman',12,'bold'),command=lambda:staff_payment(main_frame)).place(relx=.24,rely=0,relwidth=0.12,height=25)
     tk.Button(menu_bar_frame,text='Payment report',font=('Times New Roman',12,'bold'),command=lambda:payment_report(main_frame)).place(relx=.36,rely=0,relwidth=0.12,height=25)
-    tk.Button(menu_bar_frame,text='Back',font=('Times New Roman',12,'bold'),command=lambda:back_home(main_frame)).place(relx=.95,rely=0,relwidth=0.05,height=25)
+    tk.Button(menu_bar_frame,text='Back',font=('Times New Roman',12,'bold'),command=lambda:backHome(main_frame)).place(relx=.95,rely=0,relwidth=0.05,height=25)
 
 # root = tk.Tk()
 # root.geometry('1100x650+10+10')

@@ -105,7 +105,7 @@ class User_Panel():
             self.top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
             
             # close button
-            self.top_frame_close_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:self.back_home())
+            self.top_frame_close_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:self.backHome())
             self.top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
             
                 
@@ -251,7 +251,7 @@ class User_Panel():
         self.user_accessibility_admin(accessibility_frame)
     
         
-    def back_home(self):
+    def backHome(self):
         print("back home")
         self.main_frame.place_forget()
 

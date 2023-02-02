@@ -4,7 +4,7 @@ from home import *
 import color_code as color
 
 
-def back_home(main_frame):
+def backHome(main_frame):
     print("back home")
     main_frame.place_forget()
 
@@ -56,7 +56,7 @@ def sales_report(root):
     top_frame_preview_btn.place(relx=0.8, rely=0.35, relwidth=0.1, relheight=0.14)
 
 
-    top_frame_back_btn = tk.Button(top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back',command=lambda:back_home(main_frame))
+    top_frame_back_btn = tk.Button(top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back',command=lambda:backHome(main_frame))
     top_frame_back_btn.place(relx=0.8, rely=0.55, relwidth=0.1, relheight=0.14)
 
 

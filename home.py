@@ -88,7 +88,7 @@ def manage_item(root):
 def purchase_item(root):
     print('go to purchase item')
     init_page(root,'Purchase Item')
-    _item_purchase.item_purchase(root)
+    item_purchase_obj.item_purchase(root)
     
 
 def check_stock(root):
@@ -406,6 +406,8 @@ class Home:
         init_page(self.root,'Item Sale')
         global item_manage_obj
         item_manage_obj = _item_manage.Item_Manage(self.root)
+        global item_purchase_obj
+        item_purchase_obj = _item_purchase.Item_Purchase(self.root)
         
         # item manage main frame
         main_frame = tk.Frame(self.root,bg='white')
