@@ -49,8 +49,9 @@ class Item_Manage:
         command = "INSERT INTO item_details VALUES(?,?,?,?,?,?,?,?,?);"
         message = dao.set_rows(command,values)
         print(message)
-        _help_functions.show_message(self.message_type[message[0]],message[1])
         self.show_table()
+        self.clear_input()
+        _help_functions.show_message(self.message_type[message[0]],message[1])
         pass
     
     def update_item(self):
@@ -71,6 +72,7 @@ class Item_Manage:
             command = "UPDATE item_details SET item_name = ?,item_date = ?,item_group = ?,item_company = ?,item_shelf_no = ?,item_quantity = ?,item_sale_price = ?,item_purchase_price = ? WHERE item_code=?;"
             message = dao.update_rows(command,values)
             print(message)
+            self.clear_input()
             _help_functions.show_message(self.message_type[message[0]],message[1])
         except AttributeError:
             _help_functions.show_message(self.message_type[0],"Please select one")
@@ -88,7 +90,16 @@ class Item_Manage:
             _help_functions.show_message(self.message_type[0],"Please select one")
         except Exception as e:
             _help_functions.show_message(self.message_type[0],e)
-            
+    
+    def clear_input(self):
+        self.set_entry_value(self.left_frame_entry_item_name,'')
+        self.set_entry_value(self.left_frame_entry_item_code,'')
+        self.set_entry_value(self.left_frame_entry_item_group,'')
+        self.set_entry_value(self.left_frame_entry_company,'')
+        self.set_entry_value(self.left_frame_entry_shelf_no,'')
+        self.set_entry_value(self.left_frame_entry_quantity,'')
+        self.set_entry_value(self.left_frame_entry_sale_price,'')
+        self.set_entry_value(self.left_frame_entry_purchase_price,'')
     def item_manage(self,root):
         # item manage main frame
         self.main_frame = tk.Frame(root,bg='white')
