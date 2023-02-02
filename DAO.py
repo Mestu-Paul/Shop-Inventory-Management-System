@@ -114,3 +114,17 @@ def delete_rows(command,values):
         return [1,"Successfully Deleted"]
     except Exception as e:
         return [0,e]
+
+# =============== invoice table ==================== #
+def get_new_invoice():
+    conn = connect_db()
+    cursor = conn.cursor()
+    command = "SELECT MAX(invoice_number) from invoice;"
+    try:
+        cursor.execute(command)
+        max_number = cursor.fetchall()
+        conn.commit()
+        return [1,max_number[0][0]]
+    except Exception as e:
+        return [0,e]
+        

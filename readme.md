@@ -29,6 +29,21 @@ pip install dbr
 ```
 pip install cryptography
 ```
+**reportlab** *(for pdf creator)*
+
+```
+pip install reportlab
+```
+**pdfkit** *(for pdf creator)*
+
+```
+pip install pdfkit
+```
+**reportlab** *(for pdf creator)*
+
+```
+pip install html2text
+```
 
 # Menu
 

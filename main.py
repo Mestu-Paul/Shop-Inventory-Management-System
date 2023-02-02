@@ -2,7 +2,7 @@ import tkinter as tk
 
 # local 
 import menubar as menubar
-import home as home
+import home as _home
 import login as login
 
 # authentication
@@ -25,7 +25,8 @@ root.minsize(1100,650)
 MenuBar = menubar.getMenubar(root)
 
 # Home window
-home.addHome(root)
+purchase = _home.Home(root)
+purchase.addHome()
 
 
 

@@ -4,7 +4,7 @@ from tkinter import Menu
 import manage_bank_account as mngbnkac
 import basic_info_setting as bscinf
 from user_panal import User_Panel
-from home import addHome
+# from home import addHome
 import color_code as color
 
 def getMenubar(root):
@@ -116,10 +116,10 @@ def getMenubar(root):
     )
     
     # add menu item to file menu
-    File_menu.add_command(
-        label='Home',
-        command=lambda:addHome(root)
-    )
+    # File_menu.add_command(
+    #     label='Home',
+    #     command=lambda:addHome(root)
+    # )
 
     return menubar
 

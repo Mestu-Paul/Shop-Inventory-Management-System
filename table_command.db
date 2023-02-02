@@ -6,3 +6,41 @@ command = 'CREATE TABLE user_panel (\
     full_name TEXT,\
     role TEXT\
 );'
+
+/* ------------------ item_details ------------------------- *
+command = 'CREATE TABLE item_details (\
+    item_name TEXT UNIQUE,\
+    item_code  TEXT PRIMARY KEY,\
+    item_date date,\
+    item_group TEXT,\
+    item_company TEXT,\
+    item_shelf_no TEXT,\
+    item_quantity INTEGER,\
+    item_sale_price REAL,\
+    item_purchase_price REAL\
+);'
+
+/* ------------------ invoice ------------------------- *
+'CREATE TABLE invoice (\
+    invoice_number INTEGER PRIMARY KEY AUTOINCREMENT,\
+    invoice_type TEXT, \
+    invoice_date DATE,\
+    inoice_time TIME, \
+    total REAL, \
+    discount REAL, \
+    payable REAL, \
+    paid REAl, \
+    change REAL \
+);'
+
+/* ------------------ invoice product details ------------------------- *
+'CREATE table invoice_product_details (\
+    item_code TEXT, \
+    qty INTEGER, \
+    total REAL,\
+    discount REAL,\
+    payable REAL, \
+    invoice_number INTEGER,\
+    FOREIGN KEY (item_code) REFERENCES item_details(item_code), \
+    FOREIGN KEY (invoice_number) REFERENCES invoice(invoice_number) \
+);'
