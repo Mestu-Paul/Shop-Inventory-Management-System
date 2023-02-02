@@ -265,12 +265,10 @@ class Item_Manage:
         self.tree.tag_configure("red_green", background="#a9a9a9")
         
         command = "SELECT item_details.*, invoice.date \
-        FROM item_details \
-        JOIN invoice\
-        ON item_details.invoice_id=invoice.invoice_id;"
+        FROM item_details,invoice \
+        WHERE invoice.type='purchase' and item_details.invoice_id=invoice.invoice_id;"
+        
         data_rows = dao.get_rows(command)
-        # # Insert the data in Treeview widget
-        # # tree.insert('', 'end', values=('1', 'Honda', "hello"))
         print(data_rows)
         if data_rows[0]==0:
             print(data_rows[1])

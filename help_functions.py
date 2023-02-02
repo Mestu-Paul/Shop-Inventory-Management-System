@@ -8,7 +8,9 @@ def show_message(message_type,message):
     messagebox.resizable(False,False)
     message_icon = ImageTk.PhotoImage(Image.open(f"img/{message_type}.png").resize((50,50)))
     tk.Label(messagebox,image=message_icon).pack(side=tk.TOP)
-    tk.Label(messagebox,text=message).pack(side=tk.TOP,fill=tk.X)
+    text = tk.Text(messagebox,wrap=tk.WORD)
+    text.pack(side=tk.TOP,fill=tk.X)
+    text.insert(tk.END,message)
     tk.Button(messagebox,text='Ok',command=messagebox.destroy).pack(side=tk.TOP)
     messagebox.mainloop()
 
