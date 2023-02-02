@@ -83,12 +83,12 @@ def init_page(root,page_name):
 def manage_item(root):
     print("go to manage item")
     init_page(root,'Manage Item')
-    item_manage_obj.item_manage(root)
+    item_manage_obj.item_manage()
 
 def purchase_item(root):
     print('go to purchase item')
     init_page(root,'Purchase Item')
-    item_purchase_obj.item_purchase(root)
+    item_purchase_obj.itemPurchase()
     
 
 def check_stock(root):

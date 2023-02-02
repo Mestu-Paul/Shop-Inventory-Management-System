@@ -187,9 +187,9 @@ class Item_Manage:
         self.right_frame_btn_back.place(relx=0.8,rely=0.85,relwidth=0.11,relheight=0.06)
 
         
-    def item_manage(self,root):
+    def item_manage(self):
         # item manage main frame
-        self.main_frame = tk.Frame(root,bg='white')
+        self.main_frame = tk.Frame(self.root,bg='white')
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
         
         # ======================== left frame ========================= #
@@ -266,7 +266,7 @@ class Item_Manage:
         
         command = "SELECT item_details.*, invoice.date \
         FROM item_details,invoice \
-        WHERE invoice.type='purchase' and item_details.invoice_id=invoice.invoice_id;"
+        WHERE invoice.type='add' and item_details.invoice_id=invoice.invoice_id;"
         
         data_rows = dao.get_rows(command)
         print(data_rows)

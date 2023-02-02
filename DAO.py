@@ -87,6 +87,8 @@ def set_rows(command,values):
         cursor.execute(command,values)
         conn.commit()
         return [1,"Successfully added a new one"]
+    except sqlite3.IntegrityError:
+        return [0,'duplicate code']
     except Exception as e:
         return [0,e]
 def update_rows(command,values):
