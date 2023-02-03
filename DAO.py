@@ -68,12 +68,13 @@ def delete_row_of_a_table(table_name,condition_column_name,condion_column_value)
         return [1,f"Successfully deleted the user , user name = {condion_column_value}"]
     except Exception as e:
         return [0,e]
-def get_rows(command):
+        
+def get_rows(command,values):
     conn = connect_db()
     cursor = conn.cursor()
     print(command)
     try:
-        cursor.execute(command)
+        cursor.execute(command,values)
         rows = cursor.fetchall()
         # print(rows)
         return [1,rows]
@@ -87,8 +88,8 @@ def set_rows(command,values):
         cursor.execute(command,values)
         conn.commit()
         return [1,"Successfully added a new one"]
-    except sqlite3.IntegrityError:
-        return [0,'duplicate code']
+    except sqlite3.IntegrityError as e:
+        return [0,'duplicate record '+e]
     except Exception as e:
         return [0,e]
 def update_rows(command,values):
@@ -107,9 +108,6 @@ def update_rows(command,values):
 def delete_rows(command,values):
     conn = connect_db()
     cursor = conn.cursor()
-    # user_info.insert(1,user_info[1])
-    # user_info.insert(4,user_info[0])
-    # print(user_info)
     try:
         cursor.execute(command,values)
         conn.commit()
@@ -118,7 +116,7 @@ def delete_rows(command,values):
         return [0,e]
 
 # =============== invoice table ==================== #
-def get_new_invoice():
+def getLastInvoiceId():
     conn = connect_db()
     cursor = conn.cursor()
     command = "SELECT MAX(invoice_id) from invoice;"

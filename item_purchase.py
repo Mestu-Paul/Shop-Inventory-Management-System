@@ -17,11 +17,13 @@ class Item_Purchase:
         pass
     
     def back_home(self):
+        self.add_item_list.clear()
+        self.check_unique_code.clear()
         self.main_frame.place_forget()
     
     def clearItemEntries(self):
-        for item in self.item_entries:
-            self.set_entry_value(item,'')
+        for i in range(len(self.item_entries)-1):
+            self.set_entry_value(self.item_entries[i],'')
             
             
     def addItemList(self):
@@ -66,7 +68,9 @@ class Item_Purchase:
                 self.clearItemEntries()
                 self.item_entries[0].config(state='normal')
                 return
-    
+    def activeNextEntry(self,event,next_entry):
+        next_entry.focus_set()
+        
     def leftFrame(self):
         item_info_list = ['Item Code :','Item Name :', 'Item Group :', 'Company :',
                         'VAT :', 'Quantity :','Sale Price :','Purchase Price :','Date :']
@@ -80,6 +84,10 @@ class Item_Purchase:
         for i in range(9):
             self.item_entries[i].place(relx=0.48,rely=0.01+i*0.08,relwidth=0.5,relheight=0.06)
         
+        self.item_entries[0].focus_set()
+        for i in range(7):
+            self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
+        
         self.add_btn = tk.Button(self.left_frame,text='Add',bg=color.color_list[2], fg=color.color_list[3], command=self.addItemList)
         self.update_btn = tk.Button(self.left_frame,text='Update',bg=color.color_list[2], fg=color.color_list[3], command=self.updateItem)
         self.delete_btn = tk.Button(self.left_frame,text='Delete',bg=color.color_list[6], fg=color.color_list[1], command=self.deleteItem)
@@ -90,11 +98,15 @@ class Item_Purchase:
         
     def showTotalInfo(self):
         sum = 0
+        vat = 0
+        qty  = 0
         for values in self.add_item_list:
-            sum += (float)(values[5])*(float)(values[7])
+            tmp = (float)(values[5])*(float)(values[7])
+            qty += float(values[5])
+            sum += tmp
             print(values[5],values[7])
-            
-        total_info = [len(self.add_item_list), sum,0,sum]+[entries.get() for entries in self.total_info_entries]            
+        vat = 0          
+        total_info = [qty,sum,0,vat,vat+sum]+[entries.get() for entries in self.total_info_entries]            
         
         for lbl,text in zip(self.total_info_lbl,total_info):
             lbl.config(text=text)
@@ -126,21 +138,21 @@ class Item_Purchase:
             self.supliers_entries[i].place(relx=0.16,rely=0.19+(i*0.06),relwidth=0.2,relheight=0.05)
           
     def calcChange(self,event):
-        self.set_entry_value(self.total_info_entries[1],(float)(self.total_info_entries[0].get())-(float)(self.total_info_lbl[3].cget('text')))
-        
+        self.set_entry_value(self.total_info_entries[1],(float)(self.total_info_entries[0].get())-(float)(self.total_info_lbl[4].cget('text')))
+
     def totalFrame(self):
-        lbl_list = ['Total Item :', 'Total Price :','Discount :','Payable :','Total Paid :', 'Change :']
+        lbl_list = ['Total Item :', 'Total Price :','Discount :','VAT :','Payable :','Total Paid :', 'Change :']
         for i in range(len(lbl_list)):
             tk.Label(self.right_frame,text=lbl_list[i],bg=color.color_list[7], anchor='w'\
-                ).place(relx=0.5, rely=0.01+(i*0.06), relwidth=0.15, relheight=0.05)
+                ).place(relx=0.45, rely=0.01+(i*0.06), relwidth=0.15, relheight=0.05)
             
-        self.total_info_lbl = [tk.Label(self.right_frame,bg=color.color_list[7]) for i in range(4)]
+        self.total_info_lbl = [tk.Label(self.right_frame,bg=color.color_list[7]) for i in range(5)]
         for i in range(len(self.total_info_lbl)):
-            self.total_info_lbl[i].place(relx=0.65,rely=0.01+(i*0.06),relwidth=0.15,relheight=0.05)
+            self.total_info_lbl[i].place(relx=0.6,rely=0.01+(i*0.06),relwidth=0.15,relheight=0.05)
             
         self.total_info_entries = [tk.Entry(self.right_frame) for i in range(2)]
         for i in range(len(self.total_info_entries)):
-            self.total_info_entries[i].place(relx=0.65,rely=0.25+(i*0.06),relwidth=0.15,relheight=0.05)
+            self.total_info_entries[i].place(relx=0.6,rely=0.31+(i*0.06),relwidth=0.15,relheight=0.05)
         self.total_info_entries[0].bind("<Return>",self.calcChange)
             
     def paymentMethodSelect(self,event):
@@ -150,31 +162,31 @@ class Item_Purchase:
         else:
             account_list = ['sonali bank-1','sonali-bank-2']
         select_lbl = tk.Label(self.right_frame,text='Select A/C :',bg=color.color_list[7],  anchor='w')
-        select_lbl.place(relx=0.65,rely=0.38,relwidth=0.15,relheight=0.05)
+        select_lbl.place(relx=0.8,rely=0.15,relwidth=0.15,relheight=0.05)
         
         self.payment_acount = tk.StringVar()
         self.payment_acount.set(account_list[0]) # default value
         payment_acount_entry = tk.OptionMenu(self.right_frame, self.payment_acount, *account_list)
-        payment_acount_entry.place(relx=0.81, rely=0.38, relwidth=0.15, relheight=0.05)
+        payment_acount_entry.place(relx=0.8, rely=0.22, relwidth=0.15, relheight=0.05)
             
             
         pass            
     def paymentFrame(self):
         tk.Label(self.right_frame,text='Payment Method :',bg=color.color_list[7], anchor='w'\
-            ).place(relx=0.38,rely=0.38,relwidth=0.15,relheight=0.05)
+            ).place(relx=0.8,rely=0.01,relwidth=0.15,relheight=0.05)
         
         self.payment_method_type = tk.StringVar()
         payment_method_type_list = ['Cash', "Bkash", "Nagad",'Card']
         self.payment_method_type.set(payment_method_type_list[0]) # default value
         payment_method = tk.OptionMenu(self.right_frame, self.payment_method_type, *payment_method_type_list,command=self.paymentMethodSelect)
-        payment_method.place(relx=0.53, rely=0.38, relwidth=0.1, relheight=0.05)
+        payment_method.place(relx=0.8, rely=0.07, relwidth=0.1, relheight=0.05)
         pass
     
     
     def addInvoiceDB(self,row):
 
         values = [0 for i in range(10)]
-        values[0] = row[9]+1 # invoice id
+        values[0] = row[9]# invoice id
         values[1] = 'purchase' # type
         values[2] = row[8] # date
         values[3] = dt.datetime.now().strftime("%I:%M:%S %p") # time
@@ -209,7 +221,7 @@ class Item_Purchase:
         values[7] = values[4]+values[6] # payable
         values[8] = values[7] # paid
         values[9] = 0 # change
-        values[10] = row[9]+1 # invoice_id
+        values[10] = row[9] # invoice_id
         
         command = "INSERT INTO sale_purchase VALUES(?,?,?,?,?,?,?,?,?,?,?);"
         message = dao.set_rows(command,values)
@@ -219,7 +231,7 @@ class Item_Purchase:
             return
         
     def addItemDetailsDB(self,values):
-        message = dao.get_new_invoice()
+        message = dao.getLastInvoiceId()
         values.append(message[1]+1)
         print("\n-----------new invoice item details-------------\n",message)
         if(message[0]==0):
@@ -248,6 +260,8 @@ class Item_Purchase:
         item_qty = []
         item_price = []
         sum = 0
+        vat = 0
+        discount = 0
         for values in self.add_item_list:
             item_name.append(values[1])
             item_qty.append(float(values[5]))
@@ -255,8 +269,10 @@ class Item_Purchase:
             sum += (float)(values[5])*(float)(values[7])
             print(values[5],values[7])
         
-        total_info = [sum,0,sum]+[entries.get() for entries in self.total_info_entries]
-        if total_info[3]=='' or total_info[4]=='' or (float)(total_info[3])<sum:
+        total_info = [sum,discount,vat,vat+sum]+[float(entries.get()) for entries in self.total_info_entries]
+        print("complete ",total_info)
+        print("sum ",sum)
+        if total_info[4]=='' or total_info[5]=='' or total_info[4]<sum:
             _help.show_message('warning','Please pay carefully')
             return
         
@@ -339,5 +355,3 @@ class Item_Purchase:
         self.right_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
         self.right_frame.place(relx=0.3,rely=0, relwidth=0.69, relheight=1)
         self.rightFrame()
-        
-        

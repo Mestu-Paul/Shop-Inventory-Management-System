@@ -7,11 +7,11 @@ def show_message(message_type,message):
     messagebox.geometry('300x200+200+100')
     messagebox.resizable(False,False)
     message_icon = ImageTk.PhotoImage(Image.open(f"img/{message_type}.png").resize((50,50)))
-    tk.Label(messagebox,image=message_icon).pack(side=tk.TOP)
+    tk.Label(messagebox,image=message_icon).place(relx=0.4,rely=0.01)
     text = tk.Text(messagebox,wrap=tk.WORD)
-    text.pack(side=tk.TOP,fill=tk.X)
+    text.place(relx=0,rely=0.3,relwidth=1,relheight=0.55)
     text.insert(tk.END,message)
-    tk.Button(messagebox,text='Ok',command=messagebox.destroy).pack(side=tk.TOP)
+    tk.Button(messagebox,text='Ok',command=messagebox.destroy).place(relx=0.46,rely=0.85,relwidth=0.15)
     messagebox.mainloop()
 
 def is_number(var):

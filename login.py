@@ -17,8 +17,8 @@ class user_login:
         self.authenticated = False
         self.role = None
     def authentication(self,user_name,user_password):
-        command = f"SELECT user_name,role FROM user_panel WHERE user_name = '{user_name.get()}' AND user_password = '{user_password.get()}';"
-        result = dao.get_rows(command)
+        command = f"SELECT user_name,role FROM user_panel WHERE user_name = '?' AND user_password = '?';"
+        result = dao.get_rows(command,[user_name.get(),user_password.get()])
         print(result)
         if(result[0]==0):
             tk.Label(self.right_frame,text='Authentication Error!', font=("Comic Sans MS", 10, "italic"), bg=color.color_list[7], fg='red').place(relx=0.53,rely=0.6)

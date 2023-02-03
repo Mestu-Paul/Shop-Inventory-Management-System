@@ -2,7 +2,7 @@ import pdfkit
 import os
 class PythonToHtml:
     def __init__(self) -> None:
-        self.total_info_name = ['Total','Discount','Payable','Paid','Change']
+        self.total_info_name = ['Total','Discount','VAT','Payable','Paid','Change']
         self.config = pdfkit.configuration(wkhtmltopdf=r'C:\\Program Files (x86)\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')        
         pass
     
@@ -80,8 +80,8 @@ class PythonToHtml:
                 <tr>
                     <td>{item_name[i]}</td>
                     <td>{item_qty[i]}</td>
-                    <td>{item_price[i]}</td>
-                    <td>{item_price[i]*item_qty[i]}</td>
+                    <td>{format(float(item_price[i]),'.2f')}</td>
+                    <td>{format(float(item_price[i]*item_qty[i]),'.2f')}</td>
                 </tr>
         """
         self.html+="""
@@ -95,7 +95,7 @@ class PythonToHtml:
             self.html += f"""
                 <tr>
                     <td>{self.total_info_name[i]}</td>
-                    <td>{total_info[i]}</td>
+                    <td>{format(float(total_info[i]),'.2f')}</td>
                 </tr>
         """
         self.html+="""

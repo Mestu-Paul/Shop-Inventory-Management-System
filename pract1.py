@@ -1,5 +1,7 @@
 import tkinter as tk
-
+v = {'1':2,'2':2}
+if '5' in v.keys:
+    print('yes')
 class EntryForm(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)

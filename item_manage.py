@@ -24,14 +24,14 @@ class Item_Manage:
     
     
     def addInvoiceDB(self):
-        message = dao.get_new_invoice()
+        message = dao.getLastInvoiceId()
         print("\n-----------new invoice--------------\n",message)
         if(message[0]==0):
             _help.show_message('error',message[1])
             return
         values = [0 for i in range(10)]
         values[0] = message[1]+1 # invoice id
-        values[1] = 'add' # type
+        values[1] = 'purchase' # type
         values[2] = self.item_entries[8].get() # date
         values[3] = dt.datetime.now().strftime("%I:%M:%S %p") # time
         
@@ -65,7 +65,7 @@ class Item_Manage:
         values[7] = values[4]+values[6] # payable
         values[8] = values[7] # paid
         values[9] = 0 # change
-        message = dao.get_new_invoice()
+        message = dao.getLastInvoiceId()
         print("\n-----------new invoice purchase--------------\n",message)
         if(message[0]==0):
             _help.show_message('error',message[1])
@@ -87,7 +87,7 @@ class Item_Manage:
                 _help.show_message('error','Please fill all the fields')
                 return False
         print("values ",values)
-        message = dao.get_new_invoice()
+        message = dao.getLastInvoiceId()
         values.append(message[1]+1)
         print("\n-----------new invoice item details-------------\n",message)
         if(message[0]==0):
@@ -140,9 +140,12 @@ class Item_Manage:
             _help.show_message(self.message_type[0],e)
     
     def clear_input(self):
-        for i in range(8):
+        for i in range(7):
             self.set_entry_value(self.item_entries[i],'')
     
+    def activeNextEntry(self,event,next_entry):
+        next_entry.focus_set()
+        
     def leftFrame(self,left_frame):
         item_info_list = ['Item Code :','Item Name :', 'Item Group :', 'Company :',
                         'VAT :', 'Quantity :','Sale Price :','Purchase Price :','Date :']
@@ -153,6 +156,9 @@ class Item_Manage:
         
         # ---------------------- item info input ------------ #
         self.item_entries = [tk.Entry(left_frame) for i in range(8)]
+        # self.item_entries[7].bind("<Return>",lambda e,next_entry=self.item_entries[9]: self.activeNextEntry(e,next_entry))
+        for i in range(7):
+            self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
         self.item_entries.append(tkcal.DateEntry(left_frame,date_pattern="dd/MM/yyyy"))
         for i in range(9):
             self.item_entries[i].place(relx=0.48,rely=0.01+i*0.08,relwidth=0.5,relheight=0.06)
@@ -266,9 +272,9 @@ class Item_Manage:
         
         command = "SELECT item_details.*, invoice.date \
         FROM item_details,invoice \
-        WHERE invoice.type='add' and item_details.invoice_id=invoice.invoice_id;"
+        WHERE invoice.type=? and item_details.invoice_id=invoice.invoice_id;"
         
-        data_rows = dao.get_rows(command)
+        data_rows = dao.get_rows(command,['purchase'])
         print(data_rows)
         if data_rows[0]==0:
             print(data_rows[1])
