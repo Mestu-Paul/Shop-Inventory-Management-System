@@ -51,3 +51,12 @@ command = 'CREATE TABLE user_panel (\
     FOREIGN KEY (code) REFERENCES item_details(code), \
     FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id) \
 );'
+
+/* ------------------ demage_item ------------------------- *
+'CREATE TABLE demage_item(\
+    code  TEXT,\
+    quantity INTEGER,\
+    invoice_id INTEGER, \
+    FOREIGN KEY (code) REFERENCES item_details(code), \
+    FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id) \
+);'
