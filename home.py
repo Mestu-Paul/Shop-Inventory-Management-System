@@ -94,12 +94,12 @@ def purchase_item(root):
 def check_stock(root):
     print('go to check stock')
     init_page(root,'Check Stock Item')
-    _check_stock.check_stock(root)    
+    check_stock_obj.checkStock()    
 
 def check_demage_stock(root):
     print('go to demage check')
     init_page(root,'Deamge Stock Item')
-    _check_demage_stock.check_demage_stock(root)
+    demage_stock_obj.demageStock()
 
 def purchase_report(root):
     print('go to purchase report')
@@ -186,9 +186,13 @@ class Home:
     
     def __init__(self,root):
         self.root = root
-        global item_manage_obj,item_purchase_obj
+        global item_manage_obj,item_purchase_obj,check_stock_obj
+        global demage_stock_obj
         item_manage_obj = _item_manage.Item_Manage(root)
         item_purchase_obj = _item_purchase.Item_Purchase(root)
+        check_stock_obj = _check_stock.CheckStock(root)
+        demage_stock_obj = _check_demage_stock.DemageStcok(root)
+        
         self.items_to_sale = []
         self.total_items_info = [0,0,0,0,0,0,0]
         self.count_by_item_code = dict()
@@ -310,8 +314,8 @@ class Home:
     def showItemDetails(self,event):
         code = self.item_entries[0].get()
         command = "SELECT code,name,group_,company,vat_rate,quantity,unit_sale_price\
-                    FROM item_details\
-                    WHERE code = ?;"
+                    FROM item_details, invoice\
+                    WHERE code = ? AND item_details.invoice_id = invoice.invoice_id AND invoice.type='purchase';"
         values = [code]
         message = dao.get_rows(command,values)
         if message[0]==0:
