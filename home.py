@@ -273,7 +273,7 @@ class Home:
         item += [float(self.item_entries[9].get())] # discount 4
         item += [float(self.item_entries[10].get())] # total 5
         item += [float(self.item_entries[4].get())] # vat 6
-        print(f"total {item[5]}  {item[6]} {item[5]+item[5]*(item[6]/100)}")
+        print(f"total {item[5]}  vat(%) {item[6]} payable =  {item[5]+item[5]*(item[6]/100)}")
         item += [item[5]+item[5]*(item[6]/100)] # payable 7
         item += [self.item_entries[11].get()] # date 8
         
@@ -404,7 +404,7 @@ class Home:
             self.customer_entries[i].place(relx=0.16,rely=0.19+(i*0.06),relwidth=0.2,relheight=0.05)
     
     def calcChange(self,event):
-        self.set_entry_value(self.total_info_entries[1],(float)(self.total_info_entries[0].get())-(float)(self.total_info_lbl[4].cget('text')))
+        self.set_entry_value(self.total_info_entries[1],format((float)(self.total_info_entries[0].get())-(float)(self.total_info_lbl[4].cget('text')),'0.2f'))
     
     def totalFrame(self):
         lbl_list = ['Total Item :', 'Total Price :','Discount :','VAT :','Payable :','Total Paid :', 'Change :']
@@ -456,6 +456,14 @@ class Home:
             return
         pass
     
+    def addSaleHistoryDB(self,row):
+        command = "INSERT INTO sale_purchase VALUES(?,?,?,?,?,?,?,?,?,?,?);"
+        message = dao.set_rows(command,row)
+        print("\n-----------insert sale pur--------------\n",message)
+        if message[0]==0:
+            _help.show_message('error',message[1])
+            return
+    
     def completePayment(self):
         item_name = []
         item_qty = []
@@ -468,13 +476,16 @@ class Home:
             item_qty.append(float(values[3]))
             item_price.append(float(values[2]))
             sum += (float)(values[2])*(float)(values[3])
-            vat += values[5]*(values[6]/100)
+            discount += (float)(values[2])*(float)(values[3])*(values[4]/100)
+            tmp = ((float)(values[2])*(float)(values[3])) - (float)(values[2])*(float)(values[3])*(values[4]/100)
+            vat += tmp*(values[6]/100)
             print(values[2],values[3])
-        
-        total_info = [sum,discount,vat,sum+vat]+[entries.get() for entries in self.total_info_entries]
+            
+        print(f"sum {sum},discount {discount},vat {vat}")
+        total_info = [sum,discount,vat,sum-discount+vat]+[float(entries.get()) for entries in self.total_info_entries]
         print("tota ",total_info)
-        print("sum ",sum)
-        if total_info[5]=='' or total_info[4]=='' or (float)(total_info[4])<sum+vat:
+        print("sum ",sum-discount+vat)
+        if total_info[5]=='' or total_info[4]=='' or (float)(total_info[4])<sum-discount+vat:
             _help.show_message('warning','Please pay carefully')
             return
         
@@ -493,9 +504,23 @@ class Home:
         print(row)
             
         self.addInvoiceDB(row)
+        for values in self.items_to_sale:
+            qty = values[3]
+            price = values[2]
+            total = qty*price
+            discount = total*(values[4]/100)
+            vat = (total-discount)*(values[4]/100)
+            row = [values[0],values[1],qty,price,total,discount,vat,total+vat-discount,'','',lastInvoiceId[1]+1]
+            self.addSaleHistoryDB(row)
         # self.back_home()
         obj = pytohtml.PythonToHtml()
         obj.saleReceipt(item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
+        self.total_items_info = [0 for i in range(7)]
+        self.showTotalInfo()
+        self.set_entry_value(self.total_info_entries[0],0)
+        self.set_entry_value(self.total_info_entries[1],0)
+        self.items_to_sale.clear()
+        self.showTable()
         _help.show_message('success','Successfully added a new transaction')
         pass    
     
