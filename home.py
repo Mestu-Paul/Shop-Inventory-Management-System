@@ -104,17 +104,13 @@ def check_demage_stock(root):
 def purchase_report(root):
     print('go to purchase report')
     init_page(root,'Purchase report')
-    _purchase_report.purchase_report(root)
+    purchase_report_obj.purchaseReport()
 
 def sales_report(root):
     print('go to sales report')
     init_page(root,'Sales Report')
     _sales_report.sales_report(root)
 
-def item_sales_report(root):
-    print('go to demage check')
-    init_page(root,'Item-Sales Report')
-    _item_sales_report.item_sales_report(root)
 
 
 def expenditure(root):
@@ -187,11 +183,12 @@ class Home:
     def __init__(self,root):
         self.root = root
         global item_manage_obj,item_purchase_obj,check_stock_obj
-        global demage_stock_obj
+        global demage_stock_obj,purchase_report_obj
         item_manage_obj = _item_manage.Item_Manage(root)
         item_purchase_obj = _item_purchase.Item_Purchase(root)
         check_stock_obj = _check_stock.CheckStock(root)
         demage_stock_obj = _check_demage_stock.DemageStcok(root)
+        purchase_report_obj = _purchase_report.PurchaseReport(root)
         
         self.items_to_sale = []
         self.total_items_info = [0,0,0,0,0,0,0]
@@ -218,7 +215,7 @@ class Home:
     def leftFrame(self):
         # ---------------------------operation button--------------------------- #
         operation_name = ['Manage Item','Purchase Item','Check Stock','Demage Stock','Purchase Report',
-                          'Sales Report','Item Sales Report','Expenditure','Expenditure Report','Staff Manager','Contact Book']
+                          'Sales Report','Expenditure','Expenditure Report','Staff Manager','Contact Book']
         self.operation_btn = [tk.Button(self.left_frame,text=operation_name[i], fg=color.color_list[3], bg=color.color_list[5]) for i in range(len(operation_name))]
         
         for btn in self.operation_btn:
@@ -229,10 +226,9 @@ class Home:
         self.operation_btn[3].config(command=lambda:check_demage_stock(self.root))
         self.operation_btn[4].config(command=lambda:purchase_report(self.root))
         self.operation_btn[5].config(command=lambda:sales_report(self.root))
-        self.operation_btn[6].config(command=lambda:item_sales_report(self.root))
-        self.operation_btn[7].config(command=lambda:expenditure(self.root))
-        self.operation_btn[8].config(command=lambda:staff_manager(self.root))
-        self.operation_btn[9].config(command=lambda:contact_book(self.root))
+        self.operation_btn[6].config(command=lambda:expenditure(self.root))
+        self.operation_btn[7].config(command=lambda:staff_manager(self.root))
+        self.operation_btn[8].config(command=lambda:contact_book(self.root))
 
         # Refresh (at left_frame0) 
         self.left_frame_btn_11 = tk.Button(self.left_frame,text="Refresh", fg=color.color_list[3], bg=color.color_list[5], font=('Times New Roman1',10),command=self.refresh)

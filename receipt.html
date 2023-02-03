@@ -11,19 +11,27 @@
         * {
             margin: 0px;
             padding: 0px;
+            font-family: "Helvetica", sans-serif;
+            font-weight: 400;
         }
-
         .page {
             margin: 10px auto;
             height: max-content;
             padding: 10px;
-            width: 350px;
+            width: 90%;
             border: dashed;
             text-align: center;
             font-size: 14px;
             font-weight: bold;
         }
-
+        #receipt_name{
+            text-align: left;
+            margin-left: 5%;
+        }
+        #basic_info{
+            text-align: right;
+            margin-right: 5%;
+        }
         .shop-name {
             font-size: 20px
         }
@@ -41,13 +49,38 @@
 
         .item-list-container {
             display: flex;
-            background-color: #d1d1d1;
+            background-color: #fff;
         }
-
+        .total-items-info {
+            display: flex;
+            background-color: #f1f1f1;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .total-items-info table{
+            text-decoration: none;
+            width: 70%;
+            margin: 10px auto;
+        }
         .item-list-container table {
             margin: 0px auto;
             width: 90%;
             text-align: left;
+        }
+        .item-list-container table,
+        .item-list-container tr,
+        .item-list-container th,
+        .item-list-container td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 3px;
+        }
+        .item-list-container th{
+            background-color: #555;
+            color: #fff;
+        }
+        .item-list-container tr:nth-child(odd){
+            background-color: #d1d1d1;
         }
     </style>
 </head>
@@ -55,67 +88,102 @@
 <body>
     <div class="page">
         <div class="shop-name">ABC Fashion House</div>
-        <p style="font-size:16px">Transaction Reciept</p>
+        <p style="font-size:16px">Transaction Receipt</p>
+        <table style="width: 90%; margin: auto;">
+            <tr>
+                <td align="left">Receipt Name: Purchase Item</td>
+                <td align="right">Date: 2023-02-04</td>
+            </tr>
+        </table>
         <div class="dash-line"></div>
         <div class="item-list-container">
             <table>
                 <tr>
-                    <th>Item (qty)</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Total</th>
+                    <th align="center">SI</th>
+                    <th align="center">Code</th>
+                    <th align="center">Name</th>
+                    <th align="center">Group</th>
+                    <th align="center">Company</th>
+                    <th align="center">VAT(%)</th>
+                    <th align="center">QTY</th>
+                    <th align="center">Purchase</th>
+                    <th align="center">Total</th>
+                    <th align="center">Discount</th>
+                    <th align="center">VAT(tk)</th>
+                    <th align="center">Payable</th>
+                    <th align="center">inv-id</th>
+                    <th align="center">Date</th>
+                    <th align="center">Time</th>
                 </tr>
-        
+
                 <tr>
+                    <td>1</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>abc</td>
+                    <td>10.0</td>
+                    <td>100</td>
+                    <td>1000.0</td>
+                    <td>100000.0</td>
+                    <td>0.0</td>
+                    <td>1000000.0</td>
+                    <td>1100000.0</td>
+                    <td>1</td>
+                    <td>03/02/2023</td>
+                    <td>05:12:32 PM</td>
+                </tr>
+            
+                <tr>
+                    <td>2</td>
+                    <td>mcg</td>
                     <td>kop</td>
-                    <td>150.0</td>
-                    <td>1400.00</td>
-                    <td>210000.00</td>
+                    <td>kp</td>
+                    <td>sa</td>
+                    <td>9.0</td>
+                    <td>150</td>
+                    <td>1900.0</td>
+                    <td>285000.0</td>
+                    <td>0.0</td>
+                    <td>2565000.0</td>
+                    <td>2850000.0</td>
+                    <td>2</td>
+                    <td>03/02/2023</td>
+                    <td>05:13:40 PM</td>
                 </tr>
-        
+            
                 <tr>
+                    <td>3</td>
+                    <td>kjsa</td>
                     <td>skjn</td>
-                    <td>90.0</td>
-                    <td>500.00</td>
-                    <td>45000.00</td>
+                    <td>sdl</td>
+                    <td>skdn</td>
+                    <td>3.0</td>
+                    <td>90</td>
+                    <td>900.0</td>
+                    <td>81000.0</td>
+                    <td>0.0</td>
+                    <td>243000.0</td>
+                    <td>324000.0</td>
+                    <td>3</td>
+                    <td>03/02/2023</td>
+                    <td>05:13:40 PM</td>
                 </tr>
-        
+            
             </table>
         </div>
         <div class="dash-line"></div>
-        <div class="item-list-container">
+        <div class="total-items-info">
             <table>
-        
+
                 <tr>
-                    <td>Total</td>
-                    <td>255000.00</td>
+                    <th align="left">Total item Quantity :</th>
+                    <td>340.0</td>
                 </tr>
-        
                 <tr>
-                    <td>Discount</td>
-                    <td>0.00</td>
+                    <th align="left">Total Purchase Price :</th>
+                    <td>3800.0</td>
                 </tr>
-        
-                <tr>
-                    <td>VAT</td>
-                    <td>0.00</td>
-                </tr>
-        
-                <tr>
-                    <td>Payable</td>
-                    <td>255000.00</td>
-                </tr>
-        
-                <tr>
-                    <td>Paid</td>
-                    <td>260000.00</td>
-                </tr>
-        
-                <tr>
-                    <td>Change</td>
-                    <td>5000.00</td>
-                </tr>
-        
             </table>
         </div>
         <div class="dash-line"></div>
@@ -126,4 +194,5 @@
 </body>
 
 </html>
+        
         

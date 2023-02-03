@@ -1,5 +1,16 @@
 import pdfkit
 import os
+
+
+options = {
+    'page-size': 'Letter',
+    'margin-top': '5mm',
+    'margin-right': '0mm',
+    'margin-bottom': '0mm',
+    'margin-left': '0mm',
+    'orientation': 'Landscape',
+    'encoding': "UTF-8"
+}
 class PythonToHtml:
     def __init__(self) -> None:
         self.total_info_name = ['Total','Discount','VAT','Payable','Paid','Change']
@@ -20,6 +31,8 @@ class PythonToHtml:
         * {{
             margin: 0px;
             padding: 0px;
+            font-family: "Helvetica", sans-serif;
+            font-weight: 400;
         }}
 
         .page {{
@@ -34,7 +47,8 @@ class PythonToHtml:
         }}
 
         .shop-name {{
-            font-size: 20px
+            font-size: 20px;
+            font-weight: 800;
         }}
 
         .dash-line {{
@@ -102,7 +116,7 @@ class PythonToHtml:
             </table>
         </div>
         <div class="dash-line"></div>
-        <div style="font-size: 18px; text-align: center;">
+        <div style="font-size: 18px; text-align: center; font-weight:800;">
             Thank You
         </div>
     </div>
@@ -113,7 +127,7 @@ class PythonToHtml:
         with open("receipt.html", "w") as file:
             file.write(self.html)
         
-        pdfkit.from_file('receipt.html', 'cash_memo.pdf',configuration=self.config)
+        pdfkit.from_file('receipt.html', 'cash_memo.pdf',configuration=self.config,options=options)
         os.startfile('cash_memo.pdf')
 
     def stockReceipt(self,receipt_name, date, headings, rows, total_info_name, total_info):
@@ -130,8 +144,9 @@ class PythonToHtml:
         * {
             margin: 0px;
             padding: 0px;
+            font-family: "Helvetica", sans-serif;
+            font-weight: 400;
         }
-
         .page {
             margin: 10px auto;
             height: max-content;
@@ -261,7 +276,7 @@ class PythonToHtml:
         """
         with open("receipt.html", "w") as file:
             file.write(html)
-        pdfkit.from_file("receipt.html", 'cash_memo.pdf',configuration=self.config)
+        pdfkit.from_file("receipt.html", 'cash_memo.pdf',configuration=self.config,options=options)
         os.startfile('cash_memo.pdf')
 
 # pdfkit.from_file('receipt.html','cash_memo.pdf',configuration=config)
@@ -272,3 +287,6 @@ class PythonToHtml:
 # obj = PythonToHtml()
 # rows = [[2,2,2],[3,3,3],[1,1,1],[1,1,1]]
 # obj.stockReceipt("stock item","03/02/2023",['name','id','value'],rows,['a','','b','c'],[1,'',2,3])
+
+# pdfkit.from_file('receipt.html', 'cash_memo.pdf',configuration=pdfkit.configuration(wkhtmltopdf=r'C:\\Program Files (x86)\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'),options=options)
+# os.startfile('cash_memo.pdf')
