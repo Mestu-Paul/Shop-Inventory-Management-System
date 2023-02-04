@@ -232,6 +232,7 @@ class Item_Purchase:
         
     def addItemDetailsDB(self,values):
         message = dao.getLastInvoiceId()
+        self.lstinv = message[1]+1
         values.append(message[1]+1)
         print("\n-----------new invoice item details-------------\n",message)
         if(message[0]==0):
@@ -281,7 +282,8 @@ class Item_Purchase:
         
         self.back_home()
         obj = pytohtml.PythonToHtml()
-        obj.saleReceipt(item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
+        date = dt.datetime.now().strftime("%d/%m/%Y")
+        obj.showItemDetails('Purchase Item',date,self.lstinv, item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
         _help.show_message('success','Successfully added a new transaction')
         pass
         

@@ -510,7 +510,7 @@ class Home:
             self.addSaleHistoryDB(row)
         # self.back_home()
         obj = pytohtml.PythonToHtml()
-        obj.saleReceipt(item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
+        obj.saleReceipt('Sale item',self.items_to_sale[0][8],lastInvoiceId[1]+1,item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
         self.total_items_info = [0 for i in range(7)]
         self.showTotalInfo()
         self.set_entry_value(self.total_info_entries[0],0)

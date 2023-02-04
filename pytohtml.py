@@ -17,7 +17,7 @@ class PythonToHtml:
         self.config = pdfkit.configuration(wkhtmltopdf=r'C:\\Program Files (x86)\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')        
         pass
     
-    def saleReceipt(self,item_name,item_qty,item_price,total_info):
+    def saleReceipt(self,receipt_name,date,invoice, item_name,item_qty,item_price,total_info):
         self.html = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -79,6 +79,12 @@ class PythonToHtml:
     <div class="page">
         <div class="shop-name">ABC Fashion House</div>
         <p style="font-size:16px">Transaction Receipt</p>
+        <table style="width: 90%; margin: auto;">
+            <tr>
+                <td align="left">Receipt Name:{receipt_name}</td>
+                <td align="right">Date: {date}<br>invoice: #{invoice}</td>
+            </tr>
+        </table>
         <div class="dash-line"></div>
         <div class="item-list-container">
             <table>
@@ -130,7 +136,7 @@ class PythonToHtml:
         pdfkit.from_file('receipt.html', 'cash_memo.pdf',configuration=self.config,options=options)
         os.startfile('cash_memo.pdf')
 
-    def stockReceipt(self,receipt_name, date, headings, rows, total_info_name, total_info):
+    def stockReceipt(self,receipt_name, date, invoice, headings, rows, total_info_name, total_info):
         html = """
 <!DOCTYPE html>
 <html lang="en">
@@ -226,7 +232,7 @@ class PythonToHtml:
         <table style="width: 90%; margin: auto;">
             <tr>
                 <td align="left">Receipt Name:{receipt_name}</td>
-                <td align="right">Date: {date}</td>
+                <td align="right">Date: {date}<br>invoice: #{invoice}</td>
             </tr>
         </table>
         <div class="dash-line"></div>

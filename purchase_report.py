@@ -29,7 +29,7 @@ class PurchaseReport:
             total_info[1] += float(row[6]) # purchase
         
         obj = _pytohtml.PythonToHtml()
-        obj.stockReceipt(receipt_name,date,headings,rows,total_info_name,total_info)
+        obj.stockReceipt(receipt_name,date,'N\A',headings,rows,total_info_name,total_info)
     
     def topFrame(self):
         # search type

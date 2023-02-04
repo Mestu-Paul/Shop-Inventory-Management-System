@@ -28,7 +28,7 @@ class DemageStcok:
             total_info[1] += float(row[6]) # purchase
         
         obj = _pytohtml.PythonToHtml()
-        obj.stockReceipt(receipt_name,date,headings,rows,total_info_name,total_info)
+        obj.stockReceipt(receipt_name,date,self.lstinv, headings,rows,total_info_name,total_info)
     
     def deleteFromDemage(self):
         pass
@@ -59,9 +59,9 @@ class DemageStcok:
             return
         
         lastInvoiceId = int(dao.getLastInvoiceId()[1])
-        
+        self.lstinv = lastInvoiceId+1
         # insert into invoice table
-        row = [lastInvoiceId+1,'demage',dt.datetime.now().strftime("%d/%m/%Y"),dt.datetime.now().strftime("%I:%M:%S %p"),self.avl_qty*self.price]
+        row = [lastInvoiceId+1,'demage',dt.datetime.now().showItemDetails("%d/%m/%Y"),dt.datetime.now().strftime("%I:%M:%S %p"),self.avl_qty*self.price]
         message = self.addInvoiceDB(row)
         if message[0]==0:
             _help.show_message('error',f'While inserting into invoice new demage {message[1]}')

@@ -29,7 +29,7 @@ class CheckStock:
             total_info[3] += float(row[7]) + float(row[7])*(float(row[4])/100) # sale with vat
         
         obj = _pytohtml.PythonToHtml()
-        obj.stockReceipt(receipt_name,date,headings,rows,total_info_name,total_info)
+        obj.stockReceipt(receipt_name,date,'N\A',headings,rows,total_info_name,total_info)
                 
 
     def topFrame(self):

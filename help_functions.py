@@ -28,7 +28,7 @@ def show_message(message_type,message):
     tk.Label(messageBox,bg='#ffffff', image=message_icon).place(relx=0,rely=0.0,relwidth=0.3,relheight=0.75)
 
     text = tk.Text(messageBox,wrap=tk.WORD,bd=0)
-    text.place(relx=0.3,rely=0,relwidth=1,relheight=0.75)
+    text.place(relx=0.3,rely=0,relwidth=0.7,relheight=0.75)
     text.insert(tk.END,message)
     global btn
     btn = tk.Button(messageBox,text='Ok', bd=1, bg='#f1f1f1', relief=tk.SUNKEN, highlightbackground="red", command=messageBox.destroy)
