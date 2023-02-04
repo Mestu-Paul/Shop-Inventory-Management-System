@@ -8,10 +8,13 @@ import color_code as color
 
 class Item_Manage:
     def __init__(self,root):
-        self.root = root
-        self.message_type=['error','success']
-        self.item_entries = None
-        # self.item_manage(self.root)
+        try:
+            self.root = root
+            self.message_type=['error','success']
+            self.item_entries = None
+            # self.item_manage(self.root)
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while Item manage object creating {e}')
     def backHome(self):
         print("back home")
         _help.init_page(self.root,'Sale Item')

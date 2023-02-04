@@ -11,10 +11,12 @@ import pytohtml as pytohtml
 
 class Item_Purchase:
     def __init__(self,root):
-        self.root = root
-        self.add_item_list = []
-        self.check_unique_code = {}
-        pass
+        try:
+            self.root = root
+            self.add_item_list = []
+            self.check_unique_code = {}
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while item purchase  object creating {e}')
     
     def back_home(self):
         self.add_item_list.clear()

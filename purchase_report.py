@@ -8,9 +8,11 @@ import help_functions as _help
 
 class PurchaseReport:
     def __init__(self,root) -> None:
-        self.root = root
-        self.item_list = []
-        pass
+        try:
+            self.root = root
+            self.item_list = []
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while Purchase Report object creating {e}')
 
     def backHome(self):
         print("back home")

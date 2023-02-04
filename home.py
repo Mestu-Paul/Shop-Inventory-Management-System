@@ -136,23 +136,26 @@ class Home:
     # date 8
     
     def __init__(self,root):
-        self.root = root
-        global item_manage_obj,item_purchase_obj,check_stock_obj
-        global demage_stock_obj,purchase_report_obj,sales_report_obj
-        global expenditure_manage_obj,expenditure_report_obj,staff_manager_obj
-        item_manage_obj = _item_manage.Item_Manage(root)
-        item_purchase_obj = _item_purchase.Item_Purchase(root)
-        check_stock_obj = _check_stock.CheckStock(root)
-        demage_stock_obj = _check_demage_stock.DemageStcok(root)
-        purchase_report_obj = _purchase_report.PurchaseReport(root)
-        sales_report_obj = _sales_report.SalesReport(root)
-        expenditure_manage_obj = _expenditure_manage.ExpenditureManage(root)
-        expenditure_report_obj = _expenditure_report.ExpenditureReport(root)
-        staff_manager_obj = _staff_manager.StaffManager(root)
-        
-        self.items_to_sale = []
-        self.total_items_info = [0,0,0,0,0,0,0]
-        self.count_by_item_code = dict()
+        try:
+            self.root = root
+            global item_manage_obj,item_purchase_obj,check_stock_obj
+            global demage_stock_obj,purchase_report_obj,sales_report_obj
+            global expenditure_manage_obj,expenditure_report_obj,staff_manager_obj
+            item_manage_obj = _item_manage.Item_Manage(root)
+            item_purchase_obj = _item_purchase.Item_Purchase(root)
+            check_stock_obj = _check_stock.CheckStock(root)
+            demage_stock_obj = _check_demage_stock.DemageStcok(root)
+            purchase_report_obj = _purchase_report.PurchaseReport(root)
+            sales_report_obj = _sales_report.SalesReport(root)
+            expenditure_manage_obj = _expenditure_manage.ExpenditureManage(root)
+            expenditure_report_obj = _expenditure_report.ExpenditureReport(root)
+            staff_manager_obj = _staff_manager.StaffManager(root)
+            
+            self.items_to_sale = []
+            self.total_items_info = [0,0,0,0,0,0,0]
+            self.count_by_item_code = dict()
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while home object creating {e}')
         pass
     def back_home(self):
         self.main_frame.place_forget()

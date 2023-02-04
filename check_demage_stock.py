@@ -8,8 +8,11 @@ import help_functions as _help
 
 class DemageStcok:
     def __init__(self,root) -> None:
-        self.root = root
-        self.item_info_lbl = []
+        try:
+            self.root = root
+            self.item_info_lbl = []
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while demage stock object creating {e}')
         pass
     
     def backHome(self):

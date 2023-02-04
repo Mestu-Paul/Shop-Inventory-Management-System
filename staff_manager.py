@@ -6,8 +6,11 @@ import help_functions as _help
 
 class StaffManager:
     def __init__(self,root) -> None:
-        self.root = root
-        pass
+        try:
+            self.root = root
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while staff manager object creating {e}')
+    
     def backHome(self):
         print("back home")
         _help.init_page(self.root,'Sale Item')

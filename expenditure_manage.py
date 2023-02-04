@@ -9,8 +9,11 @@ import datetime as dt
 
 class ExpenditureManage:
     def __init__(self,root) -> None:
-        self.root = root
-        self.item_list = []
+        try:
+            self.root = root
+            self.item_list = []
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while expenditure manager object creating {e}')
         pass
 
     def backHome(self):

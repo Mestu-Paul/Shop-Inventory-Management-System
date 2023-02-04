@@ -7,7 +7,10 @@ import pytohtml as _pytohtml
 
 class CheckStock:
     def __init__(self,root):
-        self.root = root
+        try:
+            self.root = root
+        except Exception as e:
+            _help.show_message('warning',f'Occur exception while check stock object creating {e}')
         pass
     def backHome(self):
         print("back home")
