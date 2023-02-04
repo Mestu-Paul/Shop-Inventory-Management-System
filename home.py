@@ -10,7 +10,6 @@ import item_purchase as _item_purchase
 import check_stock as _check_stock
 import check_demage_stock as _check_demage_stock
 import sales_report as _sales_report
-import item_sales_report as _item_sales_report
 import purchase_report as _purchase_report
 import expenditure_report as _expenditure_report
 import staff_manager as _staff_manager
@@ -109,7 +108,7 @@ def purchase_report(root):
 def sales_report(root):
     print('go to sales report')
     init_page(root,'Sales Report')
-    _sales_report.sales_report(root)
+    sales_report_obj.salesReport()
 
 
 
@@ -183,12 +182,13 @@ class Home:
     def __init__(self,root):
         self.root = root
         global item_manage_obj,item_purchase_obj,check_stock_obj
-        global demage_stock_obj,purchase_report_obj
+        global demage_stock_obj,purchase_report_obj,sales_report_obj
         item_manage_obj = _item_manage.Item_Manage(root)
         item_purchase_obj = _item_purchase.Item_Purchase(root)
         check_stock_obj = _check_stock.CheckStock(root)
         demage_stock_obj = _check_demage_stock.DemageStcok(root)
         purchase_report_obj = _purchase_report.PurchaseReport(root)
+        sales_report_obj = _sales_report.SalesReport(root)
         
         self.items_to_sale = []
         self.total_items_info = [0,0,0,0,0,0,0]

@@ -73,7 +73,7 @@ class Item_Purchase:
         
     def leftFrame(self):
         item_info_list = ['Item Code :','Item Name :', 'Item Group :', 'Company :',
-                        'VAT :', 'Quantity :','Sale Price :','Purchase Price :','Date :']
+                        'VAT :', 'Quantity :','Purchase Price :','Sale Price :','Date :']
         
         for i in range(0,len(item_info_list)):
             tk.Label(self.left_frame,text=item_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w' \
