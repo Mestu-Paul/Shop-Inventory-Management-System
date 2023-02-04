@@ -514,6 +514,14 @@ class Home:
             vat = (total-discount)*(values[4]/100)
             row = [values[0],values[1],qty,price,total,discount,vat,total+vat-discount,'','',lastInvoiceId[1]+1]
             self.addSaleHistoryDB(row)
+        
+        # update total amount of main acount
+        message = dao.set_rows("UPDATE basic SET total_amount = total_amount+?;",[total_info[3]])
+        if message[0]==0:
+            _help.show_message('error',f'While updating total amount for sale item {message[1]}')
+            return
+        
+        
         # self.back_home()
         obj = pytohtml.PythonToHtml()
         obj.saleReceipt('Sale item',self.items_to_sale[0][8],lastInvoiceId[1]+1,item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)

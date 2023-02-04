@@ -184,7 +184,6 @@ class Item_Purchase:
     
     
     def addInvoiceDB(self,row):
-
         values = [0 for i in range(10)]
         values[0] = row[9]# invoice id
         values[1] = 'purchase' # type
@@ -280,10 +279,17 @@ class Item_Purchase:
         for values in self.add_item_list:
             self.addItemDetailsDB(values)
         
+        # update total amount of main acount
+        message = dao.set_rows("UPDATE basic SET total_amount = total_amount+?;",[total_info[3]])
+        if message[0]==0:
+            _help.show_message('error',f'While updating total amount for sale item {message[1]}')
+            return
+        
+        
         self.back_home()
         obj = pytohtml.PythonToHtml()
         date = dt.datetime.now().strftime("%d/%m/%Y")
-        obj.showItemDetails('Purchase Item',date,self.lstinv, item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
+        obj.saleReceipt('Purchase Item',date,self.lstinv, item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
         _help.show_message('success','Successfully added a new transaction')
         pass
         

@@ -14,26 +14,21 @@
             font-family: "Helvetica", sans-serif;
             font-weight: 400;
         }
+
         .page {
             margin: 10px auto;
             height: max-content;
             padding: 10px;
-            width: 90%;
+            width: 350px;
             border: dashed;
             text-align: center;
             font-size: 14px;
             font-weight: bold;
         }
-        #receipt_name{
-            text-align: left;
-            margin-left: 5%;
-        }
-        #basic_info{
-            text-align: right;
-            margin-right: 5%;
-        }
+
         .shop-name {
-            font-size: 20px
+            font-size: 20px;
+            font-weight: 800;
         }
 
         .dash-line {
@@ -49,38 +44,13 @@
 
         .item-list-container {
             display: flex;
-            background-color: #fff;
+            background-color: #d1d1d1;
         }
-        .total-items-info {
-            display: flex;
-            background-color: #f1f1f1;
-            width: 90%;
-            margin: 0 auto;
-        }
-        .total-items-info table{
-            text-decoration: none;
-            width: 70%;
-            margin: 10px auto;
-        }
+
         .item-list-container table {
             margin: 0px auto;
             width: 90%;
             text-align: left;
-        }
-        .item-list-container table,
-        .item-list-container tr,
-        .item-list-container th,
-        .item-list-container td{
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 3px;
-        }
-        .item-list-container th{
-            background-color: #555;
-            color: #fff;
-        }
-        .item-list-container tr:nth-child(odd){
-            background-color: #d1d1d1;
         }
     </style>
 </head>
@@ -91,76 +61,71 @@
         <p style="font-size:16px">Transaction Receipt</p>
         <table style="width: 90%; margin: auto;">
             <tr>
-                <td align="left">Receipt Name: Expenditure</td>
-                <td align="right">Date: 2023-02-04<br>invoice: #N/A</td>
+                <td align="left">Receipt Name:Purchase Item</td>
+                <td align="right">Date: 04/02/2023<br>invoice: #19</td>
             </tr>
         </table>
         <div class="dash-line"></div>
         <div class="item-list-container">
             <table>
                 <tr>
-                    <th align="center">SI</th>
-                    <th align="center">Purpose</th>
-                    <th align="center">Amount</th>
-                    <th align="center">Remarks</th>
-                    <th align="center">INV-id</th>
-                    <th align="center">Date</th>
-                    <th align="center">Time</th>
+                    <th>Item (qty)</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
                 </tr>
-
+        
                 <tr>
-                    <td>1</td>
-                    <td>check</td>
-                    <td>100.0</td>
-                    <td>credit1
-</td>
-                    <td>13</td>
-                    <td>2/4/23</td>
-                    <td>04:23:40 PM</td>
+                    <td>aa</td>
+                    <td>10.0</td>
+                    <td>1000.00</td>
+                    <td>10000.00</td>
                 </tr>
-            
-                <tr>
-                    <td>2</td>
-                    <td>check1</td>
-                    <td>-1000.0</td>
-                    <td>credit2
-</td>
-                    <td>14</td>
-                    <td>2/4/23</td>
-                    <td>04:23:57 PM</td>
-                </tr>
-            
+        
             </table>
         </div>
         <div class="dash-line"></div>
-        <div class="total-items-info">
+        <div class="item-list-container">
             <table>
-
+        
                 <tr>
-                    <th align="left">Total Expenditure :</th>
-                    <td>2</td>
+                    <td>Total</td>
+                    <td>10000.00</td>
                 </tr>
+        
                 <tr>
-                    <th align="left">Expenditure Credit :</th>
-                    <td>100.0</td>
+                    <td>Discount</td>
+                    <td>0.00</td>
                 </tr>
+        
                 <tr>
-                    <th align="left">Expenditure Debit :</th>
-                    <td>1000.0</td>
+                    <td>VAT</td>
+                    <td>0.00</td>
                 </tr>
+        
                 <tr>
-                    <th align="left">Total Expenditure Amount :</th>
-                    <td>-900.0</td>
+                    <td>Payable</td>
+                    <td>10000.00</td>
                 </tr>
+        
+                <tr>
+                    <td>Paid</td>
+                    <td>11000.00</td>
+                </tr>
+        
+                <tr>
+                    <td>Change</td>
+                    <td>1000.00</td>
+                </tr>
+        
             </table>
         </div>
         <div class="dash-line"></div>
-        <div style="font-size: 18px; text-align: center;">
+        <div style="font-size: 18px; text-align: center; font-weight:800;">
             Thank You
         </div>
     </div>
 </body>
 
 </html>
-        
         

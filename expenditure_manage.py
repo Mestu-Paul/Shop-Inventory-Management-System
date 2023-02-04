@@ -45,6 +45,12 @@ class ExpenditureManage:
             _help.show_message('error',message[1])
             return
         
+        command = "UPDATE basic SET total_amount = total_amount+?;"
+        values = [float(values[1])]
+        message = dao.set_rows(command,values)
+        if message[0]==0:
+            _help.show_message('error',f'While updating total amount for expenditure {message[1]}')
+            return
         
         message = self.addInvoiceDB(row)
         if message[0]==0:
