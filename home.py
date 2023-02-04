@@ -11,6 +11,7 @@ import check_stock as _check_stock
 import check_demage_stock as _check_demage_stock
 import sales_report as _sales_report
 import purchase_report as _purchase_report
+import expenditure_manage as _expenditure_manage
 import expenditure_report as _expenditure_report
 import staff_manager as _staff_manager
 import item_manage as _item_manage
@@ -113,12 +114,13 @@ def sales_report(root):
 
 
 def expenditure(root):
-	print('go to expenditure')
+    print('go to expenditure')
+    expenditure_manage_obj.expenditureManage()
 
 def expenditure_report(root):
     print('go to expenditure report')
     init_page(root,'Expenditure Report')
-    _expenditure_report.expenditure_report(root)
+    expenditure_report_obj.expenditureReport()
 
 def staff_manager(root):
     print('go to staff manager')
@@ -183,12 +185,15 @@ class Home:
         self.root = root
         global item_manage_obj,item_purchase_obj,check_stock_obj
         global demage_stock_obj,purchase_report_obj,sales_report_obj
+        global expenditure_manage_obj,expenditure_report_obj
         item_manage_obj = _item_manage.Item_Manage(root)
         item_purchase_obj = _item_purchase.Item_Purchase(root)
         check_stock_obj = _check_stock.CheckStock(root)
         demage_stock_obj = _check_demage_stock.DemageStcok(root)
         purchase_report_obj = _purchase_report.PurchaseReport(root)
         sales_report_obj = _sales_report.SalesReport(root)
+        expenditure_manage_obj = _expenditure_manage.ExpenditureManage(root)
+        expenditure_report_obj = _expenditure_report.ExpenditureReport(root)
         
         self.items_to_sale = []
         self.total_items_info = [0,0,0,0,0,0,0]
@@ -379,7 +384,7 @@ class Home:
         tk.Label(self.right_frame,text='Query :', bg=color.color_list[7], anchor='w').place(relx=0.01, rely=0.07, relwidth=0.15, relheight=0.05)
         
         self.product_search_type = tk.StringVar()
-        search_type_list = ['name', "code", "company",'group']
+        search_type_list = ['A/C name', "Phone"]
         self.product_search_type.set(search_type_list[0]) # default value
         search_type = tk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
         search_type.place(relx=0.16, rely=0.01, relwidth=0.2, relheight=0.06)
@@ -561,7 +566,7 @@ class Home:
         scrollbarx.place(relx=0,rely=0.95,relwidth=1,relheight=0.05)
         
     def rightFrame(self):
-        # self.searchFrame()
+        self.searchFrame()
         self.customerFrame()
         self.totalFrame()
         self.paymentFrame()

@@ -24,7 +24,7 @@ def show_message(message_type,message):
     messageBox.resizable(False,False)
     messageBox.grab_set()
     
-    message_icon = ImageTk.PhotoImage(Image.open("img/error.png").resize((50,50)))
+    message_icon = ImageTk.PhotoImage(Image.open(f"img/{message_type}.png").resize((50,50)))
     tk.Label(messageBox,bg='#ffffff', image=message_icon).place(relx=0,rely=0.0,relwidth=0.3,relheight=0.75)
 
     text = tk.Text(messageBox,wrap=tk.WORD,bd=0)
