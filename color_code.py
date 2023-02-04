@@ -10,8 +10,9 @@ from tkinter import colorchooser
 # color6 = '#b1b13d'
 # red    = '#ff0000'
 # light_grey = '#e1e1e1'
+global color_list,temp_color_list
 color_list = ['#297592','#ffffff','#3bbd75','#000000','#13dbcc','#b1b13d','#ff0000','#e1e1e1']
-temp_color_list = color_list.copy()
+temp_color_list = [color for color in color_list]
 
 def fun():
     print('button clicked')
@@ -26,21 +27,29 @@ def update_preview(main_frame):
 def choose_color(idx,main_frame):
 	# variable to store hexadecimal code of color
     color_code = colorchooser.askcolor(title ="Choose color")
+    global color_list,temp_color_list
     temp_color_list[idx] = color_code[1]
     print(color_code[1])
     update_preview(main_frame)
     
 def backHome(main_frame):
+    global color_list,temp_color_list
     print("back home")
     print(color_list)
     main_frame.place_forget()
+    
+    
 def color_update_apply(main_frame):
-    print(color_list)
-    color_list=temp_color_list.copy()
+    # print("update ",color_list)
+    global color_list,temp_color_list
+    color_list=[color for color in temp_color_list]
     print(color_list)
     backHome(main_frame)
+    
+    
 def color_change(root):
-    temp_color_list = color_list.copy()
+    global color_list,temp_color_list
+    temp_color_list = [color for color in color_list]
     print('I am here color change')
     main_frame = tk.Frame(root)
     main_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
