@@ -5,6 +5,8 @@ import manage_bank_account as mngbnkac
 import basic_info_setting as bscinf
 from user_panal import User_Panel
 # from home import addHome
+import help_functions as _help
+import DAO as dao
 import color_code as color
 
 def getMenubar(root):
@@ -116,10 +118,10 @@ def getMenubar(root):
     )
     
     # add menu item to file menu
-    # File_menu.add_command(
-    #     label='Home',
-    #     command=lambda:addHome(root)
-    # )
+    File_menu.add_command(
+        label='Main Balance',
+        command=showMainBalance
+    )
 
     return menubar
 
@@ -156,3 +158,11 @@ def account_ladger():
 def summary_sheet():
 	print('Summary Sheet')
 
+# ------------- main balance file menu command ------------- #
+def showMainBalance():
+    message = dao.get_rows("SELECT total_amount FROM basic;",[])
+    if message[0]==0:
+        _help.show_message('error',f'While query for total balance {message[1]}')
+        return
+    print(message[1][0])
+    _help.show_message('balance',f"Your current balance is {format(float(message[1][0][0]),'0.2f')}")

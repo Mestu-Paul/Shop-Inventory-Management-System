@@ -19,6 +19,10 @@ import help_functions as _help
 import color_code as color
 import pytohtml as pytohtml
 
+shop_name = None
+phone = None
+email = None
+owner = None
 
 # object of classes
 
@@ -39,16 +43,32 @@ def init_page(root,page_name):
     top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
     # ---------------------------------------------------------------------
     # logo  (at frame 0)
+    
+    global shop_name,phone,email,owner
+    if shop_name==None:
+        print('retrieve')
+        message = dao.get_rows("SELECT * FROM basic;",[])
+        if message[0]==0:
+            _help.show_message('error',f'While retreiving basic info {message[1]}')
+            return
+        message= message[1][0]
+        print(message)
+        shop_name = message[0]
+        owner = message[1]
+        phone = message[2]
+        email = message[3]
+
+    
     root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
     top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
     top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
 
     # shop name (at frame 0)
-    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text="abc Fashion House" , fg=color.color_list[1], bg=color.color_list[0], font=("Comic Sans MS", 20, "bold"))
+    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , fg=color.color_list[1], bg=color.color_list[0], font=("Comic Sans MS", 20, "bold"))
     top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
 
     # shop owner's info (at frame 0)
-    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text="Mobile: +8801xxxxxxxxx\nEmail: abc@xxxxx.com\nOwner: abc" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
+    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
     top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
     
     # page name 
