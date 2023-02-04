@@ -34,6 +34,8 @@ def set_user_panel(user_info):
         cursor.execute(command,user_info)
         conn.commit()
         return [1,"Successfully added a new member"]
+    except sqlite3.IntegrityError as e: 
+        return [0,f'Duplicated record {e}']
     except Exception as e:
         return [0,e]
 def updater_user_panel(user_info):
@@ -48,6 +50,8 @@ def updater_user_panel(user_info):
         cursor.execute(command)
         conn.commit()
         return [1,f"Successfully updated the user , user name = {user_info[0]}"]
+    except sqlite3.IntegrityError as e: 
+        return [0,f'Duplicated record {e}']
     except Exception as e:
         return [0,e]
 # --------------------- end --------------------- #
@@ -103,6 +107,8 @@ def update_rows(command,values):
         cursor.execute(command,values)
         conn.commit()
         return [1,"Successfully updated"]
+    except sqlite3.IntegrityError as e: 
+        return [0,f'Duplicated record {e}']
     except Exception as e:
         return [0,e]
 def delete_rows(command,values):

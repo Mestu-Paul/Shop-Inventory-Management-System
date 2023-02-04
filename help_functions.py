@@ -2,6 +2,9 @@ import tkinter as tk
 from PIL import ImageTk, Image
 import re as regex
 import datetime as dt 
+import time
+import threading
+
 
 import DAO as dao 
 import color_code as color
@@ -63,6 +66,9 @@ shop_name = None
 phone = None
 email = None
 owner = None   
+
+        
+        
 def init_page(root,page_name):
     # ============================ top frame 0 ============================
     top_frame_0 = tk.Frame(root,bg=color.color_list[0])
@@ -97,31 +103,29 @@ def init_page(root,page_name):
     top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
     top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
     
-    # page name 
-    top0_frame_0_lbl_3 = tk.Label(top_frame_0,text=page_name , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 17,"bold"))
-    top0_frame_0_lbl_3.place(relx=0.43, rely=0.3)
-
-
 
 
     # ============================ top frame 1 ============================
     top_frame_1 = tk.Frame(root,bg=color.color_list[2])
     top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
     # ---------------------------------------------------------------------
-    # welcome  (at frame 1)
-    top_frame_1_lbl_0 = tk.Label(top_frame_1,text="Welcome to abc Fasion House" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_0.pack(side=tk.LEFT,padx=50)
-
-    # date (at frame 1)
+    
     cur_date = dt.date.today().strftime("%B %d, %Y")
-    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_date , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
-
-    # time (at frame 1)
     cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
-    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_time , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+    name_list = [f'Welcome to {shop_name}',cur_date,cur_time,page_name]
+    
+    lbl_list = [tk.Label(top_frame_1, fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12)
+            ) for i in range(len(name_list))]
+    
+    def show_time():
+        while True:
+            current_time = time.strftime("%H:%M:%S %p")
+            lbl_list[2].config(text=current_time)
+            time.sleep(1)
 
-    # tittle (at frame 1)
-    # top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    # top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+    for i,lbl in enumerate(lbl_list):
+        lbl.pack(side=tk.LEFT,padx=50)
+        lbl.config(text=name_list[i])
+        
+    time_thread = threading.Thread(target=show_time)
+    time_thread.start()

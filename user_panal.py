@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 import color_code as color
 # from home import _help.init_page
 import home as _home
-import help_functions as _help_functions
+import help_functions as _help
 import DAO as dao
 
 class User_Panel():
@@ -114,7 +114,7 @@ class User_Panel():
             self.bottom_frame.place(relx=0,rely=0.31,relwidth=1,relheight=.69)
             self.show_table()
         except Exception as e:
-            _help_functions.show_message("warning",e)
+            _help.show_message("warning",e)
             return
         
     def show_table(self):
@@ -133,7 +133,7 @@ class User_Panel():
         print(user_panel_user_info)
         if user_panel_user_info[0]==0:
             print(user_panel_user_info[1])
-            _help_functions.show_message('warning',user_panel_user_info[1])
+            _help.show_message('warning',user_panel_user_info[1])
         else:
             for i in range(0,len(user_panel_user_info[1])):
                 values_list = [user_panel_user_info[1][i][0],user_panel_user_info[1][i][3],user_panel_user_info[1][i][4]]
@@ -146,21 +146,21 @@ class User_Panel():
         message_type=['error','success']
         user_info = [self.top_frame_entry_user_name.get(),self.top_frame_entry_password.get(),self.top_frame_entry_user_fullname.get(),self.user_type.get()]
         if len(user_info)!=4:
-            _help_functions.show_message(message_type[0],"Please fill all the fields")
+            _help.show_message(message_type[0],"Please fill all the fields")
             return
         for info in user_info:
             print(info)
         for info in user_info:
             if len(info)==0:
-                _help_functions.show_message(message_type[0],"Please fill all the fields")
+                _help.show_message(message_type[0],"Please fill all the fields")
                 print(user_info)
                 return
             elif regex.match("^[a-zA-Z\s]+$",info)==None:
-                _help_functions.show_message(message_type[0],"You can not use any special character")
+                _help.show_message(message_type[0],"You can not use any special character")
                 return
         message = dao.set_user_panel(user_info)
         print(message)
-        _help_functions.show_message(message_type[message[0]],message[1])
+        _help.show_message(message_type[message[0]],message[1])
         self.user_panel()
             
     
@@ -168,21 +168,21 @@ class User_Panel():
         message_type=['error','success']
         user_info = [self.user_name_to_query,self.top_frame_entry_password.get(),self.top_frame_entry_user_fullname.get(),self.user_type.get()]
         if len(user_info)!=4:
-            _help_functions.show_message(message_type[0],"Please fill all the fields")
+            _help.show_message(message_type[0],"Please fill all the fields")
             return
         for info in user_info:
             print(info)
         for info in user_info:
             if len(info)==0:
-                _help_functions.show_message(message_type[0],"Please fill all the fields")
+                _help.show_message(message_type[0],"Please fill all the fields")
                 print(user_info)
                 return
             elif regex.match("^[a-zA-Z\s]+$",info)==None:
-                _help_functions.show_message(message_type[0],"You can not use any special character")
+                _help.show_message(message_type[0],"You can not use any special character")
                 return
         message = dao.updater_user_panel(user_info)
         print(message)
-        _help_functions.show_message(message_type[message[0]],message[1])
+        _help.show_message(message_type[message[0]],message[1])
         self.user_panel()
         
     
@@ -190,7 +190,7 @@ class User_Panel():
         message_type=['error','success']
         message = dao.delete_row_of_a_table("user_panel","user_name",self.user_name_to_query)
         print(message)
-        _help_functions.show_message(message_type[message[0]],message[1])
+        _help.show_message(message_type[message[0]],message[1])
         self.user_panel()
     
     
