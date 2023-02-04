@@ -4,7 +4,7 @@ from PIL import ImageTk, Image
 # from tkinter import ttk
 
 import color_code as color
-# from home import init_page
+# from home import _help.init_page
 import home as _home
 import help_functions as _help_functions
 import DAO as dao
@@ -16,7 +16,7 @@ class User_Panel():
     def user_panel(self):
         print('i am here user panal')
         try:
-            _home.init_page(self.root,'User Panel')
+            _help.init_page(self.root,'User Panel')
             # item manage main frameprint('i am here user panal')
             
             # =================== main frame ========================= #

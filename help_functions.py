@@ -1,6 +1,10 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 import re as regex
+import datetime as dt 
+
+import DAO as dao 
+import color_code as color
 
 def on_enter(event):
     global btn
@@ -53,3 +57,71 @@ def is_alphanum(var):
         if regex.match("^[a-zA-Z0-9\s]+$",v)==None:
             return False
         return True
+    
+
+shop_name = None
+phone = None
+email = None
+owner = None   
+def init_page(root,page_name):
+    # ============================ top frame 0 ============================
+    top_frame_0 = tk.Frame(root,bg=color.color_list[0])
+    top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
+    # ---------------------------------------------------------------------
+    # logo  (at frame 0)
+    
+    global shop_name,phone,email,owner
+    if shop_name==None:
+        print('retrieve')
+        message = dao.get_rows("SELECT * FROM basic;",[])
+        if message[0]==0:
+            show_message('error',f'While retreiving basic info {message[1]}')
+            return
+        message= message[1][0]
+        print(message)
+        shop_name = message[0]
+        owner = message[1]
+        phone = message[2]
+        email = message[3]
+
+    
+    root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
+    top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
+    top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
+
+    # shop name (at frame 0)
+    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , fg=color.color_list[1], bg=color.color_list[0], font=("Comic Sans MS", 20, "bold"))
+    top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
+
+    # shop owner's info (at frame 0)
+    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
+    top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
+    
+    # page name 
+    top0_frame_0_lbl_3 = tk.Label(top_frame_0,text=page_name , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 17,"bold"))
+    top0_frame_0_lbl_3.place(relx=0.43, rely=0.3)
+
+
+
+
+    # ============================ top frame 1 ============================
+    top_frame_1 = tk.Frame(root,bg=color.color_list[2])
+    top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
+    # ---------------------------------------------------------------------
+    # welcome  (at frame 1)
+    top_frame_1_lbl_0 = tk.Label(top_frame_1,text="Welcome to abc Fasion House" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
+    top_frame_1_lbl_0.pack(side=tk.LEFT,padx=50)
+
+    # date (at frame 1)
+    cur_date = dt.date.today().strftime("%B %d, %Y")
+    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_date , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
+    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+
+    # time (at frame 1)
+    cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
+    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_time , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
+    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
+
+    # tittle (at frame 1)
+    # top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
+    # top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)

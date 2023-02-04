@@ -13,6 +13,7 @@ class DemageStcok:
         pass
     
     def backHome(self):
+        _help.init_page(self.root,'Sale Item')
         self.main_frame.place_forget()
         
     def preview(self):

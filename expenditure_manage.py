@@ -6,7 +6,6 @@ import pytohtml as _pytohtml
 import help_functions as _help
 import DAO as dao 
 import datetime as dt
-from home import init_page
 
 class ExpenditureManage:
     def __init__(self,root) -> None:
@@ -16,7 +15,7 @@ class ExpenditureManage:
 
     def backHome(self):
         print("back home")
-        init_page(self.root,'Sale Item')
+        _help.init_page(self.root,'Sale Item')
         self.main_frame.place_forget()
         
         

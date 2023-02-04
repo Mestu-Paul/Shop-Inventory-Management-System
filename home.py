@@ -19,10 +19,6 @@ import help_functions as _help
 import color_code as color
 import pytohtml as pytohtml
 
-shop_name = None
-phone = None
-email = None
-owner = None
 
 # object of classes
 
@@ -36,99 +32,37 @@ owner = None
 #     cur_date = dt.date.today().strftime("%B %d, %Y")
 #     time_lbl.config(text=cur_time)
 #     date_lbl.config(text=cur_date)
-    
-def init_page(root,page_name):
-    # ============================ top frame 0 ============================
-    top_frame_0 = tk.Frame(root,bg=color.color_list[0])
-    top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
-    # ---------------------------------------------------------------------
-    # logo  (at frame 0)
-    
-    global shop_name,phone,email,owner
-    if shop_name==None:
-        print('retrieve')
-        message = dao.get_rows("SELECT * FROM basic;",[])
-        if message[0]==0:
-            _help.show_message('error',f'While retreiving basic info {message[1]}')
-            return
-        message= message[1][0]
-        print(message)
-        shop_name = message[0]
-        owner = message[1]
-        phone = message[2]
-        email = message[3]
 
-    
-    root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
-    top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
-    top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
-
-    # shop name (at frame 0)
-    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , fg=color.color_list[1], bg=color.color_list[0], font=("Comic Sans MS", 20, "bold"))
-    top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
-
-    # shop owner's info (at frame 0)
-    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
-    top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
-    
-    # page name 
-    top0_frame_0_lbl_3 = tk.Label(top_frame_0,text=page_name , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 17,"bold"))
-    top0_frame_0_lbl_3.place(relx=0.43, rely=0.3)
-
-
-
-
-    # ============================ top frame 1 ============================
-    top_frame_1 = tk.Frame(root,bg=color.color_list[2])
-    top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
-    # ---------------------------------------------------------------------
-    # welcome  (at frame 1)
-    top_frame_1_lbl_0 = tk.Label(top_frame_1,text="Welcome to abc Fasion House" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_0.pack(side=tk.LEFT,padx=50)
-
-    # date (at frame 1)
-    cur_date = dt.date.today().strftime("%B %d, %Y")
-    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_date , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
-
-    # time (at frame 1)
-    cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
-    top_frame_1_lbl_1 = tk.Label(top_frame_1,text=cur_time , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
-
-    # tittle (at frame 1)
-    # top_frame_1_lbl_1 = tk.Label(top_frame_1,text="Home" , fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12))
-    # top_frame_1_lbl_1.pack(side=tk.LEFT,padx=50)
 
 def manage_item(root):
     print("go to manage item")
-    init_page(root,'Manage Item')
+    _help.init_page(root,'Manage Item')
     item_manage_obj.item_manage()
 
 def purchase_item(root):
     print('go to purchase item')
-    init_page(root,'Purchase Item')
+    _help.init_page(root,'Purchase Item')
     item_purchase_obj.itemPurchase()
     
 
 def check_stock(root):
     print('go to check stock')
-    init_page(root,'Check Stock Item')
+    _help.init_page(root,'Check Stock Item')
     check_stock_obj.checkStock()    
 
 def check_demage_stock(root):
     print('go to demage check')
-    init_page(root,'Deamge Stock Item')
+    _help.init_page(root,'Deamge Stock Item')
     demage_stock_obj.demageStock()
 
 def purchase_report(root):
     print('go to purchase report')
-    init_page(root,'Purchase report')
+    _help.init_page(root,'Purchase report')
     purchase_report_obj.purchaseReport()
 
 def sales_report(root):
     print('go to sales report')
-    init_page(root,'Sales Report')
+    _help.init_page(root,'Sales Report')
     sales_report_obj.salesReport()
 
 
@@ -139,12 +73,12 @@ def expenditure(root):
 
 def expenditure_report(root):
     print('go to expenditure report')
-    init_page(root,'Expenditure Report')
+    _help.init_page(root,'Expenditure Report')
     expenditure_report_obj.expenditureReport()
 
 def staff_manager(root):
     print('go to staff manager')
-    _staff_manager.staff_manager(root)
+    staff_manager_obj.staffManager()
 
 def contact_book(root):
 	print('go to contact_book')
@@ -205,7 +139,7 @@ class Home:
         self.root = root
         global item_manage_obj,item_purchase_obj,check_stock_obj
         global demage_stock_obj,purchase_report_obj,sales_report_obj
-        global expenditure_manage_obj,expenditure_report_obj
+        global expenditure_manage_obj,expenditure_report_obj,staff_manager_obj
         item_manage_obj = _item_manage.Item_Manage(root)
         item_purchase_obj = _item_purchase.Item_Purchase(root)
         check_stock_obj = _check_stock.CheckStock(root)
@@ -214,6 +148,7 @@ class Home:
         sales_report_obj = _sales_report.SalesReport(root)
         expenditure_manage_obj = _expenditure_manage.ExpenditureManage(root)
         expenditure_report_obj = _expenditure_report.ExpenditureReport(root)
+        staff_manager_obj = _staff_manager.StaffManager(root)
         
         self.items_to_sale = []
         self.total_items_info = [0,0,0,0,0,0,0]
@@ -604,7 +539,7 @@ class Home:
 
         
     def addHome(self):
-        init_page(self.root,'Item Sale')
+        _help.init_page(self.root,'Item Sale')
         # global item_manage_obj
         # item_manage_obj = _item_manage.Item_Manage(self.root)
         # global item_purchase_obj
@@ -634,7 +569,7 @@ class Home:
 
     def refresh(self):
         print('refresh home')
-        init_page(self.root,'Item Sale')
+        _help.init_page(self.root,'Item Sale')
         self.addHome()
 
     

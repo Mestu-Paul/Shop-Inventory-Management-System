@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import Menu
 
-import manage_bank_account as mngbnkac
+
 import basic_info_setting as bscinf
 from user_panal import User_Panel
 # from home import addHome
@@ -141,7 +141,7 @@ def Email_Setting():
 # ------------- accounting command ------------- #
 def manage_account(root):
     print('Manage Account')
-    mngbnkac.manage_bank_account(root)
+    # mngbnkac.manage_bank_account(root)
 
 def transaction_entry():
 	print('Transaction Entry')

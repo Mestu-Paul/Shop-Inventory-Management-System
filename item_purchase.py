@@ -19,6 +19,7 @@ class Item_Purchase:
     def back_home(self):
         self.add_item_list.clear()
         self.check_unique_code.clear()
+        _help.init_page(self.root,'Sale Item')
         self.main_frame.place_forget()
     
     def clearItemEntries(self):

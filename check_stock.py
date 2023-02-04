@@ -11,6 +11,7 @@ class CheckStock:
         pass
     def backHome(self):
         print("back home")
+        _help.init_page(self.root,'Sale Item')
         self.main_frame.place_forget()
 
     def preview(self):
