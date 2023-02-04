@@ -232,8 +232,9 @@ class Home:
         self.operation_btn[4].config(command=lambda:purchase_report(self.root))
         self.operation_btn[5].config(command=lambda:sales_report(self.root))
         self.operation_btn[6].config(command=lambda:expenditure(self.root))
-        self.operation_btn[7].config(command=lambda:staff_manager(self.root))
-        self.operation_btn[8].config(command=lambda:contact_book(self.root))
+        self.operation_btn[7].config(command=lambda:expenditure_report(self.root))
+        self.operation_btn[8].config(command=lambda:staff_manager(self.root))
+        self.operation_btn[9].config(command=lambda:contact_book(self.root))
 
         # Refresh (at left_frame0) 
         self.left_frame_btn_11 = tk.Button(self.left_frame,text="Refresh", fg=color.color_list[3], bg=color.color_list[5], font=('Times New Roman1',10),command=self.refresh)

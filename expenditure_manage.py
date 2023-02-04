@@ -62,6 +62,9 @@ class ExpenditureManage:
             lbl_list[i].place(relx=0.15,rely=0.1+i*0.1, relwidth=0.1, relheight=0.07)
             self.info_entries[i].place(relx=0.25,rely=0.1+i*0.1, relwidth=0.15, relheight=0.07)
             
+        tk.Label(self.main_frame,text='Amount :\n\t- for debit\n\t + for credit',anchor='w',  bg=color.color_list[7], fg = color.color_list[3]
+            ).place(relx=0.25,rely = 0.4)
+            
         tk.Label(self.main_frame,text='Remarks :', bg=color.color_list[7], anchor='w'
             ).place(relx=0.5, rely=0.1)
         self.remarks =  tk.Text(self.main_frame,height=10, width=30)
