@@ -35,6 +35,8 @@ import pytohtml as pytohtml
 
 
 def manage_item(root):
+    # if root.session['role']>2:
+    #     _help.init_page(root,'Manage Item')    
     print("go to manage item")
     _help.init_page(root,'Manage Item')
     item_manage_obj.item_manage()

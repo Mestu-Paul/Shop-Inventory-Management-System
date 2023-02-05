@@ -6,8 +6,8 @@ import datetime as dt
 import color_code as color
 import DAO as dao
 
-class user_login:
-    def __init__(self):
+class UserLogin:
+    def __init__(self,role):
         
         # root window
         self.root = tk.Tk()
@@ -15,29 +15,39 @@ class user_login:
         self.root.geometry('600x300+300+200')
         self.root.resizable(False,False)
         self.authenticated = False
-        self.role = None
+        self.role = role
     def authentication(self,user_name,user_password):
-        command = f"SELECT user_name,role FROM user_panel WHERE user_name = '?' AND user_password = '?';"
+        command = f"SELECT user_name,role FROM user_panel WHERE user_name = ? AND user_password = ?;"
         result = dao.get_rows(command,[user_name.get(),user_password.get()])
         print(result)
-        if(result[0]==0):
+        if(result[0]==0) or len(result[1])==0:
             tk.Label(self.right_frame,text='Authentication Error!', font=("Comic Sans MS", 10, "italic"), bg=color.color_list[7], fg='red').place(relx=0.53,rely=0.6)
         else:
             self.authenticated=True
-            self.role=result[1][0][1]
+            self.role.append(result[1][0][1])
             print("role ",self.role)
-            self.user_login()
+            self.userLogin()
             # user name and password 
         # print(user_name)
         # print(user_password)
     def reset_password(self):
         pass
-    def user_login(self):
+    
+    def toggle_password(self):
+        if self.user_password["show"] == "*":
+            self.user_password["show"] = ""
+            self.toggle_button.config(image=self.open_eye)
+        else:
+            self.user_password["show"] = "*"
+            self.toggle_button.config(image=self.closed_eye)
+            
+            
+    def userLogin(self):
         if self.authenticated:
             print("authe")
             self.root.destroy()
             print("authe 1",self.role)
-            return self.role
+            return 
 
         self.root.login = ImageTk.PhotoImage(Image.open("img/login.jpg").resize((300,300)))
 
@@ -49,13 +59,20 @@ class user_login:
         tk.Label(self.right_frame,text='Login', font=("Comic Sans MS", 20, "bold"), bg=color.color_list[7], fg='green').place(relx=0.68,rely=0.05)
         
         tk.Label(self.right_frame,text='User name', font=("Comic Sans MS", 12, "italic"), bg=color.color_list[7], fg='black').place(relx=0.53,rely=0.2)
-        user_name = tk.Entry(self.right_frame)
-        user_name.place(relx=0.51,rely=0.3,width=200)
+        self.user_name = tk.Entry(self.right_frame)
+        self.user_name.place(relx=0.51,rely=0.3,relwidth=0.39, relheight=0.1)
         tk.Label(self.right_frame,text='User password', font=("Comic Sans MS", 12, "italic"), bg=color.color_list[7], fg='black').place(relx=0.53,rely=0.4)
-        user_password = tk.Entry(self.right_frame)
-        user_password.place(relx=0.51,rely=0.5,width=200)
+        self.user_password = tk.Entry(self.right_frame,show='*')
+        self.user_password.place(relx=0.51,rely=0.5,relwidth=0.3485, relheight=0.1)
+        
+        # password toggle icon
+        self.open_eye = ImageTk.PhotoImage(Image.open("img/eye_open.png").resize((20,17)))
+        self.closed_eye = ImageTk.PhotoImage(Image.open("img/eye_close.png").resize((20,17)))
+        # password toggle button
+        self.toggle_button =  tk.Button(self.right_frame, image=self.closed_eye, command=self.toggle_password, bd=0,bg=color.color_list[1])
+        self.toggle_button.place(relx=0.51+0.3485,rely=0.5, relheight=0.1)
 
-        login_button = tk.Button(self.right_frame,text='Login',command=lambda:self.authentication(user_name,user_password), font=("Comic Sans MS", 12, "italic"))
+        login_button = tk.Button(self.right_frame,text='Login',command=lambda:self.authentication(self.user_name,self.user_password), font=("Comic Sans MS", 12, "italic"))
         login_button.place(relx=0.58,rely=0.7,width=150,height=30)
         
         forgot_button = tk.Button(self.right_frame,text='Forgot password?', font=("Comic Sans MS", 12, "italic"),command=self.reset_password)

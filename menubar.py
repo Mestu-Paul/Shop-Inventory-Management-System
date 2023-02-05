@@ -127,12 +127,18 @@ def getMenubar(root):
 
 def user_panel(root):
     print("user")
+    if root.session['role']>1:
+        _help.show_message('warning','Without owner you can not access it')
+        return
     upanel.user_panel()
     
 
 # ------------- setting command ------------- #
 def General_Setting(root):
-    print("Basic info")
+    print("Basic info >",root.session['role'])
+    if root.session['role']>2:
+        _help.show_message('warning','As a manager role you can not access it')
+        return
     bscinf.basic_info_setting(root)
 
 def Email_Setting():
