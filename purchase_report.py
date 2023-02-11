@@ -42,7 +42,7 @@ class PurchaseReport:
         product_search_type = tk.StringVar()
         search_type_list = ['name', "code", "company",'group']
         product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.OptionMenu(self.top_frame, product_search_type, *search_type_list)
+        search_type = tk.ttk.OptionMenu(self.top_frame, product_search_type, *search_type_list)
         search_type.place(relx=0.09, rely=0.08, relwidth=0.1, relheight=0.12)
 
         # search box

@@ -62,7 +62,7 @@ class User_Panel():
             self.user_type = tk.StringVar()
             user_type_list = ['Owner','Admin','Manager']
             self.user_type.set('Manager')
-            self.top_frame_entry_user_type = tk.OptionMenu(self.top_frame,self.user_type,*user_type_list,command=self.user_accessibility)
+            self.top_frame_entry_user_type = tk.ttk.OptionMenu(self.top_frame,self.user_type,*user_type_list,command=self.user_accessibility)
 
             self.top_frame_entry_user_type.config(font=('Times New Roma',12))
             self.top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
@@ -103,7 +103,7 @@ class User_Panel():
             user_search_type = tk.StringVar()
             search_type_list = ['User name','User role']
             user_search_type.set(search_type_list[0]) # default value
-            search_type = tk.OptionMenu(self.top_frame, user_search_type, *search_type_list)
+            search_type = tk.ttk.OptionMenu(self.top_frame, user_search_type, *search_type_list)
             search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
 
             # search box

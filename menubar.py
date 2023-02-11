@@ -122,6 +122,10 @@ def getMenubar(root):
         label='Main Balance',
         command=showMainBalance
     )
+    File_menu.add_command(
+        label='Exit',
+        command=root.destroy
+    )
 
     return menubar
 

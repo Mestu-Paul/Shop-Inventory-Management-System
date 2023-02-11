@@ -224,7 +224,7 @@ class ItemSale:
         self.product_search_type = tk.StringVar()
         search_type_list = ['A/C name', "Phone"]
         self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
+        search_type = tk.ttk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
         search_type.place(relx=0.16, rely=0.01, relwidth=0.2, relheight=0.06)
         
         self.query = tk.Entry(self.right_frame)
@@ -280,7 +280,7 @@ class ItemSale:
         
         self.payment_acount = tk.StringVar()
         self.payment_acount.set(account_list[0]) # default value
-        payment_acount_entry = tk.OptionMenu(self.right_frame, self.payment_acount, *account_list)
+        payment_acount_entry = tk.ttk.OptionMenu(self.right_frame, self.payment_acount, *account_list)
         payment_acount_entry.place(relx=0.8, rely=0.22, relwidth=0.2, relheight=0.05)
              
     def paymentFrame(self):
@@ -290,7 +290,7 @@ class ItemSale:
         self.payment_method_type = tk.StringVar()
         payment_method_type_list = ['Cash', "Bkash", "Nagad",'Card']
         self.payment_method_type.set(payment_method_type_list[0]) # default value
-        payment_method = tk.OptionMenu(self.right_frame, self.payment_method_type, *payment_method_type_list,command=self.paymentMethodSelect)
+        payment_method = tk.ttk.OptionMenu(self.right_frame, self.payment_method_type, *payment_method_type_list,command=self.paymentMethodSelect)
         payment_method.place(relx=0.8, rely=0.07, relwidth=0.2, relheight=0.05)
     
     

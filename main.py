@@ -6,9 +6,9 @@ import home as _home
 import login as _login
 
 # authentication
-role = ['Owner']
-# a = _login.UserLogin(role)
-# a.userLogin()
+role = []
+a = _login.UserLogin(role)
+a.userLogin()
 
 if len(role)==0:
     exit()

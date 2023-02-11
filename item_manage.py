@@ -178,8 +178,7 @@ class Item_Manage:
         self.product_search_type = tk.StringVar()
         search_type_list = ['name', "code", "company",'group']
         self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
-        search_type.config(font=('Times New Roma',12))
+        search_type = tk.ttk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
         search_type.place(relx=0.14, rely=0.8, relwidth=0.18,relheight=0.06)
 
         tk.Label(self.right_frame,text='Query: ',bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w',\
