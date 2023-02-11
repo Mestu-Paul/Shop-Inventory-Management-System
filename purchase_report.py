@@ -36,7 +36,7 @@ class PurchaseReport:
     
     def topFrame(self):
         # search type
-        tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Search by :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_frame'), anchor='w', font=('Times New Roman',12), text='Search by :'
             ).place(relx=0.01, rely=0.08, relwidth=0.08, relheight=0.1)
 
         product_search_type = tk.StringVar()
@@ -46,16 +46,16 @@ class PurchaseReport:
         search_type.place(relx=0.09, rely=0.08, relwidth=0.1, relheight=0.12)
 
         # search box
-        tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Query :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_frame'), anchor='w', font=('Times New Roman',12), text='Query :'
             ).place(relx=0.01, rely=0.25, relwidth=0.08, relheight=0.1)
 
         self.query = tk.Entry(self.top_frame)
         self.query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
 
-        tk.Label(self.top_frame,bg=color.color_list[7],anchor='w', font=('Times New Roman',12), text='From :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w', font=('Times New Roman',12), text='From :'
             ).place(relx=0.01,rely=.4,relwidth=0.1)
         
-        tk.Label(self.top_frame,bg=color.color_list[7],anchor='w', font=('Times New Roman',12), text='To :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w', font=('Times New Roman',12), text='To :'
             ).place(relx=0.13,rely=0.4,relwidth=0.1)
         
         self.search_from_date = tkcal.DateEntry(self.top_frame,selecmode='day', cursor='hand1')
@@ -64,22 +64,28 @@ class PurchaseReport:
         self.search_to_date = tkcal.DateEntry(self.top_frame,selecmode='day', cursor='hand1')
         self.search_to_date.place(relx=0.13,rely=.52,relwidth=0.1)
         
+        btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(4)]
+        btn_frame[0].place(relx=0.05, rely=0.72, width=90, height=22)
+        btn_frame[1].place(relx=0.8, rely=0.15, width=90, height=22)
+        btn_frame[2].place(relx=0.8, rely=0.35, width=90, height=22)
+        btn_frame[3].place(relx=0.8, rely=0.55, width=90, height=22)
+        
         # search button
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search'
-            ).place(relx=0.05, rely=0.72, relwidth=0.1, relheight=0.12)
-        
-        # refresh button
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh'
-            ).place(relx=0.8, rely=0.15, relwidth=0.1, relheight=0.14)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        # preview buttom
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Preview',command=self.preview
-            ).place(relx=0.8, rely=0.35, relwidth=0.1, relheight=0.14)
+        refresh_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
+        refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        # back home
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back',command=self.backHome
-            ).place(relx=0.8, rely=0.55, relwidth=0.1, relheight=0.14)
-        
+        preview_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Preview', bd=0,command=self.preview)
+        preview_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        back_btn = tk.Button(btn_frame[3],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Back', bd=0,command=self.backHome)
+        back_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame[0],search_btn)
+        _help.button_hover(btn_frame[1],refresh_btn)
+        _help.button_hover(btn_frame[2],preview_btn)
+        _help.button_hover(btn_frame[3],back_btn)
     
     def on_select(self,event):
         selected_items = self.tree.selection()
@@ -89,7 +95,7 @@ class PurchaseReport:
             self.selected_si = item_values[0]
                 
     def showTable(self):
-        table_frame = tk.Frame(self.bottom_frame,bg=color.color_list[1])
+        table_frame = tk.Frame(self.bottom_frame,bg='#ffffff')
         table_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
         
         scrollbary = tk.Scrollbar(table_frame)
@@ -144,12 +150,12 @@ class PurchaseReport:
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
 
         # ======================== top frame ===================== #
-        self.top_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.top_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.top_frame.place(relx=0,rely=0,relwidth=1,relheight=0.35)
         self.topFrame()
         
         # ======================== bottom frame ===================== #
-        self.bottom_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.bottom_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.bottom_frame.place(relx=0,rely=0.35,relwidth=1,relheight=0.65)
         self.bottomFrame()
 

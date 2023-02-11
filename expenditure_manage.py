@@ -64,30 +64,37 @@ class ExpenditureManage:
     
     def createWidget(self):
         name_list = ['Date :','Purpose :','Amount :']
-        lbl_list = [tk.Label(self.main_frame,text=name_list[i], bg=color.color_list[7], anchor='w') for i in range(len(name_list))]
+        lbl_list = [tk.Label(self.main_frame,text=name_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w') for i in range(len(name_list))]
         self.info_entries = [tkcal.DateEntry(self.main_frame)]+[tk.Entry(self.main_frame) for i in range(len(name_list)-1)]
         
         for i in range(len(name_list)):
             lbl_list[i].place(relx=0.15,rely=0.1+i*0.1, relwidth=0.1, relheight=0.07)
             self.info_entries[i].place(relx=0.25,rely=0.1+i*0.1, relwidth=0.15, relheight=0.07)
             
-        tk.Label(self.main_frame,text='Amount :\n\t- for debit\n\t + for credit',anchor='w',  bg=color.color_list[7], fg = color.color_list[3]
+        tk.Label(self.main_frame,text='Amount :\n\t- for debit\n\t + for credit',anchor='w',  bg=color.getColor('bg_lbl'), fg = color.getColor('fg_lbl')
             ).place(relx=0.25,rely = 0.4)
             
-        tk.Label(self.main_frame,text='Remarks :', bg=color.color_list[7], anchor='w'
+        tk.Label(self.main_frame,text='Remarks :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'
             ).place(relx=0.5, rely=0.1)
         self.remarks =  tk.Text(self.main_frame,height=10, width=30)
         self.remarks.place(relx=0.5, rely=0.15)
         
+        btn_frame = [tk.Frame(self.main_frame,bg=color.getColor('bd_button')) for i in range(2)]
+        btn_frame[0].place(relx=0.25, rely=0.8, width=90, height=22)
+        btn_frame[1].place(relx=0.7, rely=0.8, width=90, height=22)
         
-        tk.Button(self.main_frame,text='Add',bg=color.color_list[2], fg = color.color_list[3], command=self.addExpenditure
-            ).place(relx=0.25, rely=0.8, width=80, height=30)
-        tk.Button(self.main_frame,text='Cancel',bg=color.color_list[2], fg = color.color_list[3], command=self.backHome
-            ).place(relx=0.7, rely=0.8, width=80, height=30)
+        # search button
+        add_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0,command=self.addExpenditure)
+        add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        delete_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0, command=self.backHome)
+        delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame[0],add_btn)
+        _help.button_hover_del(btn_frame[1],delete_btn)
         
     def expenditureManage(self):
         # item manage main frame
-        self.main_frame = tk.Frame(self.root,bg=color.color_list[7])
+        self.main_frame = tk.Frame(self.root,bg=color.getColor('bg_frame'))
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
         self.createWidget()
         

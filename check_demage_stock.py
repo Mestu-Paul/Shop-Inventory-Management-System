@@ -126,10 +126,10 @@ class DemageStcok:
         lbl_name = ['Code','Name','Group','Company','VAT(%)','QTY','Purchase','Sale','inv-id','Date']
         
         for i in range(0,10):
-            tk.Label(self.top_frame,text=lbl_name[i], bg=color.color_list[7], anchor='w'
+            tk.Label(self.top_frame,text=lbl_name[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'
                 ).place(relx=0.22 if i<5 else 0.38,rely=lbl_start+(lbl_height+lbl_gap)*(i%5), relwidth=0.06, relheight=lbl_height)
                     
-        self.item_info_lbl = [tk.Label(self.top_frame, bg=color.color_list[1], anchor='w')
+        self.item_info_lbl = [tk.Label(self.top_frame, bg=color.getColor('bg_input'), fg=color.getColor('fg_input'), anchor='w')
                               if i%5 else tk.Entry(self.top_frame) for i in range(0,10)]
         
         for i in range(0,10):
@@ -137,17 +137,24 @@ class DemageStcok:
         self.item_info_lbl[0].focus_set()
         self.item_info_lbl[0].bind("<Return>",self.showItemDetails)
 
-        tk.Button(self.top_frame,text='Add to demage', bg=color.color_list[2], fg=color.color_list[3], command=self.addToDemage
-            ).place(relx=0.55,rely=0.2,width=150,height=30)
-        tk.Button(self.top_frame,text='Restore Item', bg=color.color_list[2], fg=color.color_list[3], command=self.restoreItem
-            ).place(relx=0.55,rely=0.4,width=150,height=30)
-        tk.Button(self.top_frame,text='Delete demaged', bg=color.color_list[6], fg=color.color_list[1], command=self.deleteFromDemage
-            ).place(relx=0.55,rely=0.6,width=150,height=30)
+        btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(3)]
+        btn_frame[0].place(relx=0.55,rely=0.2,width=90,height=22)
+        btn_frame[1].place(relx=0.55,rely=0.4,width=90,height=22)
+        btn_frame[2].place(relx=0.55,rely=0.6,width=90,height=22)
+        add_btn = tk.Button(btn_frame[0],text='Add', bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), command=self.addToDemage, bd=0)
+        add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        restore_btn = tk.Button(btn_frame[1],text='Restore', bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), command=self.restoreItem, bd=0)
+        restore_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        delete_btn = tk.Button(btn_frame[2],text='Delete', bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), command=self.deleteFromDemage, bd=0)
+        delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame[0],add_btn)
+        _help.button_hover(btn_frame[1],restore_btn)
+        _help.button_hover_del(btn_frame[2],delete_btn)
 
     def topFrame(self):
         self.updateDemageStock()
         # search type
-        tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Search by :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Search by :'
             ).place(relx=0.01, rely=0.08, relwidth=0.08, relheight=0.1)
 
         self.product_search_type = tk.StringVar()
@@ -157,24 +164,34 @@ class DemageStcok:
         search_type.place(relx=0.09, rely=0.08, relwidth=0.1, relheight=0.12)
 
         # search box
-        tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Query :'
+        tk.Label(self.top_frame,bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :'
             ).place(relx=0.01, rely=0.25, relwidth=0.08, relheight=0.1)
 
         query = tk.Entry(self.top_frame)
         query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
 
+        btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(4)]
+        btn_frame[0].place(relx=0.05, rely=0.42, width=90, height=22)
+        btn_frame[1].place(relx=0.8, rely=0.15, width=90, height=22)
+        btn_frame[2].place(relx=0.8, rely=0.35, width=90, height=22)
+        btn_frame[3].place(relx=0.8, rely=0.55, width=90, height=22)
+        
         # search button
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search'
-            ).place(relx=0.05, rely=0.42, relwidth=0.1, relheight=0.12)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh'
-            ).place(relx=0.8, rely=0.15, relwidth=0.1, relheight=0.14)
+        refresh_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
+        refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Preview',command=self.preview
-            ).place(relx=0.8, rely=0.35, relwidth=0.1, relheight=0.14)
+        preview_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Preview', bd=0,command=self.preview)
+        preview_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back',command=self.backHome
-            ).place(relx=0.8, rely=0.55, relwidth=0.1, relheight=0.14)
+        back_btn = tk.Button(btn_frame[3],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Back', bd=0,command=self.backHome)
+        back_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame[0],search_btn)
+        _help.button_hover(btn_frame[1],refresh_btn)
+        _help.button_hover(btn_frame[2],preview_btn)
+        _help.button_hover(btn_frame[3],back_btn)
 
     def on_select(self,event):
         selected_items = self.tree.selection()
@@ -191,7 +208,7 @@ class DemageStcok:
         pass
     
     def showTable(self):
-        table_frame = tk.Frame(self.bottom_frame,bg=color.color_list[1])
+        table_frame = tk.Frame(self.bottom_frame,bg='#ffffff')
         table_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
         
         scrollbary = tk.Scrollbar(table_frame)
@@ -244,11 +261,11 @@ class DemageStcok:
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
 
         # ======================== top frame ===================== #
-        self.top_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.top_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.top_frame.place(relx=0,rely=0,relwidth=1,relheight=0.35)
         self.topFrame()
 
         # ======================== bottom frame ===================== #
-        self.bottom_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.bottom_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.bottom_frame.place(relx=0,rely=0.35,relwidth=1,relheight=0.65)
         self.bottomFrame()

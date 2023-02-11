@@ -153,22 +153,26 @@ class Item_Manage:
     def leftFrame(self,left_frame):
         item_info_list = ['Item Code :','Item Name :', 'Item Group :', 'Company :',
                         'VAT :', 'Quantity :','Purchase Price :','Sale Price :','Date :']
+        
         # ----------------------- label --------------------- #
         for i in range(0,len(item_info_list)):
-            tk.Label(left_frame,text=item_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w' \
-                     ).place(relx=0.02, rely=0.01+(0.08)*i, relwidth=0.45, relheight=0.06)
+            tk.Label(left_frame,text=item_info_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), font=('Helvic',10), anchor='w' \
+                     ).place(relx=0.02, rely=0.01+(0.06)*i, relwidth=0.45, relheight=0.04)
         
-        # ---------------------- item info input ------------ #
-        self.item_entries = [tk.Entry(left_frame) for i in range(8)]
-        # self.item_entries[7].bind("<Return>",lambda e,next_entry=self.item_entries[9]: self.activeNextEntry(e,next_entry))
+        self.item_entries_frame = [tk.Frame(left_frame, bg=color.getColor('bd_input')) for i in range(9)]
+        self.item_entries = [tk.Entry(self.item_entries_frame[i], bd=0) for i in range(8)]
+        self.item_entries.append(tkcal.DateEntry(self.item_entries_frame[8],date_pattern="dd/MM/yyyy"))
+        for i in range(9):
+            self.item_entries_frame[i].place(relx=0.48,rely=0.01+i*0.06,relwidth=0.5,relheight=0.04)
+            self.item_entries[i].pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+            _help.input_hover(self.item_entries_frame[i],self.item_entries[i])
+        
+        self.item_entries[0].focus_set()
         for i in range(7):
             self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
-        self.item_entries.append(tkcal.DateEntry(left_frame,date_pattern="dd/MM/yyyy"))
-        for i in range(9):
-            self.item_entries[i].place(relx=0.48,rely=0.01+i*0.08,relwidth=0.5,relheight=0.06)
-    
+            
     def rightFrame(self):
-        tk.Label(self.right_frame,text='Search By: ',bg=color.color_list[7],anchor='w',\
+        tk.Label(self.right_frame,text='Search By: ',bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w',\
             font=('Times New Roma',12)).place(relx=0.01,rely=0.8,relwidth=0.12)
 
         self.product_search_type = tk.StringVar()
@@ -178,55 +182,31 @@ class Item_Manage:
         search_type.config(font=('Times New Roma',12))
         search_type.place(relx=0.14, rely=0.8, relwidth=0.18,relheight=0.06)
 
-        tk.Label(self.right_frame,text='Query: ',bg=color.color_list[7],anchor='w',\
+        tk.Label(self.right_frame,text='Query: ',bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w',\
             font=('Times New Roma',12)).place(relx=0.01,rely=0.87,relwidth=0.12)
 
         self.right_frame_entry_query = tk.Entry(self.right_frame)
         self.right_frame_entry_query.place(relx=0.14,rely=0.87,relwidth=0.18,relheight=0.05)
 
+        btn_frame = [tk.Frame(self.right_frame,bg=color.getColor('bd_button')) for i in range(3)]
+        btn_frame[0].place(relx=0.1,rely=0.94, width=90, height=22)
+        btn_frame[1].place(relx=0.4,rely=0.85, width=90, height=22)
+        btn_frame[2].place(relx=0.8,rely=0.85, width=90, height=22)
+        
         # search button
-        self.right_frame_btn_search = tk.Button(self.right_frame,text='Search',bg=color.color_list[2],font=('Times New Roman',12,'bold'))
-        self.right_frame_btn_search.place(relx=0.1,rely=0.94,relwidth=0.1,relheight=0.05)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        # preview button
-        self.right_frame_btn_privew = tk.Button(self.right_frame,text='Preview',bg=color.color_list[2],font=('Times New Roman',14,'bold'))
-        self.right_frame_btn_privew.place(relx=0.4,rely=0.85,relwidth=0.11,relheight=0.06)
+        preview_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Preview', bd=0)
+        preview_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        # back button
-        self.right_frame_btn_back = tk.Button(self.right_frame,text='Back',bg=color.color_list[2],font=('Times New Roman',14,'bold'),command=lambda:self.backHome())
-        self.right_frame_btn_back.place(relx=0.8,rely=0.85,relwidth=0.11,relheight=0.06)
+        back_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Back', bd=0,command=self.backHome)
+        back_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame[0],search_btn)
+        _help.button_hover(btn_frame[1],preview_btn)
+        _help.button_hover(btn_frame[2],back_btn)
+        
 
-        
-    def item_manage(self):
-        # item manage main frame
-        self.main_frame = tk.Frame(self.root,bg='white')
-        self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
-        
-        # ======================== left frame ========================= #
-        left_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
-        left_frame.place(relx=0.005,rely=0,relwidth=0.25, relheight=1)
-        self.leftFrame(left_frame)
-        
-        # update button
-        self.left_frame_btn_update = tk.Button(left_frame,text='Update', font=('Times New Roma',14), bg=color.color_list[2],command=self.update_item)
-        self.left_frame_btn_update.place(relx=0.02,rely=0.8,relwidth=0.4)
-
-        # add button
-        self.left_frame_btn_update = tk.Button(left_frame,text='Add Item', font=('Times New Roma',14), bg=color.color_list[2],command=self.addItemDetailsDB)
-        self.left_frame_btn_update.place(relx=0.54,rely=0.8,relwidth=0.4)
-
-        # delete button
-        self.left_frame_btn_update = tk.Button(left_frame,text='Delete Item', font=('Times New Roma',14,'bold'), bg=color.color_list[6], fg=color.color_list[1],command=self.delete_item)
-        self.left_frame_btn_update.place(relx=0.26,rely=0.9,relwidth=0.45)
-
-        # ========================= right frame ========================= #
-        self.right_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
-        self.right_frame.place(relx=0.26,rely=0,relwidth=0.738, relheight=1)
-        self.rightFrame()
-        self.show_table()
-        
-        
-        
     def set_entry_value(self,entry_name,entry_value):
         entry_name.delete(0,"end")
         entry_name.insert(0,entry_value)
@@ -248,10 +228,10 @@ class Item_Manage:
     
     def show_table(self):
         tk.Label(self.right_frame,text='Item Table', font=('Times New Roma',16,'bold'),\
-                bg=color.color_list[7]).place(relx=0.4,relwidth=0.2,relheight=0.06)
+                bg=color.getColor('bg_lbl')).place(relx=0.4,relwidth=0.2,relheight=0.06)
 
         # ---------------------------- scroll table frame ----------------------------- #
-        self.right_frame_table_frame = tk.Frame(self.right_frame,bg=color.color_list[7])
+        self.right_frame_table_frame = tk.Frame(self.right_frame,bg='#ffffff')
         self.right_frame_table_frame.place(relx=0,rely=0.07,relwidth=1,relheight=0.7)
         
         # scroll bar
@@ -298,6 +278,39 @@ class Item_Manage:
         scrollbarx.config(orient='horizontal', command=self.tree.xview)
         scrollbarx.place(relx=0,rely=0.95,relwidth=1,relheight=0.05)
         
+    def item_manage(self):
+        # item manage main frame
+        self.main_frame = tk.Frame(self.root,bg='white')
+        self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
+        
+        # ======================== left frame ========================= #
+        left_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
+        left_frame.place(relx=0.005,rely=0,relwidth=0.25, relheight=1)
+        self.leftFrame(left_frame)
+        
+        btn_frame = [tk.Frame(left_frame,bg=color.getColor('bd_button')) for i in range(3)]
+        btn_frame[1].place(relx=0.01,rely=0.8, relwidth=.31, height=22) # add button place
+        btn_frame[0].place(relx=0.33,rely=0.8, relwidth=.31, height=22) # update 
+        btn_frame[2].place(relx=0.66,rely=0.8, relwidth=.31, height=22) # delete
+        
+        update_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0,command=self.update_item)
+        update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        add_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0,command=self.addItemDetailsDB)
+        add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        delete_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0,command=self.delete_item)
+        delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        _help.button_hover(btn_frame[0],update_btn)
+        _help.button_hover(btn_frame[1],add_btn)
+        _help.button_hover_del(btn_frame[2],delete_btn)
+
+        # ========================= right frame ========================= #
+        self.right_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
+        self.right_frame.place(relx=0.26,rely=0,relwidth=0.738, relheight=1)
+        self.rightFrame()
+        self.show_table()
         
 # root = tk.Tk()
 # root.geometry('1100x650')        

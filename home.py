@@ -6,6 +6,7 @@ import datetime
 
 import DAO as dao
 
+import item_sale as _item_sale
 import item_purchase as _item_purchase
 import check_stock as _check_stock
 import check_demage_stock as _check_demage_stock
@@ -33,7 +34,10 @@ import pytohtml as pytohtml
 #     time_lbl.config(text=cur_time)
 #     date_lbl.config(text=cur_date)
 
-
+def sale_item(root):
+    print("go to sale item")
+    _help.init_page(root,'Manage Item')
+    item_sale_obj.itemSale()
 def manage_item(root):
     # if root.session['role']>2:
     #     _help.init_page(root,'Manage Item')    
@@ -87,60 +91,13 @@ def contact_book(root):
 
 
 
-# class Item:
-#     def __init__(self):
-#         self.item_name=None
-#         self.item_code=None
-#         self.item_quantity=None
-#         self.item_price=None
-#         self.available=None
-#         self.discount=None
-#         self.total_item_price=None
-#         pass
-#     def __init__(self,values):
-#         self.item_name=values[0]
-#         self.item_code=values[1]
-#         self.item_quantity=values[2]
-#         self.item_price=values[3]
-#         self.available=values[4]
-#         self.discount=values[5]
-#         self.total_item_price=values[6]
-#         pass  
-#     def set_values(self,values):
-#         self.item_name=values[0]
-#         self.item_code=values[1]
-#         self.item_quantity=values[2]
-#         self.item_price=values[3]
-#         self.available=values[4]
-#         self.discount=values[5]
-#         self.total_item_price=values[6]
-        
-
 class Home:
-    # total_items_info >>>
-    # total_item 0
-    # total_price 1
-    # total_discount 2
-    # total vat 3
-    # payable 4 
-    # paid 5
-    # change 6
-    
-    # items to sale >>
-    # item code 0
-    # item name 1
-    # unit price 2
-    # quantity 3
-    # discount 4
-    # total 5
-    # vat 6
-    # payable 7
-    # date 8
+ 
     
     def __init__(self,root):
         try:
             self.root = root
-            global item_manage_obj,item_purchase_obj,check_stock_obj
+            global item_manage_obj,item_purchase_obj,check_stock_obj,item_sale_obj
             global demage_stock_obj,purchase_report_obj,sales_report_obj
             global expenditure_manage_obj,expenditure_report_obj,staff_manager_obj
             item_manage_obj = _item_manage.Item_Manage(root)
@@ -152,396 +109,38 @@ class Home:
             expenditure_manage_obj = _expenditure_manage.ExpenditureManage(root)
             expenditure_report_obj = _expenditure_report.ExpenditureReport(root)
             staff_manager_obj = _staff_manager.StaffManager(root)
-            
-            self.items_to_sale = []
-            self.total_items_info = [0,0,0,0,0,0,0]
-            self.count_by_item_code = dict()
+            item_sale_obj = _item_sale.ItemSale(root)
         except Exception as e:
             _help.show_message('warning',f'Occur exception while home object creating {e}')
         pass
-    def back_home(self):
-        self.main_frame.place_forget()
-        
-    def set_entry_value(self,entry_name,entry_value):
-        entry_name.delete(0,"end")
-        entry_name.insert(0,entry_value)
     
-    
-    def updateChange(self,event):
-        total_paid = (int)(self.right_frame_payment_info_frame_total_paid.get())
-        total_payable = (int)(self.right_frame_payment_info_frame_payable.cget('text'))
-        total_change = total_paid-total_payable
-        if total_change<0:
-            _help.show_message('warning','Customer have to pay fully')
-            return
-        print(total_paid,total_payable,total_change)
-        self.set_entry_value(self.right_frame_payment_info_frame_change,total_change)
-        
     def leftFrame(self):
         # ---------------------------operation button--------------------------- #
-        operation_name = ['Manage Item','Purchase Item','Check Stock','Demage Stock','Purchase Report',
-                          'Sales Report','Expenditure','Expenditure Report','Staff Manager','Contact Book']
-        self.operation_btn = [tk.Button(self.left_frame,text=operation_name[i], fg=color.color_list[3], bg=color.color_list[5]) for i in range(len(operation_name))]
+        operation_name = ['Sale Item','Manage Item','Purchase Item','Check Stock','Demage Stock','Purchase Report',
+                          'Sales Report','Expenditure','Expenditure Report','Staff Manager','Contact Book','Refresh']
+        self.operation_btn_frm = [tk.Frame(self.left_frame, bg=color.getColor('bd_button'), bd=0) for i in range(len(operation_name))]
+        self.operation_btn = [tk.Button() for i in range(len(operation_name))]
         
-        for btn in self.operation_btn:
-            btn.pack(side=tk.TOP,fill=tk.X,padx=5, pady=2)
-        self.operation_btn[0].config(command=lambda:manage_item(self.root))
-        self.operation_btn[1].config(command=lambda:purchase_item(self.root))
-        self.operation_btn[2].config(command=lambda:check_stock(self.root))
-        self.operation_btn[3].config(command=lambda:check_demage_stock(self.root))
-        self.operation_btn[4].config(command=lambda:purchase_report(self.root))
-        self.operation_btn[5].config(command=lambda:sales_report(self.root))
-        self.operation_btn[6].config(command=lambda:expenditure(self.root))
-        self.operation_btn[7].config(command=lambda:expenditure_report(self.root))
-        self.operation_btn[8].config(command=lambda:staff_manager(self.root))
-        self.operation_btn[9].config(command=lambda:contact_book(self.root))
-
-        # Refresh (at left_frame0) 
-        self.left_frame_btn_11 = tk.Button(self.left_frame,text="Refresh", fg=color.color_list[3], bg=color.color_list[5], font=('Times New Roman1',10),command=self.refresh)
-        self.left_frame_btn_11.pack(side=tk.TOP,fill=tk.X,padx=5, pady=15)
-
-    def deleteItem(self):
-        del self.items_to_sale[self.selected_si-1]
-        self.showTable()
-        self.showTotalInfo()
-        pass
-        
-    def clearItemEntries(self):
-        for i in range(len(self.item_entries)-1):
-            self.set_entry_value(self.item_entries[i],'')
-        self.item_entries[0].focus_set()
-    
-    def showTotalInfo(self):
-        for lbl,text in zip(self.total_info_lbl,self.total_items_info):
-            lbl.config(text=format(text,'0.2f'))
+        for i,frm in enumerate(self.operation_btn_frm):
+            frm.pack(side=tk.TOP,fill=tk.X,padx=10, pady=5)
+            self.operation_btn[i] = tk.Button(frm,text=operation_name[i], fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), bd=0)
+            self.operation_btn[i].pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+            _help.button_hover(frm,self.operation_btn[i])
             
-            
-    def addItemToSale(self):
-        for i,entries in enumerate(self.item_entries):
-            if entries.get()=='':
-                _help.show_message('warning','Fill all fields carefully')
-        item = [self.item_entries[0].get()] # code 0
-        item += [self.item_entries[1].get()] # name 1
-        item += [float(self.item_entries[6].get())] # unit price 2
-        item += [float(self.item_entries[7].get())] # qty 3
-        if item[0] in self.count_by_item_code.keys():
-            for i in range(len(self.items_to_sale)):
-                if self.items_to_sale[i][0]==item[0]:
-                    if float(self.item_entries[9].get())!=self.items_to_sale[i][4]:
-                        self.set_entry_value(self.item_entries[9],self.items_to_sale[i][4])
-                        _help.show_message('warning','Discount can not be different of same products')
-                    break
-        
-        item += [float(self.item_entries[9].get())] # discount 4
-        item += [float(self.item_entries[10].get())] # total 5
-        item += [float(self.item_entries[4].get())] # vat 6
-        print(f"total {item[5]}  vat(%) {item[6]} payable =  {item[5]+item[5]*(item[6]/100)}")
-        item += [item[5]+item[5]*(item[6]/100)] # payable 7
-        item += [self.item_entries[11].get()] # date 8
-        
-        self.total_items_info[0] += item[3] # total item
-        total_price = item[3]*item[2]
-        self.total_items_info[1] += total_price # total price
-        self.total_items_info[2] += (total_price-item[5]) # total discount
-        self.total_items_info[3] += (item[7]-item[5]) # total vat
-        self.total_items_info[4] += item[7] # payable
-        
-        if item[0] not in self.count_by_item_code.keys():
-            if float(self.avl_qty)<item[3]:
-                _help.show_message('warning','Not enough items')
-                return
-            self.count_by_item_code[item[0]] = item[3]
-            self.items_to_sale.append(item)
-        else:
-            for i in range(len(self.items_to_sale)):
-                if self.items_to_sale[i][0]==item[0]:
-                    if float(self.avl_qty)<item[3]+self.items_to_sale[i][3]:
-                        _help.show_message('warning','Not enough items')
-                        return
-                    self.count_by_item_code[item[0]] += item[3]
-                    
-                    self.items_to_sale[i][3] += item[3] # qty
-                    self.items_to_sale[i][5] += item[5] # total
-                    self.items_to_sale[i][7] += item[7] # discount
-                
-        self.showTable()
-        self.clearItemEntries()
-        self.showTotalInfo()
-        self.item_entries[0].focus_set()
-        pass
-    
-    def activeNextEntry(self,event,next_entry):
-        next_entry.focus_set()
-        
-    def showItemDetails(self,event):
-        code = self.item_entries[0].get()
-        command = "SELECT code,name,group_,company,vat_rate,quantity,unit_sale_price\
-                    FROM item_details, invoice\
-                    WHERE code = ? AND item_details.invoice_id = invoice.invoice_id AND invoice.type='purchase';"
-        values = [code]
-        message = dao.get_rows(command,values)
-        if message[0]==0:
-            _help.show_message('error',message[1])
-            return
-        
-        if len(message[1])==0:
-            _help.show_message('warning','No items')
-            return
-        item_details = message[1][0]
-        self.avl_qty = item_details[5] # available quantity
-        for i,itm in enumerate(item_details):
-            self.set_entry_value(self.item_entries[i],itm)
-        
-        
-        print(item_details)
-        self.item_entries[7].focus_set()
-        pass
-    
-    def showItemDetails1(self,event):
-        qty = (int)(self.item_entries[7].get())
-        price = float(self.item_entries[6].get())
-        self.set_entry_value(self.item_entries[8],qty*price)
-        self.set_entry_value(self.item_entries[9],0)
-        self.item_entries[9].focus_set()
+        self.operation_btn[0].config(command=lambda:sale_item(self.root))
+        self.operation_btn[1].config(command=lambda:manage_item(self.root))
+        self.operation_btn[2].config(command=lambda:purchase_item(self.root))
+        self.operation_btn[3].config(command=lambda:check_stock(self.root))
+        self.operation_btn[4].config(command=lambda:check_demage_stock(self.root))
+        self.operation_btn[5].config(command=lambda:purchase_report(self.root))
+        self.operation_btn[6].config(command=lambda:sales_report(self.root))
+        self.operation_btn[7].config(command=lambda:expenditure(self.root))
+        self.operation_btn[8].config(command=lambda:expenditure_report(self.root))
+        self.operation_btn[9].config(command=lambda:staff_manager(self.root))
+        self.operation_btn[10].config(command=lambda:contact_book(self.root))
+        self.operation_btn[11].config(command=self.refresh)
 
     
-    def showItemDetails2(self,event):
-        discount = float(self.item_entries[9].get())
-        price = float(self.item_entries[8].get())
-        discount = (discount/100.0)*price
-        self.set_entry_value(self.item_entries[10],price-discount)
-        pass
-        
-    def middleFrame(self):
-        item_info_list = ['Item Code :', 'Item Name :','Item Group :', 'Company :',
-                          'VAT :', 'Available Quantity :','Sale Price Rate :','Sale Quantity :',
-                          'Price :', 'Discount(%) :','Item Total Price :','Date :']
-        for itm in range(0,len(item_info_list)):
-            tk.Label(self.middle_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',14), text=item_info_list[itm]
-                ).place(relx=0.01,rely=itm*0.06+0.01,relwidth=0.46)                 
-        self.item_entries = [tk.Entry(self.middle_frame) for itm in range(0,len(item_info_list)-1)]
-        self.item_entries.append(tkcal.DateEntry(self.middle_frame))
-        for i,entries in enumerate(self.item_entries):
-            entries.place(relx=0.46,rely=i*0.06+0.02,relwidth=0.5)
-        
-        self.item_entries[0].bind("<Return>",self.showItemDetails)
-        self.item_entries[7].bind("<Return>",self.showItemDetails1)
-        self.item_entries[9].bind("<Return>",self.showItemDetails2)
-        
-        # self.item_entries[7].bind("<Return>",lambda e,next_entry=self.item_entries[9]: self.activeNextEntry(e,next_entry))
-        self.item_entries[0].focus_set()
-        
-            
-        # delete item
-        tk.Button(self.middle_frame, fg=color.color_list[1], bg=color.color_list[6],font=('Times New Roman',14), text='Delete',command=self.deleteItem
-            ).place(relx=0.02,rely=0.92, height=25)
-        # add item to sell
-        tk.Button(self.middle_frame, fg=color.color_list[3], bg=color.color_list[2],font=('Times New Roman',14), text='Add item',command=self.addItemToSale
-            ).place(relx=0.7,rely=0.92, height=25)
-        
-    
-    def searchFrame(self):
-        tk.Label(self.right_frame,text='Search by :', bg=color.color_list[7], anchor='w').place(relx=0.01, rely=0.01, relwidth=0.15, relheight=0.05)
-        tk.Label(self.right_frame,text='Query :', bg=color.color_list[7], anchor='w').place(relx=0.01, rely=0.07, relwidth=0.15, relheight=0.05)
-        
-        self.product_search_type = tk.StringVar()
-        search_type_list = ['A/C name', "Phone"]
-        self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
-        search_type.place(relx=0.16, rely=0.01, relwidth=0.2, relheight=0.06)
-        
-        self.query = tk.Entry(self.right_frame)
-        self.query.place(relx=0.16,rely=0.07, relwidth=0.2, relheight=0.05)
-        
-        self.search_btn = tk.Button(self.right_frame,text='Search',bg=color.color_list[2])
-        self.search_btn.place(relx=0.1, rely=0.13, relwidth=0.15, relheight=0.05)
-    
-    def customerFrame(self):
-        lbl_list = ['Name','Pre-balance','Current Balance', 'Contact']
-        for i in range(len(lbl_list)):
-            tk.Label(self.right_frame,text=lbl_list[i],bg=color.color_list[7], anchor='w'\
-                ).place(relx=0.01, rely=0.19+(i*0.06), relwidth=0.15, relheight=0.05)
-        self.customer_entries = [tk.Entry(self.right_frame) for i in range(4)]
-        for i in range(len(self.customer_entries)):
-            self.customer_entries[i].place(relx=0.16,rely=0.19+(i*0.06),relwidth=0.2,relheight=0.05)
-    
-    def calcChange(self,event):
-        self.set_entry_value(self.total_info_entries[1],format((float)(self.total_info_entries[0].get())-(float)(self.total_info_lbl[4].cget('text')),'0.2f'))
-    
-    def totalFrame(self):
-        lbl_list = ['Total Item :', 'Total Price :','Discount :','VAT :','Payable :','Total Paid :', 'Change :']
-        for i in range(len(lbl_list)):
-            tk.Label(self.right_frame,text=lbl_list[i],bg=color.color_list[7], anchor='w'\
-                ).place(relx=0.45, rely=0.01+(i*0.06), relwidth=0.15, relheight=0.05)
-            
-        self.total_info_lbl = [tk.Label(self.right_frame,bg=color.color_list[7]) for i in range(5)]
-        for i in range(len(self.total_info_lbl)):
-            self.total_info_lbl[i].place(relx=0.6,rely=0.01+(i*0.06),relwidth=0.15,relheight=0.05)
-            
-        self.total_info_entries = [tk.Entry(self.right_frame) for i in range(2)]
-        for i in range(len(self.total_info_entries)):
-            self.total_info_entries[i].place(relx=0.6,rely=0.31+(i*0.06),relwidth=0.15,relheight=0.05)
-        self.total_info_entries[0].bind("<Return>",self.calcChange)
-    
-
-    def paymentMethodSelect(self,event):
-        account_list = []
-        if self.payment_method_type.get() in ('Bkash','Nagad'):
-            account_list = ['01700909000','01611818111']
-        else:
-            account_list = ['sonali bank-1','sonali-bank-2']
-        select_lbl = tk.Label(self.right_frame,text='Select A/C :',bg=color.color_list[7],  anchor='w')
-        select_lbl.place(relx=0.8,rely=0.15,relwidth=0.2,relheight=0.05)
-        
-        self.payment_acount = tk.StringVar()
-        self.payment_acount.set(account_list[0]) # default value
-        payment_acount_entry = tk.OptionMenu(self.right_frame, self.payment_acount, *account_list)
-        payment_acount_entry.place(relx=0.8, rely=0.22, relwidth=0.2, relheight=0.05)
-             
-    def paymentFrame(self):
-        tk.Label(self.right_frame,text='Payment Method :',bg=color.color_list[7], anchor='w'\
-            ).place(relx=0.8,rely=0.01,relwidth=0.2,relheight=0.05)
-        
-        self.payment_method_type = tk.StringVar()
-        payment_method_type_list = ['Cash', "Bkash", "Nagad",'Card']
-        self.payment_method_type.set(payment_method_type_list[0]) # default value
-        payment_method = tk.OptionMenu(self.right_frame, self.payment_method_type, *payment_method_type_list,command=self.paymentMethodSelect)
-        payment_method.place(relx=0.8, rely=0.07, relwidth=0.2, relheight=0.05)
-    
-    
-    def addInvoiceDB(self,row):
-        command = "INSERT INTO invoice VALUES(?,?,?,?,?,?,?,?,?,?);"
-        message = dao.set_rows(command,row)
-        print("\n-----------invoice--------------\n",message)
-        if message[0]==0:
-            _help.show_message('error',message[1])
-            return
-        pass
-    
-    def addSaleHistoryDB(self,row):
-        command = "INSERT INTO sale_purchase VALUES(?,?,?,?,?,?,?,?,?,?,?);"
-        message = dao.set_rows(command,row)
-        print("\n-----------insert sale pur--------------\n",message)
-        if message[0]==0:
-            _help.show_message('error',message[1])
-            return
-    
-    def completePayment(self):
-        item_name = []
-        item_qty = []
-        item_price = []
-        sum = 0
-        vat = 0
-        discount = 0
-        for values in self.items_to_sale:
-            item_name.append(values[1])
-            item_qty.append(float(values[3]))
-            item_price.append(float(values[2]))
-            sum += (float)(values[2])*(float)(values[3])
-            discount += (float)(values[2])*(float)(values[3])*(values[4]/100)
-            tmp = ((float)(values[2])*(float)(values[3])) - (float)(values[2])*(float)(values[3])*(values[4]/100)
-            vat += tmp*(values[6]/100)
-            print(values[2],values[3])
-            
-        print(f"sum {sum},discount {discount},vat {vat}")
-        total_info = [sum,discount,vat,sum-discount+vat]+[float(entries.get()) for entries in self.total_info_entries]
-        print("tota ",total_info)
-        print("sum ",sum-discount+vat)
-        if total_info[5]=='' or total_info[4]=='' or (float)(total_info[4])<sum-discount+vat:
-            _help.show_message('warning','Please pay carefully')
-            return
-        
-        for values in self.items_to_sale:
-            command = "UPDATE item_details SET quantity = quantity - ? WHERE code = ?;"
-            message = dao.update_rows(command,[values[3],values[0]])
-            if message[0]==0:
-                _help.show_message('warning',f"{message[1]} for code = {values[0]}")
-                
-        lastInvoiceId = dao.getLastInvoiceId()
-        if lastInvoiceId[0]==0:
-            _help.show_message('error',f'While creating new invoice id {lastInvoiceId[1]}')
-            return
-        print(self.total_items_info,"\n",len(self.total_items_info))
-        row = [lastInvoiceId[1]+1,'sale',self.items_to_sale[0][8],dt.datetime.now().strftime("%I:%M:%S %p"),] +[self.total_items_info[i] for i in range(1,7)]
-        print(row)
-            
-        self.addInvoiceDB(row)
-        for values in self.items_to_sale:
-            qty = values[3]
-            price = values[2]
-            total = qty*price
-            discount = total*(values[4]/100)
-            vat = (total-discount)*(values[4]/100)
-            row = [values[0],values[1],qty,price,total,discount,vat,total+vat-discount,'','',lastInvoiceId[1]+1]
-            self.addSaleHistoryDB(row)
-        
-        # update total amount of main acount
-        message = dao.set_rows("UPDATE basic SET total_amount = total_amount+?;",[total_info[3]])
-        if message[0]==0:
-            _help.show_message('error',f'While updating total amount for sale item {message[1]}')
-            return
-        
-        
-        # self.back_home()
-        obj = pytohtml.PythonToHtml()
-        obj.saleReceipt('Sale item',self.items_to_sale[0][8],lastInvoiceId[1]+1,item_name=item_name,item_qty=item_qty,item_price=item_price,total_info=total_info)
-        self.total_items_info = [0 for i in range(7)]
-        self.showTotalInfo()
-        self.set_entry_value(self.total_info_entries[0],0)
-        self.set_entry_value(self.total_info_entries[1],0)
-        self.items_to_sale.clear()
-        self.showTable()
-        _help.show_message('success','Successfully added a new transaction')
-        pass    
-    
-    def on_select(self,event):
-        selected_items = self.tree.selection()
-        
-        for item in selected_items:
-            item_values = self.tree.item(item)["values"]
-            self.selected_si = item_values[0]
-                
-    def showTable(self):
-        table_frame = tk.Frame(self.right_frame,bg=color.color_list[1])
-        table_frame.place(relx=0,rely=0.51,relwidth=1,relheight=0.49)
-        
-        scrollbary = tk.Scrollbar(table_frame)
-        scrollbarx = tk.Scrollbar(table_frame)
-        
-        columns = [f'c{i}' for i in range(1,11)]
-        headings = ['SI','Code','Name','Price','QTY','Discount(%)','Total','VAT(%)','Payable','Date']
-        column_size = [40] + [80 for i in range(2,11)]
-        column_anchor = ['e','center','center','w','w','w','w','w','w','center']
-        
-        print(self.items_to_sale)
-        # treeview
-        self.tree = tk.ttk.Treeview(table_frame, column=columns, show='headings', yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
-        for i in range(0,len(columns)):
-            self.tree.heading(columns[i], text=headings[i])
-            self.tree.column(columns[i],width=column_size[i],anchor=column_anchor[i])
-            
-        row_color = ["red_row","red_green"]
-        self.tree.tag_configure("red_row", background="#e1e1e1")
-        self.tree.tag_configure("red_green", background="#a9a9a9")
-        
-        for i in range(0,len(self.items_to_sale)):
-            self.tree.insert("",tk.END,values=[i+1]+self.items_to_sale[i],tag = row_color[i%2])
-
-        self.tree.bind("<<TreeviewSelect>>", self.on_select)
-        self.tree.place(relx=0,rely=0,relwidth=0.97,relheight=.95)
-        scrollbary.place(relx=0.97,rely=0,relwidth=0.03,relheight=1)
-        scrollbary.config( command = self.tree.yview )
-        scrollbarx.config(orient='horizontal', command=self.tree.xview)
-        scrollbarx.place(relx=0,rely=0.95,relwidth=1,relheight=0.05)
-        
-    def rightFrame(self):
-        self.searchFrame()
-        self.customerFrame()
-        self.totalFrame()
-        self.paymentFrame()
-        tk.Button(self.right_frame,text='Payment',bg=color.color_list[2],command=self.completePayment).place(relx=0.45,rely=0.45,relwidth=0.1,relheight=0.05)
-        self.showTable()
-
         
     def addHome(self):
         _help.init_page(self.root,'Item Sale')
@@ -550,26 +149,14 @@ class Home:
         # global item_purchase_obj
         # item_purchase_obj = _item_purchase.Item_Purchase(self.root)
         
-        self.main_frame = tk.Frame(self.root,bg=color.color_list[1])
+        self.main_frame = tk.Frame(self.root,bg='#ffffff')
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
         
         # ============================ left frame 0 ============================
-        self.left_frame = tk.Frame(self.main_frame,bg=color.color_list[4])
+        self.left_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.left_frame.place(relx=0.005,rely=0, relwidth=0.15, relheight=1)
         self.leftFrame()
         
-
-        # ================================= middle frame ================================
-        self.middle_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
-        self.middle_frame.place(relx=0.16,rely=0, relwidth=0.28, relheight=1)
-        self.middleFrame()
-        
-
-
-        # ============================ right frame ============================ #
-        self.right_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
-        self.right_frame.place(relx=0.45,rely=0,relwidth=0.545,relheight=1)
-        self.rightFrame()
 
 
     def refresh(self):

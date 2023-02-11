@@ -27,7 +27,7 @@ def basic_info_setting(root):
         root.root.title('Shopping Inventory Management System')
         root.root.geometry('600x300+300+200')
         # ================= main frame =============== #
-        main_frame = tk.Frame(root.root,bg=color.color_list[2])
+        main_frame = tk.Frame(root.root,bg='#ffffff')
         main_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
 
         # ================= top frame =============== #

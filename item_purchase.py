@@ -79,25 +79,36 @@ class Item_Purchase:
                         'VAT :', 'Quantity :','Purchase Price :','Sale Price :','Date :']
         
         for i in range(0,len(item_info_list)):
-            tk.Label(self.left_frame,text=item_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w' \
-                     ).place(relx=0.02, rely=0.01+(0.08)*i, relwidth=0.45, relheight=0.06)
+            tk.Label(self.left_frame,text=item_info_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), font=('Helvic',10), anchor='w' \
+                     ).place(relx=0.02, rely=0.01+(0.06)*i, relwidth=0.45, relheight=0.04)
         
-        self.item_entries = [tk.Entry(self.left_frame) for i in range(8)]
-        self.item_entries.append(tkcal.DateEntry(self.left_frame,date_pattern="dd/MM/yyyy"))
+        self.item_entries_frame = [tk.Frame(self.left_frame, bg=color.getColor('bd_input')) for i in range(9)]
+        self.item_entries = [tk.Entry(self.item_entries_frame[i], bd=0) for i in range(8)]
+        self.item_entries.append(tkcal.DateEntry(self.item_entries_frame[8],date_pattern="dd/MM/yyyy"))
         for i in range(9):
-            self.item_entries[i].place(relx=0.48,rely=0.01+i*0.08,relwidth=0.5,relheight=0.06)
+            self.item_entries_frame[i].place(relx=0.48,rely=0.01+i*0.06,relwidth=0.5,relheight=0.04)
+            self.item_entries[i].pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+            _help.input_hover(self.item_entries_frame[i],self.item_entries[i])
         
         self.item_entries[0].focus_set()
         for i in range(7):
             self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
         
-        self.add_btn = tk.Button(self.left_frame,text='Add',bg=color.color_list[2], fg=color.color_list[3], command=self.addItemList)
-        self.update_btn = tk.Button(self.left_frame,text='Update',bg=color.color_list[2], fg=color.color_list[3], command=self.updateItem)
-        self.delete_btn = tk.Button(self.left_frame,text='Delete',bg=color.color_list[6], fg=color.color_list[1], command=self.deleteItem)
+        button_frame = [tk.Frame(self.left_frame,bg=color.getColor('bd_button')) for i in range(3)]
+        button_frame[0].place(relx=0.10,rely=0.8,relwidth=0.25,relheight=0.05)
+        button_frame[1].place(relx=0.37,rely=0.8,relwidth=0.25,relheight=0.05)
+        button_frame[2].place(relx=0.64,rely=0.8,relwidth=0.25,relheight=0.05)
         
-        self.delete_btn.place(relx=0.10,rely=0.8,relwidth=0.25,relheight=0.05)
-        self.update_btn.place(relx=0.37,rely=0.8,relwidth=0.25,relheight=0.05)
-        self.add_btn.place(relx=0.64,rely=0.8,relwidth=0.25,relheight=0.05)
+        self.add_btn = tk.Button(button_frame[0],text='Add',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), bd=0, font=('helvic',10), command=self.addItemList)
+        self.update_btn = tk.Button(button_frame[1],text='Update',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), font=('helvic',10), bd=0, command=self.updateItem)
+        self.delete_btn = tk.Button(button_frame[2],text='Delete',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), font=('helvic',10), bd=0, command=self.deleteItem)
+        self.add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        self.update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        self.delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(button_frame[0],self.add_btn)
+        _help.button_hover(button_frame[1],self.update_btn)
+        _help.button_hover_del(button_frame[2],self.delete_btn)
+        
         
     def showTotalInfo(self):
         sum = 0
@@ -115,8 +126,8 @@ class Item_Purchase:
             lbl.config(text=text)
     
     def searchFrame(self):
-        tk.Label(self.right_frame,text='Search by :', bg=color.color_list[7], anchor='w').place(relx=0.01, rely=0.01, relwidth=0.15, relheight=0.05)
-        tk.Label(self.right_frame,text='Query :', bg=color.color_list[7], anchor='w').place(relx=0.01, rely=0.07, relwidth=0.15, relheight=0.05)
+        tk.Label(self.right_frame,text='Search by :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w').place(relx=0.01, rely=0.01, relwidth=0.15, relheight=0.05)
+        tk.Label(self.right_frame,text='Query :',  bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w').place(relx=0.01, rely=0.07, relwidth=0.15, relheight=0.05)
         
         self.product_search_type = tk.StringVar()
         search_type_list = ['name', "code", "company",'group']
@@ -127,14 +138,19 @@ class Item_Purchase:
         self.query = tk.Entry(self.right_frame)
         self.query.place(relx=0.16,rely=0.07, relwidth=0.2, relheight=0.05)
         
-        self.search_btn = tk.Button(self.right_frame,text='Search',bg=color.color_list[2])
-        self.search_btn.place(relx=0.1, rely=0.13, relwidth=0.15, relheight=0.05)
+        btn_frame = tk.Frame(self.right_frame,bg=color.getColor('bd_button'))
+        btn_frame.place(relx=0.1, rely=0.13, relwidth=0.15, relheight=0.05)
+        
+        # search button
+        search_btn = tk.Button(btn_frame,fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(btn_frame,search_btn)
 
     
     def suplierFrame(self):
         lbl_list = ['Name','Pre-balance','Current Balance', 'Contact']
         for i in range(len(lbl_list)):
-            tk.Label(self.right_frame,text=lbl_list[i],bg=color.color_list[7], anchor='w'\
+            tk.Label(self.right_frame,text=lbl_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'\
                 ).place(relx=0.01, rely=0.19+(i*0.06), relwidth=0.15, relheight=0.05)
         self.supliers_entries = [tk.Entry(self.right_frame) for i in range(4)]
         for i in range(len(self.supliers_entries)):
@@ -146,10 +162,10 @@ class Item_Purchase:
     def totalFrame(self):
         lbl_list = ['Total Item :', 'Total Price :','Discount :','VAT :','Payable :','Total Paid :', 'Change :']
         for i in range(len(lbl_list)):
-            tk.Label(self.right_frame,text=lbl_list[i],bg=color.color_list[7], anchor='w'\
+            tk.Label(self.right_frame,text=lbl_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'\
                 ).place(relx=0.45, rely=0.01+(i*0.06), relwidth=0.15, relheight=0.05)
             
-        self.total_info_lbl = [tk.Label(self.right_frame,bg=color.color_list[7]) for i in range(5)]
+        self.total_info_lbl = [tk.Label(self.right_frame, bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl')) for i in range(5)]
         for i in range(len(self.total_info_lbl)):
             self.total_info_lbl[i].place(relx=0.6,rely=0.01+(i*0.06),relwidth=0.15,relheight=0.05)
             
@@ -164,7 +180,7 @@ class Item_Purchase:
             account_list = ['01700909000','01611818111']
         else:
             account_list = ['sonali bank-1','sonali-bank-2']
-        select_lbl = tk.Label(self.right_frame,text='Select A/C :',bg=color.color_list[7],  anchor='w')
+        select_lbl = tk.Label(self.right_frame,text='Select A/C :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),  anchor='w')
         select_lbl.place(relx=0.8,rely=0.15,relwidth=0.15,relheight=0.05)
         
         self.payment_acount = tk.StringVar()
@@ -175,7 +191,7 @@ class Item_Purchase:
             
         pass            
     def paymentFrame(self):
-        tk.Label(self.right_frame,text='Payment Method :',bg=color.color_list[7], anchor='w'\
+        tk.Label(self.right_frame,text='Payment Method :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'\
             ).place(relx=0.8,rely=0.01,relwidth=0.15,relheight=0.05)
         
         self.payment_method_type = tk.StringVar()
@@ -245,7 +261,6 @@ class Item_Purchase:
         row = values[0:8]+values[9:10]
         print(row)
         message = dao.set_rows(command,row)
-        print(message)
         if message[0]==0:
             _help.show_message('error',f"while insert into item details table {message[1]}for item code = {values[0]}")
             return 
@@ -313,7 +328,7 @@ class Item_Purchase:
         self.item_entries[0].config(state='disabled')
     
     def showTable(self):
-        table_frame = tk.Frame(self.right_frame,bg=color.color_list[1])
+        table_frame = tk.Frame(self.right_frame,bg='#ffffff')
         table_frame.place(relx=0,rely=0.51,relwidth=1,relheight=0.49)
         
         scrollbary = tk.Scrollbar(table_frame)
@@ -349,8 +364,19 @@ class Item_Purchase:
         self.suplierFrame()
         self.totalFrame()
         self.paymentFrame()
-        tk.Button(self.right_frame,text='Back',bg=color.color_list[2],command=self.back_home).place(relx=0.2,rely=0.45,relwidth=0.1,relheight=0.05)
-        tk.Button(self.right_frame,text='Payment',bg=color.color_list[2],command=self.completePayment).place(relx=0.7,rely=0.45,relwidth=0.1,relheight=0.05)
+        
+        btn_frame = [tk.Frame(self.right_frame,bg=color.getColor('bd_button')) for i in range(3)]
+        btn_frame[0].place(relx=0.2,rely=0.45,width=90,height=22)
+        btn_frame[1].place(relx=0.7,rely=0.45,width=90,height=22)
+
+        back_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), text='Back', bd=0, command=self.back_home)
+        back_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        payment_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), text='Payment', bd=0, command=self.completePayment)
+        payment_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        _help.button_hover(btn_frame[0],back_btn)
+        _help.button_hover(btn_frame[1],payment_btn)
         self.showTable()
     
         
@@ -359,10 +385,10 @@ class Item_Purchase:
         self.main_frame = tk.Frame(self.root,bg='white')
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
         
-        self.left_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.left_frame = tk.Frame(self.main_frame, bg=color.getColor('bg_frame'))
         self.left_frame.place(relx=0.01,rely=0, relwidth=0.28, relheight=1)
         self.leftFrame()
         
-        self.right_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+        self.right_frame = tk.Frame(self.main_frame, bg=color.getColor('bg_frame'))
         self.right_frame.place(relx=0.3,rely=0, relwidth=0.69, relheight=1)
         self.rightFrame()

@@ -20,25 +20,25 @@ class User_Panel():
             # item manage main frameprint('i am here user panal')
             
             # =================== main frame ========================= #
-            self.main_frame = tk.Frame(self.root,bg='white')
+            self.main_frame = tk.Frame(self.root,bg='#ffffff')
             self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)
             
             # =================== top frame ========================= #
-            self.top_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+            self.top_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
             self.top_frame.place(relx=0,rely=0,relwidth=1, relheight=0.3)
             
             # ----------------------- label --------------------- #
             user_info_list = ['Username :','Password :','Full Name :']
             for i in range(0,len(user_info_list)):
-                top_frame_lbl = tk.Label(self.top_frame,text=user_info_list[i], bg=color.color_list[7], font=('Times New Roman',14), anchor='w')
+                top_frame_lbl = tk.Label(self.top_frame,text=user_info_list[i], bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
                 top_frame_lbl.place(relx=0.02, rely=0.1+(0.2)*i, relwidth=0.09, relheight=0.15)
             
             # # ---------------------- user info input ------------ #
             self.top_frame_entry_user_name = tk.Entry(self.top_frame)
-            self.top_frame_entry_user_name.place(relx=0.12,rely=0.1,relwidth=0.12,relheight=0.15)
+            self.top_frame_entry_user_name.place(relx=0.12,rely=0.1,relwidth=0.14,relheight=0.15)
 
             self.top_frame_entry_password = tk.Entry(self.top_frame,show='*')
-            self.top_frame_entry_password.place(relx=0.12,rely=0.3,relwidth=0.12,relheight=0.15)
+            self.top_frame_entry_password.place(relx=0.12,rely=0.3,relwidth=0.14,relheight=0.15)
 
             self.open_eye = ImageTk.PhotoImage(Image.open("img/eye_open.png").resize((20,17)))
             self.closed_eye = ImageTk.PhotoImage(Image.open("img/eye_close.png").resize((20,17)))
@@ -46,18 +46,18 @@ class User_Panel():
             self.toggle_button.place(relx=0.24,rely=0.3,relwidth=0.02,relheight=0.15)
             
             self.top_frame_entry_user_fullname = tk.Entry(self.top_frame)
-            self.top_frame_entry_user_fullname.place(relx=0.12,rely=0.5,relwidth=0.12,relheight=0.15)
+            self.top_frame_entry_user_fullname.place(relx=0.12,rely=0.5,relwidth=0.14,relheight=0.15)
             
             
             # =================== access frame ========================= #
-            self.top_frame_user_access_frame = tk.LabelFrame(self.top_frame,text='User accessibility')
+            self.top_frame_user_access_frame = tk.LabelFrame(self.top_frame,text='User accessibility',bg=color.getColor('bg_frame'))
             self.top_frame_user_access_frame.place(relx=0.35,rely=0.3,relwidth=0.12,relheight=0.7)
 
 
 
             
-            self.top_frame_lbl = tk.Label(self.top_frame,text='User role: ', bg=color.color_list[7], font=('Times New Roman',14), anchor='w')
-            self.top_frame_lbl.place(relx=0.26, rely=0.1, relwidth=0.09, relheight=0.15)
+            self.top_frame_lbl = tk.Label(self.top_frame,text='User role: ', bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
+            self.top_frame_lbl.place(relx=0.28, rely=0.1, relwidth=0.09, relheight=0.15)
             
             self.user_type = tk.StringVar()
             user_type_list = ['Owner','Admin','Manager']
@@ -67,20 +67,37 @@ class User_Panel():
             self.top_frame_entry_user_type.config(font=('Times New Roma',12))
             self.top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
             
+            btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(6)]
+            btn_frame[0].place(relx=0.02,rely=0.75, width=90, height=22)
+            btn_frame[1].place(relx=0.13,rely=0.75, width=90, height=22)
+            btn_frame[2].place(relx=0.24,rely=0.75, width=90, height=22)
+            
+            add_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0)
+            add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+            update_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0)
+            update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+            delete_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0)
+            delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+            _help.button_hover(btn_frame[0],add_btn)
+            _help.button_hover(btn_frame[1],update_btn)
+            _help.button_hover_del(btn_frame[2],delete_btn)
+            
             # user add button
-            self.top_frame_add_user_btn = tk.Button(self.top_frame,text='Add',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.add_new_user)
-            self.top_frame_add_user_btn.place(relx=0.02,rely=0.75,relwidth=0.09,height=30)
+            # self.top_frame_add_user_btn = tk.Button(self.top_frame,text='Add',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.add_new_user)
+            # self.top_frame_add_user_btn.place(relx=0.02,rely=0.75,relwidth=0.09,height=30)
             
-            # user update button
-            self.top_frame_update_user_btn = tk.Button(self.top_frame,text='Update',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.update_user)
-            self.top_frame_update_user_btn.place(relx=0.13,rely=0.75,relwidth=0.09,height=30)
+            # # user update button
+            # self.top_frame_update_user_btn = tk.Button(self.top_frame,text='Update',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.update_user)
+            # self.top_frame_update_user_btn.place(relx=0.13,rely=0.75,relwidth=0.09,height=30)
             
-            # user delete button 
-            self.top_frame_delete_user_btn = tk.Button(self.top_frame,text='Delete',bg=color.color_list[6],fg=color.color_list[1],font=('Times New Roma',12),command=self.delete_user)
-            self.top_frame_delete_user_btn.place(relx=0.24,rely=0.75,relwidth=0.09,height=30)
+            # # user delete button 
+            # self.top_frame_delete_user_btn = tk.Button(self.top_frame,text='Delete',bg=color.color_list[6],fg=color.color_list[1],font=('Times New Roma',12),command=self.delete_user)
+            # self.top_frame_delete_user_btn.place(relx=0.24,rely=0.75,relwidth=0.09,height=30)
             
             # search type
-            self.top_frame_search_lbl = tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Search by :')
+            self.top_frame_search_lbl = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Search by :')
             self.top_frame_search_lbl.place(relx=0.51, rely=0.1, relwidth=0.09, relheight=0.15)
 
             user_search_type = tk.StringVar()
@@ -90,27 +107,43 @@ class User_Panel():
             search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
 
             # search box
-            self.top_frame_lbl_1 = tk.Label(self.top_frame,bg=color.color_list[7], anchor='w', font=('Times New Roman',12), text='Query :')
+            self.top_frame_lbl_1 = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :')
             self.top_frame_lbl_1.place(relx=0.51, rely=0.3, relwidth=0.09, relheight=0.15)
 
             self.query = tk.Entry(self.top_frame)
             self.query.place(relx=0.61, rely=0.3, relwidth=0.1, relheight=0.15)
 
+            btn_frame[3].place(relx=0.55, rely=0.75, width=90, height=22)
+            btn_frame[4].place(relx=0.75,rely=0.75, width=90, height=22)
+            btn_frame[5].place(relx=0.86,rely=0.75, width=90, height=22)
+            
             # search button
-            self.top_frame_search_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search')
-            self.top_frame_search_btn.place(relx=0.55, rely=0.75, relwidth=0.09, height=30)
+            search_btn = tk.Button(btn_frame[3],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+            search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+            refresh_btn = tk.Button(btn_frame[4],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
+            refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+            close_btn = tk.Button(btn_frame[5],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Close', bd=0,command=self.backHome)
+            close_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+            _help.button_hover(btn_frame[3],add_btn)
+            _help.button_hover(btn_frame[4],refresh_btn)
+            _help.button_hover_del(btn_frame[5],close_btn)
+            # # search button
+            # self.top_frame_search_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search')
+            # self.top_frame_search_btn.place(relx=0.55, rely=0.75, relwidth=0.09, height=30)
             
-            # refresh button
-            self.top_frame_refresh_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh',command=self.user_panel)
-            self.top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
+            # # refresh button
+            # self.top_frame_refresh_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh',command=self.user_panel)
+            # self.top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
             
-            # close button
-            self.top_frame_close_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:self.backHome())
-            self.top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
+            # # close button
+            # self.top_frame_close_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:self.backHome())
+            # self.top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
             
                 
             # =================== bottom frame ========================= #
-            self.bottom_frame = tk.Frame(self.main_frame,bg=color.color_list[7])
+            self.bottom_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
             self.bottom_frame.place(relx=0,rely=0.31,relwidth=1,relheight=.69)
             self.show_table()
         except Exception as e:
@@ -127,8 +160,9 @@ class User_Panel():
         self.tree.heading("col4", text="role")
 
         row_color = ["red_row","red_green"]
-        self.tree.tag_configure("red_row", background="grey")
-        self.tree.tag_configure("red_green", background="white")
+        self.tree.tag_configure("red_row", background="#e1e1e1")
+        self.tree.tag_configure("red_green", background="#a9a9a9")
+        
         user_panel_user_info = dao.get_user_panel()
         print(user_panel_user_info)
         if user_panel_user_info[0]==0:
@@ -257,7 +291,7 @@ class User_Panel():
 
 # root = tk.Tk()
 # obj = User_Panel(root)
-# obj.user_accessibility()    
+# # obj.user_accessibility()    
 # root.geometry('1100x650+10+10')        
-# user_panel(root)
+# obj.user_panel()
 # root.mainloop()

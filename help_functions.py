@@ -8,16 +8,6 @@ import threading
 
 import DAO as dao 
 import color_code as color
-
-def on_enter(event):
-    global btn
-    btn.config(bg='#dcfbf6',bd=2)
-    print('enter')
-    
-def on_leave(event):
-    global btn
-    btn.config(bg='#f1f1f1',bd=1)
-    print('leave')
     
 def show_message(message_type,message):
     messageBox = tk.Toplevel()
@@ -38,11 +28,13 @@ def show_message(message_type,message):
     text.place(relx=0.3,rely=0,relwidth=0.7,relheight=0.75)
     text.insert(tk.END,message)
     global btn
-    btn = tk.Button(messageBox,text='Ok', bd=1, bg='#f1f1f1', relief=tk.SUNKEN, highlightbackground="red", command=messageBox.destroy)
-    btn.place(relx=0.7,rely=0.8,width=80)
-
-    btn.bind("<Enter>",on_enter)
-    btn.bind("<Leave>",on_leave)
+    
+    button_frame = [tk.Frame(messageBox,bg=color.getColor('bd_button')) for i in range(1)]
+    button_frame[0].place(relx=0.7,rely=0.8,width=80)
+    
+    btn = tk.Button(button_frame[0],text='Ok',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), bd=0, font=('helvic',10), command=messageBox.destroy)
+    btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+    button_hover(button_frame[0],btn)
     messageBox.mainloop()
 
 def is_number(var):
@@ -62,6 +54,28 @@ def is_alphanum(var):
         return True
     
 
+def hover(event,l1,c1,l2=None,c2=None):
+    l1.config(bg=c1)
+    if l2:
+        l2.config(bg=c2)
+    
+def button_hover(frame,button):
+    button.bind("<Enter>",lambda e,l1=frame, c1=color.getColor('bd_button-h'),l2=button, c2=color.getColor('bg_button-h'):hover(e, l1, c1, l2, c2))
+    button.bind("<Leave>",lambda e,l1=frame, c1=color.getColor('bd_button'),l2=button, c2=color.getColor('bg_button'):hover(e, l1, c1, l2, c2))
+
+def button_hover_menu(frame,button):
+    button.bind("<Enter>",lambda e,l1=frame, c1=color.getColor('bd_menu-button-h'),l2=button, c2=color.getColor('bg_menu-button-h'):hover(e, l1, c1, l2, c2))
+    button.bind("<Leave>",lambda e,l1=frame, c1=color.getColor('bd_menu-button'),l2=button, c2=color.getColor('bg_menu-button'):hover(e, l1, c1, l2, c2))
+
+def button_hover_del(frame,button):
+    button.bind("<Enter>",lambda e,l1=frame, c1=color.getColor('bd_button_del-h'),l2=button, c2=color.getColor('bg_button_del-h'):hover(e, l1, c1, l2, c2))
+    button.bind("<Leave>",lambda e,l1=frame, c1=color.getColor('bd_button'),l2=button, c2=color.getColor('bg_button'):hover(e, l1, c1, l2, c2))
+
+def input_hover(frame,entry):
+    entry.bind("<FocusIn>",lambda e,l1=frame, c1=color.getColor('bd_input-h'):hover(e, l1, c1))
+    entry.bind("<FocusOut>",lambda e,l1=frame, c1=color.getColor('bd_input'):hover(e, l1, c1))
+
+
 shop_name = None
 phone = None
 email = None
@@ -71,7 +85,7 @@ owner = None
         
 def init_page(root,page_name):
     # ============================ top frame 0 ============================
-    top_frame_0 = tk.Frame(root,bg=color.color_list[0])
+    top_frame_0 = tk.Frame(root,bg=color.getColor('bg_main1'))
     top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
     # ---------------------------------------------------------------------
     # logo  (at frame 0)
@@ -96,17 +110,17 @@ def init_page(root,page_name):
     top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
 
     # shop name (at frame 0)
-    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , fg=color.color_list[1], bg=color.color_list[0], font=("Comic Sans MS", 20, "bold"))
+    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Comic Sans MS", 20, "bold"))
     top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
 
     # shop owner's info (at frame 0)
-    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , fg=color.color_list[1], bg=color.color_list[0], font=("Times New Roman", 12))
+    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Times New Roman", 12))
     top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
     
 
 
     # ============================ top frame 1 ============================
-    top_frame_1 = tk.Frame(root,bg=color.color_list[2])
+    top_frame_1 = tk.Frame(root,bg=color.getColor('bg_main2'))
     top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
     # ---------------------------------------------------------------------
     
@@ -114,7 +128,7 @@ def init_page(root,page_name):
     cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
     name_list = [f'Welcome to {shop_name}',cur_date,cur_time,page_name]
     
-    lbl_list = [tk.Label(top_frame_1, fg=color.color_list[3], bg=color.color_list[2], font=("Comic Sans MS",12)
+    lbl_list = [tk.Label(top_frame_1, bg=color.getColor('bg_main2'), fg=color.getColor('fg_main2'), font=("Comic Sans MS",12)
             ) for i in range(len(name_list))]
     
     def show_time():
