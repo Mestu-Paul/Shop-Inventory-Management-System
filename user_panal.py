@@ -122,13 +122,13 @@ class User_Panel():
         self.btn_frame[1].place(relx=0.13,rely=0.75, width=90, height=22)
         self.btn_frame[2].place(relx=0.24,rely=0.75, width=90, height=22)
         
-        add_btn = tk.Button(self.btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0)
+        add_btn = tk.Button(self.btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0, command=self.addNewUser)
         add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        update_btn = tk.Button(self.btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0)
+        update_btn = tk.Button(self.btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0, command=self.update_user)
         update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        delete_btn = tk.Button(self.btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0)
+        delete_btn = tk.Button(self.btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0, command=self.delete_user)
         delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
         _help.button_hover(self.btn_frame[0],add_btn)
         _help.button_hover(self.btn_frame[1],update_btn)
@@ -161,9 +161,9 @@ class User_Panel():
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
         self.tree.place(relx=0,rely=0,relwidth=1,relheight=1)
         
-    def add_new_user(self):
-        message_type=['error','success']
+    def addNewUser(self):
         user_info = [self.top_frame_entry_user_name.get(),self.top_frame_entry_password.get(),self.top_frame_entry_user_fullname.get(),self.user_type.get()]
+        message_type=['error','success']
         if len(user_info)!=4:
             _help.show_message(message_type[0],"Please fill all the fields")
             return
@@ -207,6 +207,9 @@ class User_Panel():
     
     def delete_user(self):
         message_type=['error','success']
+        if self.user_name_to_query==self.root.session['userName']:
+            _help.show_message(message_type[0],'You can not delete your self')
+            return
         message = dao.delete_row_of_a_table("user_panel","user_name",self.user_name_to_query)
         print(message)
         _help.show_message(message_type[message[0]],message[1])

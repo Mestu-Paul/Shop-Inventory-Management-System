@@ -136,7 +136,7 @@ class Home:
         ax.legend()
 
         ax.set_xticks(days)
-        ax.set_xticklabels([f"{ dt.datetime.now().strftime('%d/%m/%y')}" for day in days], rotation=45)
+        ax.set_xticklabels([f"{ dt.datetime.now().strftime('%d/%m/%y')}" for day in days], rotation=45, fontsize=9, fontname='Arial')
 
         canvas = FigureCanvasTkAgg(fig, master=self.right_frame)
         canvas.draw()
@@ -201,11 +201,6 @@ class Home:
         
     def addHome(self):
         _help.init_page(self.root,'Item Sale')
-        # _help.show_time(self.root)
-        # global item_manage_obj
-        # item_manage_obj = _item_manage.Item_Manage(self.root)
-        # global item_purchase_obj
-        # item_purchase_obj = _item_purchase.Item_Purchase(self.root)
         
         self.main_frame = tk.Frame(self.root,bg='#ffffff')
         self.main_frame.place(relx=0,rely=0.172,relwidth=1,relheight=0.75)

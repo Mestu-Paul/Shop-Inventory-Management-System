@@ -22,11 +22,6 @@ def get_user_panel():
 def set_user_panel(user_info):
     conn = connect_db()
     cursor = conn.cursor()
-    # pass_key = Fernet.generate_key()
-    # fernet = Fernet(pass_key)
-    # user_info[1] = fernet.encrypt(user_info[1].encode())
-    #     command = f"INSERT INTO user_panel values('{user_info[0]}',\
-    # '{user_info[1]}','{user_info[1]}','{user_info[2]}','{user_info[3]}');"
     command = "INSERT INTO user_panel values(?,?,?,?,?);"
     print(command)
     user_info.insert(1,user_info[1])

@@ -4,38 +4,46 @@ import re as regex
 import datetime as dt 
 import time
 import threading
-
+from tkinter import messagebox
 
 import DAO as dao 
 import color_code as color
     
 def show_message(message_type,message):
-    messageBox = tk.Toplevel()
-    screen_width = messageBox.winfo_screenwidth()
-    screen_height = messageBox.winfo_screenheight()
-    # calculate the position to center the frame
-    x = (screen_width - 200) // 2
-    y = (screen_height - 200) // 2
-    messageBox.geometry('300x200+{}+{}'.format(x, y))
-    messageBox.title(message_type)
-    messageBox.resizable(False,False)
-    messageBox.grab_set()
-    
-    message_icon = ImageTk.PhotoImage(Image.open(f"img/{message_type}.png").resize((50,50)))
-    tk.Label(messageBox,bg='#ffffff', image=message_icon).place(relx=0,rely=0.0,relwidth=0.3,relheight=0.75)
+    try:
+        messageBox = tk.Toplevel()
+        screen_width = messageBox.winfo_screenwidth()
+        screen_height = messageBox.winfo_screenheight()
+        # calculate the position to center the frame
+        x = (screen_width - 200) // 2
+        y = (screen_height - 200) // 2
+        messageBox.geometry('300x200+{}+{}'.format(x, y))
+        messageBox.title(message_type)
+        messageBox.config( bg=color.getColor('bg_frame'))
+        messageBox.resizable(False,False)
+        messageBox.grab_set()
+        total_line = (len(message)+24)//25
+        for i in range(4-total_line//2):
+            message = "\n"+message
+            pass
+        
+        message_icon = ImageTk.PhotoImage(Image.open(f"img/{message_type}.png").resize((50,50)))
+        tk.Label(messageBox, image=message_icon,  bg=color.getColor('bg_frame')).place(relx=0,rely=0.0,relwidth=0.3,relheight=0.75)
 
-    text = tk.Text(messageBox,wrap=tk.WORD,bd=0)
-    text.place(relx=0.3,rely=0,relwidth=0.7,relheight=0.75)
-    text.insert(tk.END,message)
-    global btn
-    
-    button_frame = [tk.Frame(messageBox,bg=color.getColor('bd_button')) for i in range(1)]
-    button_frame[0].place(relx=0.7,rely=0.8,width=80)
-    
-    btn = tk.Button(button_frame[0],text='Ok',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), bd=0, font=('helvic',10), command=messageBox.destroy)
-    btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-    button_hover(button_frame[0],btn)
-    messageBox.mainloop()
+        text = tk.Text(messageBox,wrap=tk.WORD,bd=0, bg=color.getColor('bg_frame'))
+        text.place(relx=0.3,rely=0,relwidth=0.7,relheight=0.75)
+        text.insert(tk.END,message)
+        global btn
+        
+        button_frame = [tk.Frame(messageBox,bg=color.getColor('bd_button')) for i in range(1)]
+        button_frame[0].place(relx=0.7,rely=0.8,width=80)
+        
+        btn = tk.Button(button_frame[0],text='Ok',bg=color.getColor('bg_button'), fg=color.getColor('fg_button'), bd=0, font=('helvic',10), command=messageBox.destroy)
+        btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        button_hover(button_frame[0],btn)
+        messageBox.mainloop()
+    except Exception as e:
+        messagebox.showerror("Error",e)
 
 def is_number(var):
     for v in var:
@@ -131,15 +139,28 @@ def init_page(root,page_name):
         
         lbl_list = [tk.Label(top_frame_1, bg=color.getColor('bg_main2'), fg=color.getColor('fg_main2'), font=("Comic Sans MS",12)
                 ) for i in range(len(name_list))]
+    
+        def show_time():
+            current_time = time.strftime("%H:%M:%S %p")
+            lbl_list[2].config(text=current_time)
+            root.after(1000,show_time)
+            
+        show_time()
+
+        for i,lbl in enumerate(lbl_list):
+            lbl.pack(side=tk.LEFT,padx=50)
+            lbl.config(text=name_list[i])
     except Exception as e:
         show_message('error',f'Found an exception while set init page {e}')
-    
-    def show_time():
-        current_time = time.strftime("%H:%M:%S %p")
-        lbl_list[2].config(text=current_time)
-        root.after(1000,show_time)
-    show_time()
 
-    for i,lbl in enumerate(lbl_list):
-        lbl.pack(side=tk.LEFT,padx=50)
-        lbl.config(text=name_list[i])
+
+# show_message('error',
+# "t h i s i s a l i n e t 0 t h i s i s a l i n e t 1")
+
+# # t h i s i s a l i n e t 2
+# # t h i s i s a l i n e t 3
+# # t h i s i s a l i n e t 4
+# # t h i s i s a l i n e t 5
+# # t h i s i s a l i n e t 6
+# # t h i s i s a l i n e t 7
+# # """)
