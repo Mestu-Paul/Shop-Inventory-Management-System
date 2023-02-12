@@ -6,9 +6,9 @@ import home as _home
 import login as _login
 
 # authentication
-role = []
-a = _login.UserLogin(role)
-a.userLogin()
+role = ['Owner']
+# a = _login.UserLogin(role)
+# a.userLogin()
 
 if len(role)==0:
     exit()
@@ -31,8 +31,8 @@ root.session = {'role':temp}
 MenuBar = menubar.getMenubar(root)
 
 # Home window
-purchase = _home.Home(root)
-purchase.addHome()
+home_obj = _home.Home(root)
+home_obj.addHome()
 
 
 

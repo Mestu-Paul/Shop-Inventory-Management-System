@@ -84,62 +84,62 @@ owner = None
         
         
 def init_page(root,page_name):
-    # ============================ top frame 0 ============================
-    top_frame_0 = tk.Frame(root,bg=color.getColor('bg_main1'))
-    top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
-    # ---------------------------------------------------------------------
-    # logo  (at frame 0)
-    
-    global shop_name,phone,email,owner
-    if shop_name==None:
-        print('retrieve')
-        message = dao.get_rows("SELECT * FROM basic;",[])
-        if message[0]==0:
-            show_message('error',f'While retreiving basic info {message[1]}')
-            return
-        message= message[1][0]
-        print(message)
-        shop_name = message[0]
-        owner = message[1]
-        phone = message[2]
-        email = message[3]
+    try:
+        # ============================ top frame 0 ============================
+        top_frame_0 = tk.Frame(root,bg=color.getColor('bg_main1'))
+        top_frame_0.place(relx=0,rely=0,relwidth=1,relheight=0.12)
+        # ---------------------------------------------------------------------
+        # logo  (at frame 0)
+        
+        global shop_name,phone,email,owner
+        if shop_name==None:
+            print('retrieve')
+            message = dao.get_rows("SELECT * FROM basic;",[])
+            if message[0]==0:
+                show_message('error',f'While retreiving basic info {message[1]}')
+                return
+            message= message[1][0]
+            print(message)
+            shop_name = message[0]
+            owner = message[1]
+            phone = message[2]
+            email = message[3]
 
-    
-    root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
-    top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
-    top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
+        
+        root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
+        top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
+        top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
 
-    # shop name (at frame 0)
-    top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Comic Sans MS", 20, "bold"))
-    top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
+        # shop name (at frame 0)
+        top0_frame_0_lbl_1 = tk.Label(top_frame_0,text=shop_name , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Comic Sans MS", 20, "bold"))
+        top0_frame_0_lbl_1.place(relx=0.07, rely=0.2)
 
-    # shop owner's info (at frame 0)
-    top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Times New Roman", 12))
-    top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
-    
+        # shop owner's info (at frame 0)
+        top0_frame_0_lbl_2 = tk.Label(top_frame_0,text=f"Mobile: {phone}\nEmail: {email}\nOwner: {owner}" , bg=color.getColor('bg_main1'), fg=color.getColor('fg_main1'), font=("Times New Roman", 12))
+        top0_frame_0_lbl_2.place(relx=0.8, rely=0.1)
+        
 
 
-    # ============================ top frame 1 ============================
-    top_frame_1 = tk.Frame(root,bg=color.getColor('bg_main2'))
-    top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
-    # ---------------------------------------------------------------------
-    
-    cur_date = dt.date.today().strftime("%B %d, %Y")
-    cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
-    name_list = [f'Welcome to {shop_name}',cur_date,cur_time,page_name]
-    
-    lbl_list = [tk.Label(top_frame_1, bg=color.getColor('bg_main2'), fg=color.getColor('fg_main2'), font=("Comic Sans MS",12)
-            ) for i in range(len(name_list))]
+        # ============================ top frame 1 ============================
+        top_frame_1 = tk.Frame(root,bg=color.getColor('bg_main2'))
+        top_frame_1.place(relx=0,rely=0.12,relwidth=1,relheight=0.05)
+        # ---------------------------------------------------------------------
+        
+        cur_date = dt.date.today().strftime("%B %d, %Y")
+        cur_time = dt.datetime.now().strftime("%I:%M:%S %p")
+        name_list = [f'Welcome to {shop_name}',cur_date,cur_time,page_name]
+        
+        lbl_list = [tk.Label(top_frame_1, bg=color.getColor('bg_main2'), fg=color.getColor('fg_main2'), font=("Comic Sans MS",12)
+                ) for i in range(len(name_list))]
+    except Exception as e:
+        show_message('error',f'Found an exception while set init page {e}')
     
     def show_time():
-        while True:
-            current_time = time.strftime("%H:%M:%S %p")
-            lbl_list[2].config(text=current_time)
-            time.sleep(1)
+        current_time = time.strftime("%H:%M:%S %p")
+        lbl_list[2].config(text=current_time)
+        root.after(1000,show_time)
+    show_time()
 
     for i,lbl in enumerate(lbl_list):
         lbl.pack(side=tk.LEFT,padx=50)
         lbl.config(text=name_list[i])
-        
-    time_thread = threading.Thread(target=show_time)
-    time_thread.start()

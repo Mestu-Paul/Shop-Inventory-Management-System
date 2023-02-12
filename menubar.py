@@ -4,7 +4,7 @@ from tkinter import Menu
 
 import basic_info_setting as bscinf
 from user_panal import User_Panel
-# from home import addHome
+import last15invoice as _last15invoice
 import help_functions as _help
 import DAO as dao
 import color_code as color
@@ -170,9 +170,11 @@ def summary_sheet():
 
 # ------------- main balance file menu command ------------- #
 def showMainBalance():
-    message = dao.get_rows("SELECT total_amount FROM basic;",[])
-    if message[0]==0:
-        _help.show_message('error',f'While query for total balance {message[1]}')
-        return
-    print(message[1][0])
-    _help.show_message('balance',f"Your current balance is {format(float(message[1][0][0]),'0.2f')}")
+    # message = dao.get_rows("SELECT total_amount FROM basic;",[])
+    # if message[0]==0:
+    #     _help.show_message('error',f'While query for total balance {message[1]}')
+    #     return
+    # print(message[1][0])
+    obj = _last15invoice.Last15Invoice()
+    obj.last15Invoice()
+    # _help.show_message('balance',f"Your current balance is {format(float(message[1][0][0]),'0.2f')}")

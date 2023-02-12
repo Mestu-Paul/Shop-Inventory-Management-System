@@ -1,10 +1,9 @@
 import tkinter as tk
 import re as regex
 from PIL import ImageTk, Image
-# from tkinter import ttk
+from tkinter import ttk
 
 import color_code as color
-# from home import _help.init_page
 import home as _home
 import help_functions as _help
 import DAO as dao
@@ -26,130 +25,116 @@ class User_Panel():
             # =================== top frame ========================= #
             self.top_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
             self.top_frame.place(relx=0,rely=0,relwidth=1, relheight=0.3)
+            self.topFrame()
             
-            # ----------------------- label --------------------- #
-            user_info_list = ['Username :','Password :','Full Name :']
-            for i in range(0,len(user_info_list)):
-                top_frame_lbl = tk.Label(self.top_frame,text=user_info_list[i], bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
-                top_frame_lbl.place(relx=0.02, rely=0.1+(0.2)*i, relwidth=0.09, relheight=0.15)
-            
-            # # ---------------------- user info input ------------ #
-            self.top_frame_entry_user_name = tk.Entry(self.top_frame)
-            self.top_frame_entry_user_name.place(relx=0.12,rely=0.1,relwidth=0.14,relheight=0.15)
-
-            self.top_frame_entry_password = tk.Entry(self.top_frame,show='*')
-            self.top_frame_entry_password.place(relx=0.12,rely=0.3,relwidth=0.14,relheight=0.15)
-
-            self.open_eye = ImageTk.PhotoImage(Image.open("img/eye_open.png").resize((20,17)))
-            self.closed_eye = ImageTk.PhotoImage(Image.open("img/eye_close.png").resize((20,17)))
-            self.toggle_button = tk.Button(self.top_frame, image=self.closed_eye, command=self.toggle_password)
-            self.toggle_button.place(relx=0.24,rely=0.3,relwidth=0.02,relheight=0.15)
-            
-            self.top_frame_entry_user_fullname = tk.Entry(self.top_frame)
-            self.top_frame_entry_user_fullname.place(relx=0.12,rely=0.5,relwidth=0.14,relheight=0.15)
-            
-            
-            # =================== access frame ========================= #
-            self.top_frame_user_access_frame = tk.LabelFrame(self.top_frame,text='User accessibility',bg=color.getColor('bg_frame'))
-            self.top_frame_user_access_frame.place(relx=0.35,rely=0.3,relwidth=0.12,relheight=0.7)
-
-
-
-            
-            self.top_frame_lbl = tk.Label(self.top_frame,text='User role: ', bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
-            self.top_frame_lbl.place(relx=0.28, rely=0.1, relwidth=0.09, relheight=0.15)
-            
-            self.user_type = tk.StringVar()
-            user_type_list = ['Owner','Admin','Manager']
-            self.user_type.set('Manager')
-            self.top_frame_entry_user_type = tk.ttk.OptionMenu(self.top_frame,self.user_type,*user_type_list,command=self.user_accessibility)
-
-            self.top_frame_entry_user_type.config(font=('Times New Roma',12))
-            self.top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
-            
-            btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(6)]
-            btn_frame[0].place(relx=0.02,rely=0.75, width=90, height=22)
-            btn_frame[1].place(relx=0.13,rely=0.75, width=90, height=22)
-            btn_frame[2].place(relx=0.24,rely=0.75, width=90, height=22)
-            
-            add_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0)
-            add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-
-            update_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0)
-            update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-
-            delete_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0)
-            delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-            _help.button_hover(btn_frame[0],add_btn)
-            _help.button_hover(btn_frame[1],update_btn)
-            _help.button_hover_del(btn_frame[2],delete_btn)
-            
-            # user add button
-            # self.top_frame_add_user_btn = tk.Button(self.top_frame,text='Add',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.add_new_user)
-            # self.top_frame_add_user_btn.place(relx=0.02,rely=0.75,relwidth=0.09,height=30)
-            
-            # # user update button
-            # self.top_frame_update_user_btn = tk.Button(self.top_frame,text='Update',bg=color.color_list[2],fg=color.color_list[3],font=('Times New Roma',12),command=self.update_user)
-            # self.top_frame_update_user_btn.place(relx=0.13,rely=0.75,relwidth=0.09,height=30)
-            
-            # # user delete button 
-            # self.top_frame_delete_user_btn = tk.Button(self.top_frame,text='Delete',bg=color.color_list[6],fg=color.color_list[1],font=('Times New Roma',12),command=self.delete_user)
-            # self.top_frame_delete_user_btn.place(relx=0.24,rely=0.75,relwidth=0.09,height=30)
-            
-            # search type
-            self.top_frame_search_lbl = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Search by :')
-            self.top_frame_search_lbl.place(relx=0.51, rely=0.1, relwidth=0.09, relheight=0.15)
-
-            user_search_type = tk.StringVar()
-            search_type_list = ['User name','User role']
-            user_search_type.set(search_type_list[0]) # default value
-            search_type = tk.ttk.OptionMenu(self.top_frame, user_search_type, *search_type_list)
-            search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
-
-            # search box
-            self.top_frame_lbl_1 = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :')
-            self.top_frame_lbl_1.place(relx=0.51, rely=0.3, relwidth=0.09, relheight=0.15)
-
-            self.query = tk.Entry(self.top_frame)
-            self.query.place(relx=0.61, rely=0.3, relwidth=0.1, relheight=0.15)
-
-            btn_frame[3].place(relx=0.55, rely=0.75, width=90, height=22)
-            btn_frame[4].place(relx=0.75,rely=0.75, width=90, height=22)
-            btn_frame[5].place(relx=0.86,rely=0.75, width=90, height=22)
-            
-            # search button
-            search_btn = tk.Button(btn_frame[3],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
-            search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-
-            refresh_btn = tk.Button(btn_frame[4],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
-            refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-
-            close_btn = tk.Button(btn_frame[5],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Close', bd=0,command=self.backHome)
-            close_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
-            _help.button_hover(btn_frame[3],add_btn)
-            _help.button_hover(btn_frame[4],refresh_btn)
-            _help.button_hover_del(btn_frame[5],close_btn)
-            # # search button
-            # self.top_frame_search_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Search')
-            # self.top_frame_search_btn.place(relx=0.55, rely=0.75, relwidth=0.09, height=30)
-            
-            # # refresh button
-            # self.top_frame_refresh_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Refresh',command=self.user_panel)
-            # self.top_frame_refresh_btn.place(relx=0.75, rely=0.75, relwidth=0.09, height=30)
-            
-            # # close button
-            # self.top_frame_close_btn = tk.Button(self.top_frame,fg=color.color_list[3], bg=color.color_list[2], font=('Times New Roman',12), text='Back', command=lambda:self.backHome())
-            # self.top_frame_close_btn.place(relx=0.86, rely=0.75, relwidth=0.09, height=30)
-            
-                
             # =================== bottom frame ========================= #
             self.bottom_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
             self.bottom_frame.place(relx=0,rely=0.31,relwidth=1,relheight=.69)
             self.show_table()
+            
         except Exception as e:
             _help.show_message("warning",e)
             return
         
+        
+    def topFrame(self):
+        # ----------------------- label --------------------- #
+        user_info_list = ['Username :','Password :','Full Name :']
+        for i in range(0,len(user_info_list)):
+            top_frame_lbl = tk.Label(self.top_frame,text=user_info_list[i], bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
+            top_frame_lbl.place(relx=0.02, rely=0.1+(0.2)*i, relwidth=0.09, relheight=0.15)
+        
+        # # ---------------------- user info input ------------ #
+        self.top_frame_entry_user_name = tk.Entry(self.top_frame)
+        self.top_frame_entry_user_name.place(relx=0.12,rely=0.1,relwidth=0.14,relheight=0.15)
+
+        self.top_frame_entry_password = tk.Entry(self.top_frame,show='*')
+        self.top_frame_entry_password.place(relx=0.12,rely=0.3,relwidth=0.14,relheight=0.15)
+
+        self.open_eye = ImageTk.PhotoImage(Image.open("img/eye_open.png").resize((20,17)))
+        self.closed_eye = ImageTk.PhotoImage(Image.open("img/eye_close.png").resize((20,17)))
+        self.toggle_button = tk.Button(self.top_frame, image=self.closed_eye, command=self.toggle_password)
+        self.toggle_button.place(relx=0.24,rely=0.3,relwidth=0.02,relheight=0.15)
+        
+        self.top_frame_entry_user_fullname = tk.Entry(self.top_frame)
+        self.top_frame_entry_user_fullname.place(relx=0.12,rely=0.5,relwidth=0.14,relheight=0.15)
+        
+        
+        # =================== access frame ========================= #
+        self.top_frame_user_access_frame = tk.LabelFrame(self.top_frame,text='User accessibility',bg=color.getColor('bg_frame'))
+        self.top_frame_user_access_frame.place(relx=0.35,rely=0.3,relwidth=0.12,relheight=0.7)
+
+
+
+        
+        self.top_frame_lbl = tk.Label(self.top_frame,text='User role: ', bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), font=('Times New Roman',14), anchor='w')
+        self.top_frame_lbl.place(relx=0.28, rely=0.1, relwidth=0.09, relheight=0.15)
+        
+        self.user_type = tk.StringVar()
+        user_type_list = ['Owner','Admin','Manager']
+        self.user_type.set('Manager')
+        self.top_frame_entry_user_type = tk.ttk.OptionMenu(self.top_frame,self.user_type,*user_type_list,command=self.user_accessibility)
+        self.top_frame_entry_user_type.place(relx=0.35,rely=0.1,relwidth=0.12,relheight=0.15)
+        
+        self.topFrameOperationBtn()
+        self.topFrameSearch()
+        
+    
+    def topFrameSearch(self):
+        # search type
+        self.top_frame_search_lbl = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Search by :')
+        self.top_frame_search_lbl.place(relx=0.51, rely=0.1, relwidth=0.09, relheight=0.15)
+
+        user_search_type = tk.StringVar()
+        search_type_list = ['User name','User role']
+        user_search_type.set(search_type_list[0]) # default value
+        search_type = tk.ttk.OptionMenu(self.top_frame, user_search_type, *search_type_list)
+        search_type.place(relx=0.61, rely=0.1, relwidth=0.1, relheight=0.15)
+
+        # search box
+        self.top_frame_lbl_1 = tk.Label(self.top_frame,bg=color.getColor("bg_lbl"), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :')
+        self.top_frame_lbl_1.place(relx=0.51, rely=0.3, relwidth=0.09, relheight=0.15)
+
+        self.query = tk.Entry(self.top_frame)
+        self.query.place(relx=0.61, rely=0.3, relwidth=0.1, relheight=0.15)
+        
+        self.btn_frame[3].place(relx=0.55, rely=0.75, width=90, height=22)
+        self.btn_frame[4].place(relx=0.75,rely=0.75, width=90, height=22)
+        self.btn_frame[5].place(relx=0.86,rely=0.75, width=90, height=22)
+        
+        # search button
+        search_btn = tk.Button(self.btn_frame[3],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        refresh_btn = tk.Button(self.btn_frame[4],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
+        refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        close_btn = tk.Button(self.btn_frame[5],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Close', bd=0,command=self.backHome)
+        close_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(self.btn_frame[3],search_btn)
+        _help.button_hover(self.btn_frame[4],refresh_btn)
+        _help.button_hover_del(self.btn_frame[5],close_btn)
+        
+        
+    def topFrameOperationBtn(self):
+        self.btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(6)]
+        self.btn_frame[0].place(relx=0.02,rely=0.75, width=90, height=22)
+        self.btn_frame[1].place(relx=0.13,rely=0.75, width=90, height=22)
+        self.btn_frame[2].place(relx=0.24,rely=0.75, width=90, height=22)
+        
+        add_btn = tk.Button(self.btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Add', bd=0)
+        add_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        update_btn = tk.Button(self.btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Update', bd=0)
+        update_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+
+        delete_btn = tk.Button(self.btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Delete', bd=0)
+        delete_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
+        _help.button_hover(self.btn_frame[0],add_btn)
+        _help.button_hover(self.btn_frame[1],update_btn)
+        _help.button_hover_del(self.btn_frame[2],delete_btn)
+        
+                    
     def show_table(self):
         self.tree = tk.ttk.Treeview(self.bottom_frame, columns=("col2", "col3","col4"))
         # Define the columns for the table

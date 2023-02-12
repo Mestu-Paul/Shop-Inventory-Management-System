@@ -3,6 +3,9 @@ from PIL import ImageTk, Image
 import datetime as dt 
 import tkcalendar as tkcal
 import datetime
+import random
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 
 import DAO as dao
 
@@ -114,6 +117,60 @@ class Home:
             _help.show_message('warning',f'Occur exception while home object creating {e}')
         pass
     
+    def barGraph(self):
+        days = range(15)
+        values1 = [random.randint(0, 100) for day in days]
+        values2 = [random.randint(0, 100) for day in days]
+
+        bar_width = 0.35
+        opacity = 0.8
+
+        fig, ax = plt.subplots()
+        fig.subplots_adjust(bottom=0.3)
+        ax.bar(days, values1, bar_width, alpha=opacity, color='#ff6347', label='Sale')
+        ax.bar([day + bar_width for day in days], values2, bar_width, alpha=opacity, color='#1090a5', label='Purchase')
+
+        ax.set_xlabel("Day")
+        ax.set_ylabel("Taka(in thousand)")
+        ax.set_title("Bar Graph for last 15days of sale and purchase")
+        ax.legend()
+
+        ax.set_xticks(days)
+        ax.set_xticklabels([f"{ dt.datetime.now().strftime('%d/%m/%y')}" for day in days], rotation=45)
+
+        canvas = FigureCanvasTkAgg(fig, master=self.right_frame)
+        canvas.draw()
+        canvas.get_tk_widget().place(relx=0,rely=0.4,relwidth=1,relheight=0.6)
+        
+    def box(self):
+        top_frame = tk.Frame(self.right_frame,bg='#ffffff')
+        top_frame.place(relx=0,rely=0,relwidth=1,relheight=0.4)
+        
+        self.root.sale_icon = ImageTk.PhotoImage(Image.open("img/sale_icon.png").resize((50,50)))
+        self.root.purchase_icon = ImageTk.PhotoImage(Image.open("img/purchase_icon.png").resize((30,30)))
+        self.root.user_icon = ImageTk.PhotoImage(Image.open("img/user_icon.png").resize((30,30)))
+        sale_frame = tk.Frame(top_frame,bg='#1090a5')
+        sale_frame.place(relx=0.1,rely=0.3,relwidth=0.2,relheight=0.5)
+        tk.Label(sale_frame,text='Total Sale\n$1000',bg='#1090a5', fg='#ffffff', font=('Helvic',14)
+            ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        tk.Label(sale_frame,bg='#1090a5',image=self.root.sale_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        
+        purchase_frame = tk.Frame(top_frame,bg='#ff6347')
+        purchase_frame.place(relx=0.4,rely=0.3,relwidth=0.2,relheight=0.5)
+        tk.Label(purchase_frame,text='Total Purchase\n$1000',bg='#ff6347', fg='#ffffff', font=('Helvic',14)
+            ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        tk.Label(purchase_frame,bg='#ff6347',image=self.root.purchase_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        
+        customer_frame = tk.Frame(top_frame,bg='#0d9355')
+        customer_frame.place(relx=0.7,rely=0.3,relwidth=0.2,relheight=0.5)
+        tk.Label(customer_frame,text='Number of Customer\n1200',bg='#0d9355', fg='#ffffff', font=('Helvic',14)
+            ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        tk.Label(customer_frame,bg='#0d9355',image=self.root.user_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
+        
+    def rightFrame(self):
+        self.barGraph()
+        self.box()
+        
     def leftFrame(self):
         # ---------------------------operation button--------------------------- #
         operation_name = ['Sale Item','Manage Item','Purchase Item','Check Stock','Demage Stock','Purchase Report',
@@ -144,6 +201,7 @@ class Home:
         
     def addHome(self):
         _help.init_page(self.root,'Item Sale')
+        # _help.show_time(self.root)
         # global item_manage_obj
         # item_manage_obj = _item_manage.Item_Manage(self.root)
         # global item_purchase_obj
@@ -156,6 +214,10 @@ class Home:
         self.left_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.left_frame.place(relx=0.005,rely=0, relwidth=0.15, relheight=1)
         self.leftFrame()
+        
+        self.right_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
+        self.right_frame.place(relx=0.16,rely=0,relwidth=0.835, relheight=1)
+        self.rightFrame()
         
 
 
