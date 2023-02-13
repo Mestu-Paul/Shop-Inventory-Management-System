@@ -34,37 +34,110 @@ class CheckStock:
         
         obj = _pytohtml.PythonToHtml()
         obj.stockReceipt(receipt_name,date,'N\A',headings,rows,total_info_name,total_info)
-                
-
+     
+    def suggestion(self,event):
+        command = f'SELECT DISTINCT {self.product_search_type.get()} FROM item_details;'
+        result = dao.get_rows(command,[])
+        if result[0]==0:
+            _help.show_message('error',f'Found an exception while finding distinct words for search {result[1]}')
+        self.suggestion_words = []
+        for word in result[1]:
+            self.suggestion_words.append(word[0])
+        self.set_entry_value(self.search_query,'')
+    
+    
+    def set_entry_value(self,entry_name,entry_value):
+        entry_name.delete(0,"end")
+        entry_name.insert(0,entry_value)        
+    
+    def showSuggestion(self,event,type):
+        if type:
+            self.suggestion_frame.place(relx=0.09, rely=0.35, relwidth=0.1,relheight=0.25)
+            self.search_btn_frame.place_forget()
+            self.update_suggestions(event)
+        else:
+            self.search_btn_frame.place(relx=0.05, rely=0.42, width=90, height=22)
+            self.suggestion_frame.place_forget()
+        
+    def update_suggestions(self,event):
+        entered_text = self.search_query.get()
+        print(self.suggestion_words)
+        suggestions = [word for word in self.suggestion_words if word.startswith(entered_text)]
+        if len(entered_text)==0:
+            suggestions=self.suggestion_words
+        print(suggestions)
+        self.suggest_list.delete(0, tk.END)
+        for suggestion in suggestions:
+            self.suggest_list.insert(tk.END, suggestion)
+               
+    def searchItem(self):
+        if len(self.product_search_type.get())==0 or len(self.search_query.get())==0:
+            _help.show_message('warning','Input field can not be empty')
+            return
+        command = f"SELECT item_details.*, invoice.date \
+        FROM item_details,invoice \
+        WHERE item_details.{self.product_search_type.get()}=? and item_details.invoice_id=invoice.invoice_id;"
+        
+        data_rows = dao.get_rows(command,[self.search_query.get()])
+        print(data_rows)
+        items = []
+        if data_rows[0]==0:
+            print(data_rows[1])
+            _help.show_message('warning',data_rows[1])
+            return
+        else:
+            for i in range(0,len(data_rows[1])):
+                values_list = [i+1]
+                for data in data_rows[1][i]:
+                    values_list.append(data)
+                items.append(values_list)
+        self.showTable(items)
+        pass
+    
     def topFrame(self):
         # search type
         tk.Label(self.top_frame,bg=color.getColor('bg_lbl'),fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Search by :'
             ).place(relx=0.01, rely=0.08, relwidth=0.08, relheight=0.1)
 
         self.product_search_type = tk.StringVar()
-        search_type_list = ['name', "code", "company",'group']
+        search_type_list = ['name', 'name','code', 'company','group']
         self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.ttk.OptionMenu(self.top_frame, self.product_search_type, *search_type_list)
+        search_type = tk.ttk.OptionMenu(self.top_frame, self.product_search_type, *search_type_list, command=self.suggestion)
         search_type.place(relx=0.09, rely=0.08, relwidth=0.1, relheight=0.12)
 
         # search box
         tk.Label(self.top_frame,bg=color.getColor('bg_lbl'),fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :'
             ).place(relx=0.01, rely=0.25, relwidth=0.08, relheight=0.1)
 
-        query = tk.Entry(self.top_frame)
-        query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
-
+        self.search_query = tk.Entry(self.top_frame)
+        self.search_query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
+        self.search_query.bind("<KeyRelease>", self.update_suggestions)
+        self.search_query.bind("<BackSpace>", self.update_suggestions)
+        self.search_query.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        self.search_query.bind("<FocusOut>",lambda e,type=0:self.showSuggestion(e,type))
+        
+        self.suggestion_frame = tk.Frame(self.top_frame)
+        self.suggest_list = tk.Listbox(self.suggestion_frame)
+        self.suggest_list.place(relx=0,rely=0,relwidth=1,relheight=1)
+        
+        def fillQuery(event):
+            self.set_entry_value(self.search_query,self.suggest_list.get(self.suggest_list.curselection()))
+            self.showSuggestion(event,0)
+        self.suggest_list.bind("<Double-Button-1>", fillQuery)
+        self.suggest_list.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        
         btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(4)]
         btn_frame[0].place(relx=0.05, rely=0.42, width=90, height=22)
         btn_frame[1].place(relx=0.8, rely=0.15, width=90, height=22)
         btn_frame[2].place(relx=0.8, rely=0.35, width=90, height=22)
         btn_frame[3].place(relx=0.8, rely=0.55, width=90, height=22)
         
+        self.search_btn_frame = btn_frame[0]
         # search button
-        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0, command=self.searchItem)
         search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
-        refresh_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
+        refresh_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0, command=self.checkStock)
         refresh_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
         preview_btn = tk.Button(btn_frame[2],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Preview', bd=0,command=self.preview)
@@ -80,7 +153,9 @@ class CheckStock:
     def on_select(self,event):
         pass
     
-    def showTable(self):
+    def showTable(self,items=None):
+        if items:
+            self.item_list=items
         table_frame = tk.Frame(self.bottom_frame,bg='#ffffff')
         table_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
         
