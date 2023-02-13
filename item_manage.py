@@ -102,7 +102,7 @@ class Item_Manage:
         print("\n-----------insert item--------------\n",message)
         self.addPurchaseHistoryDB()
         self.addInvoiceDB()
-        self.show_table()
+        self.retrieveAllItems()
         self.clear_input()
         _help.show_message(self.message_type[message[0]],message[1])
         pass
@@ -124,7 +124,7 @@ class Item_Manage:
             message = dao.update_rows(command,values)
             print(message)
             self.clear_input()
-            self.show_table()
+            self.retrieveAllItems()
             _help.show_message(self.message_type[message[0]],message[1])
         except AttributeError:
             _help.show_message(self.message_type[0],"Please select one")
@@ -170,30 +170,103 @@ class Item_Manage:
         self.item_entries[0].focus_set()
         for i in range(7):
             self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
-            
+    
+    
+    def searchItem(self):
+        if len(self.product_search_type.get())==0 or len(self.search_query.get())==0:
+            _help.show_message('warning','Input field can not be empty')
+            return
+        command = f"SELECT item_details.*, invoice.date \
+        FROM item_details,invoice \
+        WHERE item_details.{self.product_search_type.get()}=? and item_details.invoice_id=invoice.invoice_id;"
+        
+        data_rows = dao.get_rows(command,[self.search_query.get()])
+        print(data_rows)
+        items = []
+        if data_rows[0]==0:
+            print(data_rows[1])
+            _help.show_message('warning',data_rows[1])
+            return
+        else:
+            for i in range(0,len(data_rows[1])):
+                values_list = [i+1]
+                for data in data_rows[1][i]:
+                    values_list.append(data)
+                items.append(values_list)
+        self.show_table(items)
+        pass
+    
+    def suggestion(self,event):
+        command = f'SELECT DISTINCT {self.product_search_type.get()} FROM item_details;'
+        result = dao.get_rows(command,[])
+        if result[0]==0:
+            _help.show_message('error',f'Found an exception while finding distinct words for search {result[1]}')
+        self.suggestion_words = []
+        for word in result[1]:
+            self.suggestion_words.append(word[0])
+        
+    
+    def showSuggestion(self,event,type):
+        if type:
+            self.suggestion_frame.place(relx=0.14,rely=0.92,relwidth=0.18,relheight=0.08)
+            self.search_btn_frame.place_forget()
+            self.update_suggestions(event)
+        else:
+            self.search_btn_frame.place(relx=0.1,rely=0.94, width=90, height=22)
+            self.suggestion_frame.place_forget()
+        
+    def update_suggestions(self,event):
+        entered_text = self.search_query.get()
+        print(self.suggestion_words)
+        suggestions = [word for word in self.suggestion_words if word.startswith(entered_text)]
+        if len(entered_text)==0:
+            suggestions=self.suggestion_words
+        print(suggestions)
+        self.suggest_list.delete(0, tk.END)
+        for suggestion in suggestions:
+            self.suggest_list.insert(tk.END, suggestion)
+    
     def rightFrame(self):
         tk.Label(self.right_frame,text='Search By: ',bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w',\
             font=('Times New Roma',12)).place(relx=0.01,rely=0.8,relwidth=0.12)
 
         self.product_search_type = tk.StringVar()
-        search_type_list = ['name', "code", "company",'group']
+        search_type_list = ['name', 'name', 'code', 'company','group']
         self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.ttk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list)
+        search_type = tk.ttk.OptionMenu(self.right_frame, self.product_search_type, *search_type_list, command=self.suggestion)
         search_type.place(relx=0.14, rely=0.8, relwidth=0.18,relheight=0.06)
 
         tk.Label(self.right_frame,text='Query: ',bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'),anchor='w',\
             font=('Times New Roma',12)).place(relx=0.01,rely=0.87,relwidth=0.12)
 
-        self.right_frame_entry_query = tk.Entry(self.right_frame)
-        self.right_frame_entry_query.place(relx=0.14,rely=0.87,relwidth=0.18,relheight=0.05)
+        self.search_query = tk.Entry(self.right_frame)
+        self.search_query.place(relx=0.14,rely=0.87,relwidth=0.18,relheight=0.05)
+        self.search_query.bind("<KeyRelease>", self.update_suggestions)
+        self.search_query.bind("<BackSpace>", self.update_suggestions)
+        self.search_query.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        self.search_query.bind("<FocusOut>",lambda e,type=0:self.showSuggestion(e,type))
 
+        self.suggestion_frame = tk.Frame(self.right_frame)
+        y_scrollbar = tk.Scrollbar(self.suggestion_frame)
+        y_scrollbar.place(relx=0.9,rely=0,relwidth=0.1,relheight=1)
+        self.suggest_list = tk.Listbox(self.suggestion_frame, yscrollcommand=y_scrollbar.set)
+        self.suggest_list.place(relx=0,rely=0,relwidth=0.9,relheight=1)
+        
+        def fillQuery(event):
+            self.set_entry_value(self.search_query,self.suggest_list.get(self.suggest_list.curselection()))
+            self.showSuggestion(event,0)
+        self.suggest_list.bind("<Double-Button-1>", fillQuery)
+        self.suggest_list.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        
+        
         btn_frame = [tk.Frame(self.right_frame,bg=color.getColor('bd_button')) for i in range(3)]
         btn_frame[0].place(relx=0.1,rely=0.94, width=90, height=22)
         btn_frame[1].place(relx=0.4,rely=0.85, width=90, height=22)
         btn_frame[2].place(relx=0.8,rely=0.85, width=90, height=22)
         
+        self.search_btn_frame = btn_frame[0]
         # search button
-        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0, command=self.searchItem)
         search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
         preview_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Preview', bd=0)
@@ -225,7 +298,7 @@ class Item_Manage:
                 self.set_entry_value(self.item_entries[i],item_values[i+1])
             self.item_entries[8].set_date(item_values[10])
     
-    def show_table(self):
+    def show_table(self, items):
         tk.Label(self.right_frame,text='Item Table', font=('Times New Roma',16,'bold'),\
                 bg=color.getColor('bg_lbl')).place(relx=0.4,relwidth=0.2,relheight=0.06)
 
@@ -253,22 +326,8 @@ class Item_Manage:
         self.tree.tag_configure("red_row", background="#e1e1e1")
         self.tree.tag_configure("red_green", background="#a9a9a9")
         
-        command = "SELECT item_details.*, invoice.date \
-        FROM item_details,invoice \
-        WHERE invoice.type=? and item_details.invoice_id=invoice.invoice_id;"
-        
-        data_rows = dao.get_rows(command,['purchase'])
-        print(data_rows)
-        if data_rows[0]==0:
-            print(data_rows[1])
-            _help.show_message('warning',data_rows[1])
-        else:
-            for i in range(0,len(data_rows[1])):
-                values_list = [i+1]
-                for data in data_rows[1][i]:
-                    values_list.append(data)
-                
-                self.tree.insert("",tk.END,values=values_list,tag = row_color[i%2])
+        for i,item in enumerate(items):
+            self.tree.insert("",tk.END,values=item,tag = row_color[i%2])
 
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
         self.tree.place(relx=0,rely=0,relwidth=0.97,relheight=.95)
@@ -276,7 +335,30 @@ class Item_Manage:
         scrollbary.config( command = self.tree.yview )
         scrollbarx.config(orient='horizontal', command=self.tree.xview)
         scrollbarx.place(relx=0,rely=0.95,relwidth=1,relheight=0.05)
+    
+    
+    def retrieveAllItems(self):
+        command = "SELECT item_details.*, invoice.date \
+        FROM item_details,invoice \
+        WHERE invoice.type=? and item_details.invoice_id=invoice.invoice_id;"
         
+        data_rows = dao.get_rows(command,['purchase'])
+        print(data_rows)
+        items = []
+        if data_rows[0]==0:
+            print(data_rows[1])
+            _help.show_message('warning',data_rows[1])
+            return
+        else:
+            for i in range(0,len(data_rows[1])):
+                values_list = [i+1]
+                for data in data_rows[1][i]:
+                    values_list.append(data)
+                items.append(values_list)
+        self.show_table(items)
+        pass
+    
+    
     def item_manage(self):
         # item manage main frame
         self.main_frame = tk.Frame(self.root,bg='white')
@@ -309,7 +391,7 @@ class Item_Manage:
         self.right_frame = tk.Frame(self.main_frame,bg=color.getColor('bg_frame'))
         self.right_frame.place(relx=0.26,rely=0,relwidth=0.738, relheight=1)
         self.rightFrame()
-        self.show_table()
+        self.retrieveAllItems()
         
 # root = tk.Tk()
 # root.geometry('1100x650')        

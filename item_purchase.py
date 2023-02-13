@@ -31,6 +31,7 @@ class Item_Purchase:
             
     def addItemList(self):
         values = [entry.get() for entry in self.item_entries]
+        print(values)
         if values[0] in self.check_unique_code:
             _help.show_message('warning','Duplicate code\nYou can update previous record')
             return
@@ -93,6 +94,8 @@ class Item_Purchase:
         self.item_entries[0].focus_set()
         for i in range(7):
             self.item_entries[i].bind("<Return>",lambda e,next_entry=self.item_entries[i+1]: self.activeNextEntry(e,next_entry))
+        # when click enter on sale_price entry 
+        self.item_entries[i].bind("<Return>",self.addItemList)
         
         button_frame = [tk.Frame(self.left_frame,bg=color.getColor('bd_button')) for i in range(3)]
         button_frame[0].place(relx=0.10,rely=0.8,relwidth=0.25,relheight=0.05)
@@ -115,15 +118,17 @@ class Item_Purchase:
         vat = 0
         qty  = 0
         for values in self.add_item_list:
-            tmp = (float)(values[5])*(float)(values[7])
+            tmp = (float)(values[5])*(float)(values[6])
             qty += float(values[5])
             sum += tmp
-            print(values[5],values[7])
+            print(values[5],values[6])
         vat = 0          
         total_info = [qty,sum,0,vat,vat+sum]+[entries.get() for entries in self.total_info_entries]            
         
         for lbl,text in zip(self.total_info_lbl,total_info):
             lbl.config(text=text)
+    
+
     
     def searchFrame(self):
         tk.Label(self.right_frame,text='Search by :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w').place(relx=0.01, rely=0.01, relwidth=0.15, relheight=0.05)
@@ -283,9 +288,9 @@ class Item_Purchase:
         for values in self.add_item_list:
             item_name.append(values[1])
             item_qty.append(float(values[5]))
-            item_price.append(float(values[7]))
-            sum += (float)(values[5])*(float)(values[7])
-            print(values[5],values[7])
+            item_price.append(float(values[6]))
+            sum += (float)(values[5])*(float)(values[6])
+            print(values[5],values[6])
         
         total_info = [sum,discount,vat,vat+sum]+[float(entries.get()) for entries in self.total_info_entries]
         print("complete ",total_info)
