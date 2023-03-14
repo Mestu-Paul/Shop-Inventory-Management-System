@@ -43,8 +43,7 @@ class CheckStock:
         self.suggestion_words = []
         for word in result[1]:
             self.suggestion_words.append(word[0])
-        self.set_entry_value(self.search_query,'')
-    
+        self.set_entry_value(self.search_query,'')    
     
     def set_entry_value(self,entry_name,entry_value):
         entry_name.delete(0,"end")
@@ -76,9 +75,10 @@ class CheckStock:
             return
         command = f"SELECT item_details.*, invoice.date \
         FROM item_details,invoice \
-        WHERE item_details.{self.product_search_type.get()}=? and item_details.invoice_id=invoice.invoice_id;"
+        WHERE item_details.{self.product_search_type.get()}=? AND\
+        invoice.type=? AND item_details.invoice_id=invoice.invoice_id;"
         
-        data_rows = dao.get_rows(command,[self.search_query.get()])
+        data_rows = dao.get_rows(command,[self.search_query.get(),'purchase'])
         print(data_rows)
         items = []
         if data_rows[0]==0:

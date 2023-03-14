@@ -12,7 +12,7 @@ class PurchaseReport:
             self.root = root
             self.item_list = []
         except Exception as e:
-            _help.show_message('warning',f'Occur exception while Purchase Report object creating {e}')
+            _help.show_message('warning',f'Found an exception while Purchase Report object creating {e}')
 
     def backHome(self):
         print("back home")
@@ -29,7 +29,7 @@ class PurchaseReport:
         for i,row in enumerate(self.item_list):
             rows.append([i+1]+list(row))
             total_info[0] += float(row[5]) # qty
-            total_info[1] += float(row[6]) # purchase
+            total_info[1] += float(row[7]) # purchase
         
         obj = _pytohtml.PythonToHtml()
         obj.stockReceipt(receipt_name,date,'N\A',headings,rows,total_info_name,total_info)

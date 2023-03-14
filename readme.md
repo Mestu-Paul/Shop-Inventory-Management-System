@@ -19,11 +19,6 @@ pip install Pillow
 ```
 pip install dbr
 ```
-**barcode** *(for image)*
-
-```
-pip install dbr
-```
 **cryptography** *(for password encryption)*
 
 ```
@@ -43,6 +38,11 @@ pip install pdfkit
 
 ```
 pip install html2text
+```
+**SQLite** *(for database)*
+
+```
+pip install db-sqlite3
 ```
 
 # Menu

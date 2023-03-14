@@ -61,11 +61,11 @@ class DemageStcok:
         if message[0]==0:
             _help.show_message('error',f'While removing demaged item {message[1]}')
             return
-        
+         
         lastInvoiceId = int(dao.getLastInvoiceId()[1])
         self.lstinv = lastInvoiceId+1
         # insert into invoice table
-        row = [lastInvoiceId+1,'demage',dt.datetime.now().showItemDetails("%d/%m/%Y"),dt.datetime.now().strftime("%I:%M:%S %p"),self.avl_qty*self.price]
+        row = [lastInvoiceId+1,'demage',dt.datetime.now().strftime("%d/%m/%Y"),dt.datetime.now().strftime("%I:%M:%S %p"),self.avl_qty*self.price]
         message = self.addInvoiceDB(row)
         if message[0]==0:
             _help.show_message('error',f'While inserting into invoice new demage {message[1]}')
@@ -95,7 +95,7 @@ class DemageStcok:
             FROM item_details, invoice \
             WHERE item_details.invoice_id=invoice.invoice_id\
             AND invoice.type=? AND item_details.code = ?; "
-        values = ['purchase',code]
+        values = ['demage',code]
         message = dao.get_rows(command,values)
         print(message,values)
         if message[0]==0:
@@ -151,6 +151,69 @@ class DemageStcok:
         _help.button_hover(btn_frame[1],restore_btn)
         _help.button_hover_del(btn_frame[2],delete_btn)
 
+    def suggestion(self,event):
+        command = f'SELECT DISTINCT {self.product_search_type.get()} FROM item_details;'
+        result = dao.get_rows(command,[])
+        if result[0]==0:
+            _help.show_message('error',f'Found an exception while finding distinct words for search {result[1]}')
+        self.suggestion_words = []
+        for word in result[1]:
+            self.suggestion_words.append(word[0])
+        self.set_entry_value(self.search_query,'')
+          
+    
+    def showSuggestion(self,event,type):
+        if type:
+            self.suggestion_frame.place(relx=0.09, rely=0.35, relwidth=0.1,relheight=0.25)
+            self.search_btn_frame.place_forget()
+            self.update_suggestions(event)
+        else:
+            self.search_btn_frame.place(relx=0.05, rely=0.42, width=90, height=22)
+            self.suggestion_frame.place_forget()
+        
+    def update_suggestions(self,event):
+        entered_text = self.search_query.get()
+        print(self.suggestion_words)
+        suggestions = [word for word in self.suggestion_words if word.startswith(entered_text)]
+        if len(entered_text)==0:
+            suggestions=self.suggestion_words
+        print(suggestions)
+        self.suggest_list.delete(0, tk.END)
+        for suggestion in suggestions:
+            self.suggest_list.insert(tk.END, suggestion)
+               
+    def searchItem(self):
+        if len(self.product_search_type.get())==0 or len(self.search_query.get())==0:
+            _help.show_message('warning','Input field can not be empty')
+            return
+        command = f"SELECT item_details.*, invoice.date \
+            FROM item_details, invoice,demage_item \
+            WHERE demage_item.invoice_id=invoice.invoice_id AND\
+            demage_item.code=item_details.code \
+            AND item_details.{self.product_search_type.get()}=? AND \
+            invoice.type=?;"
+        # command = f"SELECT item_details.*, invoice.date \
+        # FROM item_details,invoice \
+        # WHERE item_details.{self.product_search_type.get()}=? AND\
+        # invoice.type=? AND item_details.invoice_id=invoice.invoice_id;"
+        
+        data_rows = dao.get_rows(command,[self.search_query.get(),'demage'])
+        print(data_rows)
+        items = []
+        if data_rows[0]==0:
+            print(data_rows[1])
+            _help.show_message('warning',data_rows[1])
+            return
+        else:
+            for i in range(0,len(data_rows[1])):
+                values_list = [i+1]
+                for data in data_rows[1][i]:
+                    values_list.append(data)
+                items.append(values_list)
+        self.showTable(items)
+        pass
+    
+    
     def topFrame(self):
         self.updateDemageStock()
         # search type
@@ -160,15 +223,30 @@ class DemageStcok:
         self.product_search_type = tk.StringVar()
         search_type_list = ['name', "code", "company",'group']
         self.product_search_type.set(search_type_list[0]) # default value
-        search_type = tk.ttk.OptionMenu(self.top_frame, self.product_search_type, *search_type_list)
+        search_type = tk.ttk.OptionMenu(self.top_frame, self.product_search_type, *search_type_list, command=self.suggestion)
         search_type.place(relx=0.09, rely=0.08, relwidth=0.1, relheight=0.12)
 
         # search box
         tk.Label(self.top_frame,bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w', font=('Times New Roman',12), text='Query :'
             ).place(relx=0.01, rely=0.25, relwidth=0.08, relheight=0.1)
 
-        query = tk.Entry(self.top_frame)
-        query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
+        self.search_query = tk.Entry(self.top_frame)
+        self.search_query.place(relx=0.09, rely=0.25, relwidth=0.1, relheight=0.1)
+        self.search_query.bind("<KeyRelease>", self.update_suggestions)
+        self.search_query.bind("<BackSpace>", self.update_suggestions)
+        self.search_query.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        self.search_query.bind("<FocusOut>",lambda e,type=0:self.showSuggestion(e,type))
+        
+        self.suggestion_frame = tk.Frame(self.top_frame)
+        self.suggest_list = tk.Listbox(self.suggestion_frame)
+        self.suggest_list.place(relx=0,rely=0,relwidth=1,relheight=1)
+        
+        def fillQuery(event):
+            self.set_entry_value(self.search_query,self.suggest_list.get(self.suggest_list.curselection()))
+            self.showSuggestion(event,0)
+        self.suggest_list.bind("<Double-Button-1>", fillQuery)
+        self.suggest_list.bind("<FocusIn>",lambda e,type=1:self.showSuggestion(e,type))
+        
 
         btn_frame = [tk.Frame(self.top_frame,bg=color.getColor('bd_button')) for i in range(4)]
         btn_frame[0].place(relx=0.05, rely=0.42, width=90, height=22)
@@ -176,8 +254,9 @@ class DemageStcok:
         btn_frame[2].place(relx=0.8, rely=0.35, width=90, height=22)
         btn_frame[3].place(relx=0.8, rely=0.55, width=90, height=22)
         
+        self.search_btn_frame = btn_frame[0]
         # search button
-        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0)
+        search_btn = tk.Button(btn_frame[0],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Search', bd=0, command=self.searchItem)
         search_btn.pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
 
         refresh_btn = tk.Button(btn_frame[1],fg=color.getColor('fg_button'), bg=color.getColor('bg_button'), font=('Times New Roman',12), text='Refresh', bd=0)
@@ -207,7 +286,9 @@ class DemageStcok:
                     else self.set_entry_value(self.item_info_lbl[i-1],item_values[i])
         pass
     
-    def showTable(self):
+    def showTable(self,items=None):
+        if items:
+            self.item_list=items
         table_frame = tk.Frame(self.bottom_frame,bg='#ffffff')
         table_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
         

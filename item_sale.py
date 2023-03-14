@@ -8,6 +8,7 @@ import DAO as dao
 import help_functions as _help
 import color_code as color
 import pytohtml as pytohtml
+import qrcodeScanner as qs
 
 
 class ItemSale:
@@ -40,6 +41,9 @@ class ItemSale:
             _help.show_message('warning',f'Occur exception while home object creating {e}')
         pass
     def back_home(self):
+        self.items_to_sale.clear()
+        self.total_items_info = [0,0,0,0,0,0,0]
+        self.count_by_item_code = dict()
         self.main_frame.place_forget()
         
     def set_entry_value(self,entry_name,entry_value):
@@ -137,6 +141,14 @@ class ItemSale:
     def activeNextEntry(self,event,next_entry):
         next_entry.focus_set()
         
+    def withQrCode(self):
+        self.scanner = qs.qrCodeScanner()
+        data = self.scanner.scanCode()
+        self.set_entry_value(self.item_entries[0],data)
+        print(data)
+        self.showItemDetails(None)
+        self.scanner.closeCam()
+        
     def showItemDetails(self,event):
         code = self.item_entries[0].get()
         command = "SELECT code,name,group_,company,vat_rate,quantity,unit_sale_price\
@@ -196,10 +208,17 @@ class ItemSale:
         self.item_entries_frame = [tk.Frame(self.middle_frame, bg=color.getColor('bd_input')) for i in range(len(item_info_list))]
         self.item_entries = [tk.Entry(self.item_entries_frame[i], bd=0) for i in range(len(item_info_list)-1)]
         self.item_entries.append(tkcal.DateEntry(self.item_entries_frame[11],date_pattern="dd/MM/yyyy"))
+        # self.item_entries[-1].config(state='disabled')
         for i in range(len(item_info_list)):
             self.item_entries_frame[i].place(relx=0.48,rely=0.01+i*0.06,relwidth=0.5,relheight=0.04)
             self.item_entries[i].pack(fill=tk.BOTH, expand=True,padx=1,pady=1)
             _help.input_hover(self.item_entries_frame[i],self.item_entries[i])
+            
+        self.item_entries[0].place(relx=0,rely=0.03,relwidth=0.9,relheight=0.94)
+        
+        # qr code scanner button
+        self.qrCodeScanner =  tk.Button(self.item_entries_frame[0],text='qr',command=self.withQrCode, bd=0,bg=color.color_list[1])
+        self.qrCodeScanner.place(relx=0.9,rely=0.03,relwidth=0.094,relheight=0.94)
         
         self.item_entries[0].focus_set()
         self.item_entries[0].bind("<Return>",self.showItemDetails)

@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 import DAO as dao
+import datetime as dt
+
 import help_functions as _help
 import color_code as color
+
 
 class Last15Invoice:
     def __init__(self):
@@ -19,9 +22,9 @@ class Last15Invoice:
     def mainFrame(self):
         tk.Label(self.main_frame,text='Account and last 15 invoice', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), font=('Helvic', 15)
                 ).pack(side=tk.TOP,pady=5)
-        self.showTable()
+        self.getData()
         
-        tk.Label(self.main_frame,text=f'Total Amount ${self.getTotal()}', bg='#ffffff', fg='#000000',font=('Helvic', 15)
+        tk.Label(self.main_frame,text=f'Total Amount ৳{self.getTotal()}', bg='#ffffff', fg='#000000',font=('Helvic', 15)
             ).place(relx=0,rely=0.755,relwidth=1,relheight=0.1)
         btn_frame = tk.Frame(self.main_frame,bg=color.getColor('bd_button'))
         btn_frame.place(relx=0.7,rely=0.87,width=90,height=22)
@@ -35,15 +38,28 @@ class Last15Invoice:
             self.root = tk.Tk()
             self.root.geometry('500x700+450+10')
             self.root.title('Account')
-            self.root.grab_set()
+            # self.root.grab_set()
             
             self.main_frame = tk.Frame(self.root,bg=color.getColor('bg_frame'))
             self.main_frame.place(relx=0,rely=0,relwidth=1,relheight=1)
             self.mainFrame()
-            
             self.root.mainloop()
         except Exception as e:
             _help.show_message('warning',f'Found an exception while showing last 15 invoice {e}')
+        
+    def getData(self):
+        command = f"SELECT type,total,invoice_id FROM invoice LIMIT 15;"
+        print(command)
+        values = []
+        result = dao.get_rows(command,values)
+        print(result)
+        if result[0]==0:
+            _help.show_message('error',result[1])
+            return
+        self.item_list = []
+        for item in result[1]:
+            self.item_list.append(list(item))
+        self.showTable()
         
         
     def showTable(self):
@@ -53,7 +69,7 @@ class Last15Invoice:
         scrollbary = tk.Scrollbar(table_frame)
         scrollbarx = tk.Scrollbar(table_frame)
         
-        columns = [f'c{i}' for i in range(1,4)]
+        columns = [f'c{i}' for i in range(1,5)]
         headings = ['SI','Type','Amount','INV-id']
         column_size = [20,50,50,50]
         column_anchor = ['e','center','w','center']
@@ -67,9 +83,9 @@ class Last15Invoice:
         row_color = ["red_row","red_green"]
         self.tree.tag_configure("red_row", background="#e1e1e1")
         self.tree.tag_configure("red_green", background="#a9a9a9")
-        self.add_item_list = [['a','b','c']]
-        for i in range(0,len(self.add_item_list)):
-            self.tree.insert("",tk.END,values=[i+1]+self.add_item_list[i],tag = row_color[i%2])
+        
+        for i in range(0,len(self.item_list)):
+            self.tree.insert("",tk.END,values=[i+1]+self.item_list[i],tag = row_color[i%2])
 
         self.tree.place(relx=0,rely=0,relwidth=0.97,relheight=.95)
         scrollbary.place(relx=0.97,rely=0,relwidth=0.03,relheight=1)

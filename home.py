@@ -118,9 +118,44 @@ class Home:
         pass
     
     def barGraph(self):
+        command = f"""SELECT type, date, SUM(total) AS total_price
+                FROM invoice
+                GROUP BY type, date
+                ORDER BY date
+                """
+        message = dao.get_rows(command,[])
+        if message[0]==0:
+            _help.show_message('error',message[1])
+            return
+        
+        end_date = dt.datetime.today().date()
+        start_date = (dt.datetime.today().date()-dt.timedelta(days=14))
+        dates = []
+        while end_date>=start_date:
+            dates.append(end_date.strftime("%d/%m/%Y"))
+            end_date -= dt.timedelta(days=1)
+        values = {'purchase':[0 for i in range(len(dates))],'sale':[0 for i in range(len(dates))]}
+        print('purchase :', values['purchase'])
+        print('sale :',values['sale'])
+        # for i in range(len(dates)):
+        #     values['purchase'][i]=random.randint(50,100)
+        #     values['sale'][i]=random.randint(50,100)
+        for row in message[1]:
+            try:
+                idx = dates.index(row[1])
+                values[row[0]][idx]=row[2]
+            except Exception as e:
+                continue
+
+        for x in values:
+            values[x] = list(reversed(values[x]))
+            print(values[x])
+            
+        dates = list(reversed(dates))
+
         days = range(15)
-        values1 = [random.randint(0, 100) for day in days]
-        values2 = [random.randint(0, 100) for day in days]
+        values1 = values['sale']
+        values2 = values['purchase']
 
         bar_width = 0.35
         opacity = 0.8
@@ -136,13 +171,43 @@ class Home:
         ax.legend()
 
         ax.set_xticks(days)
-        ax.set_xticklabels([f"{ dt.datetime.now().strftime('%d/%m/%y')}" for day in days], rotation=45, fontsize=9, fontname='Arial')
+        ax.set_xticklabels([f"{ day}" for day in dates], rotation=45, fontsize=9, fontname='Arial')
 
         canvas = FigureCanvasTkAgg(fig, master=self.right_frame)
         canvas.draw()
         canvas.get_tk_widget().place(relx=0,rely=0.4,relwidth=1,relheight=0.6)
         
     def box(self):
+        command = f"""SELECT SUM(total) AS total_price
+                    FROM invoice
+                    GROUP BY type
+                    ORDER BY type
+                    """
+        message = dao.get_rows(command,[])
+        print(message)
+        if message[0]==0:
+            _help.show_message('error',message[1])
+            return
+        total = {}
+        try:
+            total['purchase']=message[1][0][0]
+        except Exception:
+            total['purchase']=0
+        try:
+            total['sale']=message[1][1][0]
+        except Exception:
+            total['sale']=0
+        command = f"""SELECT COUNT(invoice_id)
+                    FROM invoice
+                    WHERE type='sale'
+                    """
+        message = dao.get_rows(command,[])
+        print(message)
+        try:
+            total['customer']=message[1][0][0] # len(message[1])
+        except Exception:
+            total['customer']=0
+        
         top_frame = tk.Frame(self.right_frame,bg='#ffffff')
         top_frame.place(relx=0,rely=0,relwidth=1,relheight=0.4)
         
@@ -151,19 +216,19 @@ class Home:
         self.root.user_icon = ImageTk.PhotoImage(Image.open("img/user_icon.png").resize((30,30)))
         sale_frame = tk.Frame(top_frame,bg='#1090a5')
         sale_frame.place(relx=0.1,rely=0.3,relwidth=0.2,relheight=0.5)
-        tk.Label(sale_frame,text='Total Sale\n$1000',bg='#1090a5', fg='#ffffff', font=('Helvic',14)
+        tk.Label(sale_frame,text=f'Total Sale\n৳{total["sale"]}',bg='#1090a5', fg='#ffffff', font=('Helvic',14)
             ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         tk.Label(sale_frame,bg='#1090a5',image=self.root.sale_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         
         purchase_frame = tk.Frame(top_frame,bg='#ff6347')
         purchase_frame.place(relx=0.4,rely=0.3,relwidth=0.2,relheight=0.5)
-        tk.Label(purchase_frame,text='Total Purchase\n$1000',bg='#ff6347', fg='#ffffff', font=('Helvic',14)
+        tk.Label(purchase_frame,text=f'Total Purchase\n৳{total["purchase"]}',bg='#ff6347', fg='#ffffff', font=('Helvic',14)
             ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         tk.Label(purchase_frame,bg='#ff6347',image=self.root.purchase_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         
         customer_frame = tk.Frame(top_frame,bg='#0d9355')
         customer_frame.place(relx=0.7,rely=0.3,relwidth=0.2,relheight=0.5)
-        tk.Label(customer_frame,text='Number of Customer\n1200',bg='#0d9355', fg='#ffffff', font=('Helvic',14)
+        tk.Label(customer_frame,text=f'Number of Customer\n{total["customer"]}',bg='#0d9355', fg='#ffffff', font=('Helvic',14)
             ).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         tk.Label(customer_frame,bg='#0d9355',image=self.root.user_icon).pack(side=tk.TOP,fill='both',padx=5,pady=5)
         

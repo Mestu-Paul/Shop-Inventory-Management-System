@@ -63,16 +63,19 @@ class ExpenditureManage:
         pass
     
     def createWidget(self):
-        name_list = ['Date :','Purpose :','Amount :']
+        name_list = ['Date :','Purpose :','Amount :','Type :']
         lbl_list = [tk.Label(self.main_frame,text=name_list[i], bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w') for i in range(len(name_list))]
-        self.info_entries = [tkcal.DateEntry(self.main_frame)]+[tk.Entry(self.main_frame) for i in range(len(name_list)-1)]
+        self.info_entries = [tkcal.DateEntry(self.main_frame)]+[tk.Entry(self.main_frame) for i in range(len(name_list)-2)]
+        self.expenditureType = tk.StringVar()
+        # self.info_entries.append([ for ])
+        # tk.Radiobutton
         
         for i in range(len(name_list)):
             lbl_list[i].place(relx=0.15,rely=0.1+i*0.1, relwidth=0.1, relheight=0.07)
             self.info_entries[i].place(relx=0.25,rely=0.1+i*0.1, relwidth=0.15, relheight=0.07)
             
-        tk.Label(self.main_frame,text='Amount :\n\t- for debit\n\t + for credit',anchor='w',  bg=color.getColor('bg_lbl'), fg = color.getColor('fg_lbl')
-            ).place(relx=0.25,rely = 0.4)
+        # tk.Label(self.main_frame,text='Amount :\n\t- for debit\n\t + for credit',anchor='w',  bg=color.getColor('bg_lbl'), fg = color.getColor('fg_lbl')
+        #     ).place(relx=0.25,rely = 0.4)
             
         tk.Label(self.main_frame,text='Remarks :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w'
             ).place(relx=0.5, rely=0.1)

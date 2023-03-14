@@ -123,12 +123,11 @@ class Item_Purchase:
             sum += tmp
             print(values[5],values[6])
         vat = 0          
-        total_info = [qty,sum,0,vat,vat+sum]+[entries.get() for entries in self.total_info_entries]            
+        total_info = [qty,sum,0,vat,vat+sum] # +[entries.get() for entries in self.total_info_entries]            
         
         for lbl,text in zip(self.total_info_lbl,total_info):
             lbl.config(text=text)
     
-
     
     def searchFrame(self):
         tk.Label(self.right_frame,text='Search by :', bg=color.getColor('bg_lbl'), fg=color.getColor('fg_lbl'), anchor='w').place(relx=0.01, rely=0.01, relwidth=0.15, relheight=0.05)
@@ -207,22 +206,7 @@ class Item_Purchase:
         pass
     
     
-    def addInvoiceDB(self,row):
-        values = [0 for i in range(10)]
-        values[0] = row[9]# invoice id
-        values[1] = 'purchase' # type
-        values[2] = row[8] # date
-        values[3] = dt.datetime.now().strftime("%I:%M:%S %p") # time
-        
-        qty = (int)(row[5]) # qty
-        unit_price = (float)(row[7]) # unit  price
-        
-        values[4] = (float)(qty*unit_price) # total
-        values[5] = 0 # discount
-        values[6] = (float)(values[4]*(float)(row[4])) # vat
-        values[7] = values[4]+values[6] # payable
-        values[8] = values[7] # paid
-        values[9] = 0 # change
+    def addInvoiceDB(self,values):
         command = "INSERT INTO invoice VALUES(?,?,?,?,?,?,?,?,?,?);"
         message = dao.set_rows(command,values)
         print("\n-----------invoice--------------\n",message)
@@ -240,8 +224,8 @@ class Item_Purchase:
         values[3] = (float)(row[6]) # unit  price
         values[4] = (float)(values[2]*values[3]) # total
         values[5] = 0 #discount
-        values[6] = (float)(values[4]*(float)(row[4])) # vat
-        values[7] = values[4]+values[6] # payable
+        values[6] = 0 # vat
+        values[7] = values[4] # payable
         values[8] = values[7] # paid
         values[9] = 0 # change
         values[10] = row[9] # invoice_id
@@ -255,12 +239,12 @@ class Item_Purchase:
         
     def addItemDetailsDB(self,values):
         message = dao.getLastInvoiceId()
-        self.lstinv = message[1]+1
-        values.append(message[1]+1)
-        print("\n-----------new invoice item details-------------\n",message)
         if(message[0]==0):
             _help.show_message('error',message[1])
             return
+        self.lstinv = message[1]+1
+        values.append(message[1]+1)
+        print("\n-----------new invoice item details-------------\n",message)
         print(values)
         command = "INSERT INTO item_details VALUES(?,?,?,?,?,?,?,?,?);"
         row = values[0:8]+values[9:10]
@@ -272,11 +256,9 @@ class Item_Purchase:
         print("\n-----------insert item--------------\n",message)
         
         self.addPurchaseHistoryDB(values)
-        self.addInvoiceDB(values)
         
         self.showTable()
         self.clearItemEntries()
-        return message
         
     def completePayment(self):
         item_name = []
@@ -299,11 +281,16 @@ class Item_Purchase:
             _help.show_message('warning','Please pay carefully')
             return
         
+        # ['Item Code :','Item Name :', 'Item Group :', 'Company :',
+        # 'VAT :', 'Quantity :','Purchase Price :','Sale Price :','Date :']
         for values in self.add_item_list:
             self.addItemDetailsDB(values)
+        values = [self.lstinv,'purchase',self.add_item_list[0][8],dt.datetime.now().strftime("%I:%M:%S %p"),sum,  0,         0,   sum,      total_info[4],total_info[5]]
+                # invoice_id ,     type ,        date             ,       time                              ,total, discount, vat , payable,  paid        , change
+        self.addInvoiceDB(values)
         
         # update total amount of main acount
-        message = dao.set_rows("UPDATE basic SET total_amount = total_amount+?;",[total_info[3]])
+        message = dao.set_rows("UPDATE basic SET total_amount = total_amount+?;",[-total_info[3]])
         if message[0]==0:
             _help.show_message('error',f'While updating total amount for sale item {message[1]}')
             return
