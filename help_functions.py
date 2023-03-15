@@ -115,7 +115,7 @@ def init_page(root,page_name):
 
         
         root.shop_logo = ImageTk.PhotoImage(Image.open("img/logo.png").resize((50,50)))
-        top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo)
+        top0_frame_0_lbl_0 = tk.Label(top_frame_0, image = root.shop_logo,bg=color.getColor('bg_main1'))
         top0_frame_0_lbl_0.place(relx=0.01, rely=0.1, relwidth=0.05, relheight=0.7)
 
         # shop name (at frame 0)

@@ -1,134 +1,270 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <style>
-        .container{
-            width: 936px;
-            height: 445px;
-            border: 1px solid black;
-            margin: 0 auto;
-            padding-top: 5px;
-            padding-bottom: 10px;
-        }
-        .container ul{
-            list-style-type: none;
-        }
-        .header{
-            background-color: #eeeedd;
-            padding: 10px 0px;
-            display: flex;
-        }
-        .header table{
-            width: 50%;
-            margin: 0 auto;
-        }
-        .header table td{
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
             padding: 0px;
+            font-family: "Helvetica", sans-serif;
+            font-weight: 400;
         }
-        .information table{
-            padding: 10px 0px;
-            font-size: 20px;
-            display: flex;
-            width: 95%;
-            /* border: 1px solid; */
-            margin: auto;
-        }
-        .information table tr,td{
-            padding-top: 10px;
-        }
-        .info-box{
-            margin: 0px 5px;
-            border-bottom: 1px dotted;
-            width: 450px;
-        }
-        img{
-            height: 80px;
-            width: 80px;
-        }
-        .sign{
-            margin-top: 30px;
-        }
-        .sign table{
+        .page {
+            margin: 10px auto;
+            height: max-content;
+            padding: 10px;
             width: 90%;
-            margin: 0px auto;
-        }
-        .sign table td{
-            padding: 0px;
-        }
-        .footer{
-            background-color: #eeeedd;
-            padding: 10px 0px;
+            border: dashed;
             text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        #receipt_name{
+            text-align: left;
+            margin-left: 5%;
+        }
+        #basic_info{
+            text-align: right;
+            margin-right: 5%;
+        }
+        .shop-name {
+            font-size: 20px
+        }
+
+        .dash-line {
+            width: 90%;
+            border-top: 1px dashed;
+            border-spacing: 20px;
+            margin: 10px auto;
+        }
+
+        .left-frame p {
+            padding: 5px 0px;
+        }
+
+        .item-list-container {
+            display: flex;
+            background-color: #fff;
+        }
+        .total-items-info {
+            display: flex;
+            background-color: #f1f1f1;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .total-items-info table{
+            text-decoration: none;
+            width: 70%;
+            margin: 10px auto;
+        }
+        .item-list-container table {
+            margin: 0px auto;
+            width: 90%;
+            text-align: left;
+        }
+        .item-list-container table,
+        .item-list-container tr,
+        .item-list-container th,
+        .item-list-container td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 3px;
+        }
+        .item-list-container th{
+            background-color: #555;
+            color: #fff;
+        }
+        .item-list-container tr:nth-child(odd){
+            background-color: #d1d1d1;
         }
     </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <table>
-                    <tr>
-                        <td rowspan="3"><img src="https://upload.wikimedia.org/wikipedia/commons/archive/8/8e/20130209134529%21COU_LOGO.jpg"/></td>
-                        <td style="font-size: 40px; text-align: center; font-weight: bold;">Comilla University</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: 20px; text-align: center; ">Cumilla-3506</td>
-                    </tr>
-                    <tr>
-                        <td style="background-color: black; color:white; font-size: 35px; text-align: center; font-weight: bold;">ADMIT CARD</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="font-size: 20px; font-weight: bold; text-align: right;">
-                            3rd Year 1st Semester Final Examination 2022
-                        </td>
-                    </tr>
-                </table>
-            </div>
+</head>
+
+<body>
+    <div class="page">
+        <div class="shop-name">ABC Fashion House</div>
+        <p style="font-size:16px">Transaction Receipt</p>
+        <table style="width: 90%; margin: auto;">
+            <tr>
+                <td align="left">Receipt Name: Purchase Item</td>
+                <td align="right">Date: 2023-03-15<br>invoice: #N\A</td>
+            </tr>
+        </table>
+        <div class="dash-line"></div>
+        <div class="item-list-container">
+            <table>
+                <tr>
+                    <th align="center">SI</th>
+                    <th align="center">Code</th>
+                    <th align="center">Name</th>
+                    <th align="center">Group</th>
+                    <th align="center">Company</th>
+                    <th align="center">VAT(%)</th>
+                    <th align="center">QTY</th>
+                    <th align="center">Purchase</th>
+                    <th align="center">Total</th>
+                    <th align="center">Discount</th>
+                    <th align="center">VAT(tk)</th>
+                    <th align="center">Payable</th>
+                    <th align="center">inv-id</th>
+                    <th align="center">Date</th>
+                    <th align="center">Time</th>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td>shirt20M-1</td>
+                    <td>Shirt</td>
+                    <td>Male-20</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>5</td>
+                    <td>1400.0</td>
+                    <td>7000.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>7000.0</td>
+                    <td>3</td>
+                    <td>01/02/2023</td>
+                    <td>11:53:33 PM</td>
+                </tr>
             
-            <div class="information">
-                <table>
-                    <tr>
-                        <td>Name of the Students: </td>
-                        <td colspan="3"><div class="info-box">Mestu Paul</div></td>
-                    </tr>
-                    <tr>
-                        <td>Hall Name: </td>
-                        <td colspan="3"><div class="info-box">Bangabandhu Sheikh Mujibur Hall</div></td>
-                    </tr>
-                    <tr>
-                        <td>Department: </td>
-                        <td colspan="2"><div class="info-box" style="width: 300px;">Computer Science and Engineering</div></td>
-                        <td>Registration No: </td>
-                        <td><div class="info-box" style="width: 150px;">11908005</div></td>
-                    </tr>
-                    <tr>
-                        <td>Session: </td>
-                        <td ><div class="info-box" style="width: 150px;">2018-2019</div></td>
-                        <td>Examination Roll No: </td>
-                        <td colspan="2"><div class="info-box" style="width: 200px;">11908005</div></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="sign">
-                <table>
-                    <tr>
-                        <td>----------------------------------</td>
-                        <td style="text-align: right;">----------------------------------</td>
-                    </tr>
-                    <tr>
-                        <td>Signature of Student</td>
-                        <td style="text-align: right;">Controller of Examination's</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="footer">
-                it is footer line
-            </div>  
+                <tr>
+                    <td>2</td>
+                    <td>Shirt20M-2</td>
+                    <td>Shirt</td>
+                    <td>Male-2</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>2</td>
+                    <td>1300.0</td>
+                    <td>2600.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>2600.0</td>
+                    <td>4</td>
+                    <td>02/02/2023</td>
+                    <td>11:55:26 PM</td>
+                </tr>
+            
+                <tr>
+                    <td>3</td>
+                    <td>shirt20M-1</td>
+                    <td>Shirt</td>
+                    <td>Male-20</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>5</td>
+                    <td>1400.0</td>
+                    <td>7000.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>7000.0</td>
+                    <td>4</td>
+                    <td>02/02/2023</td>
+                    <td>11:55:26 PM</td>
+                </tr>
+            
+                <tr>
+                    <td>4</td>
+                    <td>shirt20M-1</td>
+                    <td>Shirt</td>
+                    <td>Male-20</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>5</td>
+                    <td>1400.0</td>
+                    <td>7000.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>7000.0</td>
+                    <td>5</td>
+                    <td>17/02/2023</td>
+                    <td>03:08:04 AM</td>
+                </tr>
+            
+                <tr>
+                    <td>5</td>
+                    <td>shirt20M-1</td>
+                    <td>Shirt</td>
+                    <td>Male-20</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>2</td>
+                    <td>1400.0</td>
+                    <td>2800.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>2800.0</td>
+                    <td>6</td>
+                    <td>13/03/2023</td>
+                    <td>10:57:12 AM</td>
+                </tr>
+            
+                <tr>
+                    <td>6</td>
+                    <td>shirt20M-1</td>
+                    <td>Shirt</td>
+                    <td>Male-20</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>50</td>
+                    <td>1400.0</td>
+                    <td>70000.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>70000.0</td>
+                    <td>8</td>
+                    <td>15/03/2023</td>
+                    <td>09:39:04 AM</td>
+                </tr>
+            
+                <tr>
+                    <td>7</td>
+                    <td>Shirt20M-2</td>
+                    <td>Shirt</td>
+                    <td>Male-2</td>
+                    <td>Brand1</td>
+                    <td>7.0</td>
+                    <td>40</td>
+                    <td>1300.0</td>
+                    <td>52000.0</td>
+                    <td>0.0</td>
+                    <td>0.0</td>
+                    <td>52000.0</td>
+                    <td>8</td>
+                    <td>15/03/2023</td>
+                    <td>09:39:04 AM</td>
+                </tr>
+            
+            </table>
         </div>
-    </body>
+        <div class="dash-line"></div>
+        <div class="total-items-info">
+            <table>
+
+                <tr>
+                    <th align="left">Total item Quantity :</th>
+                    <td>109.0</td>
+                </tr>
+                <tr>
+                    <th align="left">Total Purchase Price :</th>
+                    <td>9600.0</td>
+                </tr>
+            </table>
+        </div>
+        <div class="dash-line"></div>
+        <div style="font-size: 18px; text-align: center;">
+            Thank You
+        </div>
+    </div>
+</body>
+
 </html>
-    
+        
+        

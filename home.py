@@ -138,8 +138,8 @@ class Home:
         print('purchase :', values['purchase'])
         print('sale :',values['sale'])
         # for i in range(len(dates)):
-        #     values['purchase'][i]=random.randint(50,100)
-        #     values['sale'][i]=random.randint(50,100)
+        #     values['purchase'][i]=random.randint(2000,3000)
+        #     values['sale'][i]=random.randint(2000,3000)
         for row in message[1]:
             try:
                 idx = dates.index(row[1])
